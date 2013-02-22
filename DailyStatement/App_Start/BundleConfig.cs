@@ -23,7 +23,7 @@ namespace DailyStatement
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/normalize.css", "~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",
@@ -38,6 +38,10 @@ namespace DailyStatement
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
+            // Kendo Scripts
+            bundles.Add(new ScriptBundle("~/bundles/kendoUI").Include("~/Scripts/2012.3.1114/kendo/kendo.web.min.js"));
+            // Kendo CSS
+            bundles.Add(new StyleBundle("~/Content/kendo/css").Include("~/Content/kendo/kendo.common.min.css", "~/Content/kendo/kendo.bootstrap.min.css"));
         }
     }
 }
