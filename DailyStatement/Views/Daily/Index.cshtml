@@ -3,94 +3,64 @@
 @{
     ViewBag.Title = "Index";
 }
-@section Scripts
-{
-    <style>
-        body { font-size: 9pt; }
-        #dvGrid { width: 500px; }
-        span.hi-lite { color: red; }
-        #dvGrid th.k-header { text-align: center; }
-    </style>
+@section scripts{
     <script>
+        
         $(function () {
-            //建立資料來源物件
-            var dataSrc = new kendo.data.DataSource({
+            var url = '@Url.Action("Grid")';
+            
+            var dataSource = new kendo.data.DataSource({
+                serverPaging: true,
+                serverSorting: true,
+                serverFiltering: true,
+                pageSize: 5,
                 transport: {
                     read: {
-                        //以下其實就是$.ajax的參數
-                        type: "POST",
-                        url: "/Daily/Grid",
-                        dataType: "json",
-                        data: {
-                            //額外傳至後方的參數
-                            keywd: function () {
-                                return $("#tKeyword").val();
-                            }
-                        }
+                        url: url,
+                        type: "post",
+                        dataType: 'json'
                     }
                 },
                 schema: {
                     //取出資料陣列
                     data: function (d) { return d.data; },
                     //取出資料總筆數(計算頁數用)
-                    total: function (d) { return d.total; }
-                },
-                pageSize: 10,
-                serverPaging: true,
-                serverSorting: true
-            });
-            //JSON日期轉換
-            var dateRegExp = /^\/Date\((.*?)\)\/$/;
-            window.toDate = function (value) {
-                var date = dateRegExp.exec(value);
-                return new Date(parseInt(date[1]));
-            }
-            $("#dvGrid").kendoGrid({
-                dataSource: dataSrc,
-                columns: [
-                    { field: "UserNo", title: "會員編號" },
-                    {
-                        field: "UserName", title: "會員名稱",
-                        template: '#= "<span class=\\"u-name\\">" + UserName + "</span>" #'
-                    },
-                    {
-                        field: "RegDate", title: "加入日期",
-                        template: '#= kendo.toString(toDate(RegDate), "yyyy/MM/dd")#'
-                    },
-                    { field: "Points", title: "累積點數" },
-                ],
-                sortable: true,
-                pageable: true,
-                dataBound: function () {
-                    //AJAX資料Bind完成後觸發
-                    var kw = $("#tKeyword").val();
-                    //若有設關鍵字，做Highlight處理
-                    if (kw.length > 0) {
-                        var re = new RegExp(kw, "g");
-                        $(".u-name").each(function () {
-                            var $td = $(this);
-                            $td.html($td.text()
-                           .replace(re, "<span class='hi-lite'>$&</span>"));
-                        });
+                    total: function (d) { return d.total; },
+                    model: {
+                        id: 'DailyInfoId',
+                        fields: {
+                            ProjectNo: { type: 'string' },
+                            Category: { type: 'string' },
+                            Customer: { type: 'string' },
+                            WorkContent: { type: 'string' },
+                            CreateDate: { type: 'date' },
+                            WorkContent: {type: 'string'}
+                        }
                     }
                 }
             });
-            //按下查詢鈕
-            $("#bQuery").click(function () {
-                //要求資料來源重新讀取(並指定切至第一頁)
-                dataSrc.read({ page: 1, skip: 0 });
-                //Grid重新顯示資料
-                $("#dvGrid").data("kendoGrid").refresh();
+
+
+            $("#grid").kendoGrid({
+                columns: [{ title: "案號", field: "ProjectNo" },
+                    { title: "工作類型", field: "Category" },
+                    { title: "客戶名稱", field: "Customer" },
+                    { title: "工作內容", field: "WorkContent" },
+                    { title: "日期 ", field: "CreateDate" },
+                    { title: "工時", field: "WorkContent" }
+                ],
+                dataSource: dataSource,
+                height: 200,
+                scrollable: true,
+                pageable: true,
+                sortable: {
+                    mode: "multiple"
+                }
             });
         });
     </script>
-}
-<div style="padding: 10px;">
-    關鍵字:
-    <input id="tKeyword" /><input type="button" value="查詢" id="bQuery" />
-</div>
-<div id="dvGrid">
-</div>
+    }
+<div id="grid"></div>
 
 
 <h2>Index</h2>

@@ -22,13 +22,20 @@ namespace DailyStatement.Controllers
             return View(db.Dailies.ToList());
         }
 
-        public JsonResult Grid(KendoGridRequest request, string keywd)
+        public JsonResult Grid(KendoGridRequest request)
         {
-            //var result = db.Dailies.ToList();
-            //return Json(new KendoGrid<DailyInfo>(request, result));
-            var result = SimMemberInfo.SimuDataStore.Where(o =>
-            string.IsNullOrEmpty(keywd) || o.UserName.Contains(keywd));
-            return Json(new KendoGrid<SimMemberInfo>(request, result));
+            // Sample here: https://github.com/rwhitmire/KendoGridBinder
+            var dailies = db.Dailies.ToList();
+            var d = new List<DailyInfo> { 
+                new DailyInfo{ CreateDate = DateTime.Now, Customer="哈哈哈我破關了", DailyInfoId=1, EmployeeId=1, ProjectNo="000001", WorkContent="Fuck 快讓我破關", WorkingHours=10 },
+                new DailyInfo{ CreateDate = DateTime.Now, Customer="哈哈哈我破關了", DailyInfoId=2, EmployeeId=1, ProjectNo="000002", WorkContent="Fuck 快讓我破關", WorkingHours=10 },
+                new DailyInfo{ CreateDate = DateTime.Now, Customer="哈哈哈我破關了", DailyInfoId=3, EmployeeId=1, ProjectNo="000003", WorkContent="Fuck 快讓我破關", WorkingHours=10 },
+                new DailyInfo{ CreateDate = DateTime.Now, Customer="哈哈哈我破關了", DailyInfoId=4, EmployeeId=1, ProjectNo="000004", WorkContent="Fuck 快讓我破關", WorkingHours=10 },
+                new DailyInfo{ CreateDate = DateTime.Now, Customer="哈哈哈我破關了", DailyInfoId=5, EmployeeId=1, ProjectNo="000005", WorkContent="Fuck 快讓我破關", WorkingHours=10 },
+                new DailyInfo{ CreateDate = DateTime.Now, Customer="哈哈哈我破關了", DailyInfoId=6, EmployeeId=1, ProjectNo="000006", WorkContent="Fuck 快讓我破關", WorkingHours=10 }
+            };
+            var grid = new KendoGrid<DailyInfo>(request, d);
+            return Json(grid);
 
         }
 

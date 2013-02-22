@@ -58,33 +58,6 @@ namespace DailyStatement.Models
         public virtual List<DailyInfo> DailyInfos { get; set; }
     }
 
-    public class SimMemberInfo
-    {
-        public string UserNo; //會員編號
-        public string UserName; //會員名稱
-        public DateTime RegDate; //註冊日期
-        public int Points; //累積點數
-
-        //模疑資料來源
-        public static List<SimMemberInfo> SimuDataStore = null;
-
-        static SimMemberInfo()
-        {
-            Random rnd = new Random();
-            //借用具名顏色名稱來產生隨機資料
-            string[] colorNames = typeof(Color)
-                .GetProperties(BindingFlags.Static | BindingFlags.Public)
-                .Select(o => o.Name).ToArray();
-            SimuDataStore =
-                colorNames
-                .Select(cn => new SimMemberInfo()
-                {
-                    UserNo = string.Format("C{0:00000}", rnd.Next(99999)),
-                    UserName = cn,
-                    RegDate = DateTime.Today.AddDays(-rnd.Next(1000)),
-                    Points = rnd.Next(9999)
-                }).ToList();
-        }
-    }
+    
 
 }
