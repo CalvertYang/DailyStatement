@@ -8,6 +8,12 @@ namespace DailyStatement
         // 如需 Bundling 的詳細資訊，請造訪 http://go.microsoft.com/fwlink/?LinkId=254725
         public static void RegisterBundles(BundleCollection bundles)
         {
+            // Fixed min.css and min.js problem when debug mode.
+            bundles.IgnoreList.Clear();
+            bundles.IgnoreList.Ignore("*.intellisense.js");
+            bundles.IgnoreList.Ignore("*-vsdoc.js");
+            bundles.IgnoreList.Ignore("*.debug.js", OptimizationMode.WhenEnabled);
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -39,9 +45,11 @@ namespace DailyStatement
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
             // Kendo Scripts
-            bundles.Add(new ScriptBundle("~/bundles/kendoUI").Include("~/Scripts/2012.3.1114/kendo/kendo.web.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/kendoUI").Include("~/Scripts/kendo/2012.3.1114/kendo.web.min.js"));
             // Kendo CSS
             bundles.Add(new StyleBundle("~/Content/kendo/css").Include("~/Content/kendo/kendo.common.min.css", "~/Content/kendo/kendo.bootstrap.min.css"));
+            // Bootstrap
+            bundles.Add(new StyleBundle("~/Content/bootstrap/css").Include("~/Content/bootstrap.css", "~/Content/bootstrap-responsive.css"));
         }
     }
 }

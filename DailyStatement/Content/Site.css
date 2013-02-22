@@ -1,15 +1,6 @@
 ﻿body {
-    font-size: .85em;
-    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
-    color: #232323;
-    background-color: #fff;
-}
-
-header, footer, nav, section {
-    display: block;
-}
-
-
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
 /* Styles for basic forms
 -----------------------------------------------------------*/
 fieldset {
