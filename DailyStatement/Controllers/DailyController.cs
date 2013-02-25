@@ -25,9 +25,9 @@ namespace DailyStatement.Controllers
         public JsonResult Grid(KendoGridRequest request)
         {
             // Sample here: https://github.com/rwhitmire/KendoGridBinder
-
-            //var dailies = db.Dailies.ToList();
-
+            db.Configuration.ProxyCreationEnabled = false;
+            var dailies = db.Dailies.Include("WorkCategory").ToList();
+            
             //var d = new List<DailyInfo> { 
             //    new DailyInfo{ CreateDate = DateTime.Now, Customer="哈哈哈我破關了", DailyInfoId=1, EmployeeId=1, ProjectNo="000001", WorkContent="Fuck 快讓我破關", WorkingHours=10 },
             //    new DailyInfo{ CreateDate = DateTime.Now, Customer="哈哈哈我破關了", DailyInfoId=2, EmployeeId=1, ProjectNo="000002", WorkContent="Fuck 快讓我破關", WorkingHours=10 },
@@ -37,23 +37,24 @@ namespace DailyStatement.Controllers
             //    new DailyInfo{ CreateDate = DateTime.Now, Customer="哈哈哈我破關了", DailyInfoId=6, EmployeeId=1, ProjectNo="000006", WorkContent="Fuck 快讓我破關", WorkingHours=10 }
             //};
 
-            var dailies = new List<DailyInfo>();
-            foreach (var daily in db.Dailies)
-            {
-                DailyInfo d = new DailyInfo();
-                d.CreateDate = daily.CreateDate;
-                d.Customer = daily.Customer;
-                d.DailyInfoId = daily.DailyInfoId;
-                // d.Employee = daily.Employee;
-                d.EmployeeId = daily.EmployeeId;
-                d.ProjectNo = daily.ProjectNo;
-                d.RowVersion = daily.RowVersion;
-                d.WorkCategory = daily.WorkCategory;
-                d.WorkCategoryId = daily.WorkCategoryId;
-                d.WorkContent = daily.WorkContent;
-                d.WorkingHours = daily.WorkingHours;
-                dailies.Add(d);
-            }
+            //var dailies = new List<DailyInfo>();
+            //foreach (var daily in db.Dailies)
+            //{
+            //    DailyInfo d = new DailyInfo();
+            //    d.CreateDate = daily.CreateDate;
+            //    d.Customer = daily.Customer;
+            //    d.DailyInfoId = daily.DailyInfoId;
+            //    // d.Employee = daily.Employee;
+            //    d.EmployeeId = daily.EmployeeId;
+            //    d.ProjectNo = daily.ProjectNo;
+            //    d.RowVersion = daily.RowVersion;
+            //    d.WorkCategory = daily.WorkCategory;
+            //    d.WorkCategoryId = daily.WorkCategoryId;
+            //    d.WorkContent = daily.WorkContent;
+            //    d.WorkingHours = daily.WorkingHours;
+            //    dailies.Add(d);
+            //}
+
             var grid = new KendoGrid<DailyInfo>(request, dailies);
             return Json(grid);
 
@@ -77,6 +78,7 @@ namespace DailyStatement.Controllers
 
         public ActionResult Create()
         {
+            ViewData["Categories"] = new SelectList(db.Categories.ToList(), "WorkCategoryId", "Name", "");
             return View();
         }
 

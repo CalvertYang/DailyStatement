@@ -15,11 +15,14 @@ legend {
 }
 
 textarea {
-    min-height: 75px;
+    min-height: 100px;
 }
 
 .editor-label {
     margin: 1em 0 0 0;
+    color:#808080;
+    font-family:sans-serif;
+    font-weight: bold;
 }
 
 .editor-field {

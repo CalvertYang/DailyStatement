@@ -36,7 +36,7 @@
                             ProjectNo: {
                                 type: 'string'
                             },
-                            Category: { type: 'string' },
+                            WorkCategory: { type: 'string' },
                             Customer: {
                                 type: 'string'
                             },
@@ -51,7 +51,7 @@
 
             $("#grid").kendoGrid({
                 columns: [{ title: "案號", field: "ProjectNo" },
-                    { title: "工作類型", field: "Category" },
+                    { title: "工作類型", field: "WorkCategory" },
                     {
                         title: "客戶名稱", field: "Customer"
                     },
@@ -61,18 +61,18 @@
                     {
                         title: "操作",
                         field: "DailyInfoId",
-                        template: '<a href="Daily/Edit/#=DailyInfoId#" class="btn  btn-info">編輯</a>  <a href="Daily/Delete/#=DailyInfoId#" class="btn  btn-danger">刪除</a>'
+                        template: "<a href='@Url.Action("Edit")/#=DailyInfoId#' class='btn btn-small btn-info'>編輯</a> <a href='@Url.Action("Delete")/#=DailyInfoId#' class='btn btn-small  btn-danger'>刪除</a>", width: 120 
                     }
-                  
                 ],
+                toolbar: [{ name: "create", template: "<a href='@Url.Action("Create")' class='btn btn-small btn-success'>新增</a>" }],
                 dataSource: dataSource,
-                height: 200,
+                height: 700,
                 scrollable: true,
                 pageable: true,
                 // editable: true,
-                sortable: {
-                    mode: "multiple"
-                }
+                // sortable: {
+                //    mode: "multiple"
+                // }
             });
         });
     </script>
@@ -82,7 +82,7 @@
 
 <div class="row">
     <div class="span12 pull-right">
-        @Html.ActionLink("新增", "Create", "Daily", new { @class="btn btn-success pull-right", id="btn-create", style="margin-bottom:2px;"})
+        @* Html.ActionLink("新增", "Create", "Daily", new { @class="btn btn-success pull-right", id="btn-create", style="margin-bottom:2px;"})*@
     </div>
 </div>
 <div class="row">
@@ -90,58 +90,3 @@
         <div id="grid"></div>
     </div>
 </div>
-
-
-
-
-
-
-<p>
-    
-</p>
-<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProjectNo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Customer)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.WorkContent)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreateDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.WorkingHours)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProjectNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Customer)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WorkContent)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreateDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WorkingHours)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.DailyInfoId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.DailyInfoId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.DailyInfoId })
-        </td>
-    </tr>
-}
-
-</table>
