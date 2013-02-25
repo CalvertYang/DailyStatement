@@ -3,14 +3,21 @@
 @{
     ViewBag.Title = "Edit";
 }
+<style>
+    .edit-block {
+        width: 600px;
+        margin: 10px auto;
+       
+    }
+</style>
 
-<h2>Edit</h2>
-
-@using (Html.BeginForm()) {
+<div class="row">
+    <div class="span6 offset3">
+<h4>編輯</h4>
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
-
     <fieldset>
-        <legend>DailyInfo</legend>
 
         @Html.HiddenFor(model => model.DailyInfoId)
 
@@ -21,6 +28,17 @@
             @Html.EditorFor(model => model.ProjectNo)
             @Html.ValidationMessageFor(model => model.ProjectNo)
         </div>
+
+         <div class="editor-label">
+            @Html.LabelFor(model => model.WorkCategory)
+        </div>
+    
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.WorkCategoryId, ViewData["Categories"] as SelectList)
+            @*Html.DropDownList("categories", ViewData["Categories"] as SelectList, "請選擇", Model.WorkCategoryId)*@
+            @Html.ValidationMessageFor(model => model.WorkCategoryId)
+        </div>
+
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Customer)
@@ -53,9 +71,12 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("返回", "Index")
 </div>
 
+
+s</div>
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

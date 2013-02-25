@@ -7,8 +7,8 @@
     <script>
         
         $(function () {
-            var url = '@Url.Action("Grid")';
-            
+            var urlRead = '@Url.Action("Grid")';
+
             var dataSource = new kendo.data.DataSource({
                 serverPaging: true,
                 serverSorting: true,
@@ -16,11 +16,12 @@
                 pageSize: 5,
                 transport: {
                     read: {
-                        url: url,
+                        url: urlRead,
                         type: "post",
                         dataType: 'json'
                     }
                 },
+                batch: true,
                 schema: {
                     //取出資料陣列
                     data: function (d) { return d.data; },
@@ -29,9 +30,16 @@
                     model: {
                         id: 'DailyInfoId',
                         fields: {
-                            ProjectNo: { type: 'string' },
+                            DailyInfoId: {
+                                editable: false
+                            },
+                            ProjectNo: {
+                                type: 'string'
+                            },
                             Category: { type: 'string' },
-                            Customer: { type: 'string' },
+                            Customer: {
+                                type: 'string'
+                            },
                             WorkContent: { type: 'string' },
                             CreateDate: { type: 'date' },
                             WorkContent: {type: 'string'}
@@ -44,15 +52,24 @@
             $("#grid").kendoGrid({
                 columns: [{ title: "案號", field: "ProjectNo" },
                     { title: "工作類型", field: "Category" },
-                    { title: "客戶名稱", field: "Customer" },
+                    {
+                        title: "客戶名稱", field: "Customer"
+                    },
                     { title: "工作內容", field: "WorkContent" },
-                    { title: "日期 ", field: "CreateDate" },
-                    { title: "工時", field: "WorkContent" }
+                    { title: "日期 ", field: "CreateDate", format: "{0:yyyy/MM/dd}" },
+                    { title: "工時", field: "WorkContent" },
+                    {
+                        title: "操作",
+                        field: "DailyInfoId",
+                        template: '<a href="Daily/Edit/#=DailyInfoId#" class="btn  btn-info">編輯</a>  <a href="Daily/Delete/#=DailyInfoId#" class="btn  btn-danger">刪除</a>'
+                    }
+                  
                 ],
                 dataSource: dataSource,
                 height: 200,
                 scrollable: true,
                 pageable: true,
+                // editable: true,
                 sortable: {
                     mode: "multiple"
                 }
@@ -60,13 +77,27 @@
         });
     </script>
     }
-<div id="grid"></div>
+
+<h4>工作時數日報</h4>
+
+<div class="row">
+    <div class="span12 pull-right">
+        @Html.ActionLink("新增", "Create", "Daily", new { @class="btn btn-success pull-right", id="btn-create", style="margin-bottom:2px;"})
+    </div>
+</div>
+<div class="row">
+    <div class="span12">
+        <div id="grid"></div>
+    </div>
+</div>
 
 
-<h2>Index</h2>
+
+
+
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    
 </p>
 <table>
     <tr>

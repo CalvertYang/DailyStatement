@@ -26,7 +26,7 @@ namespace DailyStatement.Controllers
         {
             // Sample here: https://github.com/rwhitmire/KendoGridBinder
 
-            // var dailies = db.Dailies.ToList();
+            //var dailies = db.Dailies.ToList();
 
             //var d = new List<DailyInfo> { 
             //    new DailyInfo{ CreateDate = DateTime.Now, Customer="哈哈哈我破關了", DailyInfoId=1, EmployeeId=1, ProjectNo="000001", WorkContent="Fuck 快讓我破關", WorkingHours=10 },
@@ -108,6 +108,8 @@ namespace DailyStatement.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewData["Categories"] = new SelectList(db.Categories.ToList(), "WorkCategoryId", "Name", "");
             return View(dailyinfo);
         }
 
@@ -121,6 +123,11 @@ namespace DailyStatement.Controllers
             {
                 db.Entry(dailyinfo).State = EntityState.Modified;
                 db.SaveChanges();
+
+   
+               
+
+
                 return RedirectToAction("Index");
             }
             return View(dailyinfo);
@@ -129,15 +136,15 @@ namespace DailyStatement.Controllers
         //
         // GET: /Daily/Delete/5
 
-        //public ActionResult Delete(int id = 0)
-        //{
-        //    DailyInfo dailyinfo = db.Dailies.Find(id);
-        //    if (dailyinfo == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(dailyinfo);
-        //}
+        public ActionResult Delete(int id = 0)
+        {
+            DailyInfo dailyinfo = db.Dailies.Find(id);
+            if (dailyinfo == null)
+            {
+                return HttpNotFound();
+            }
+            return View(dailyinfo);
+        }
 
         //
         // POST: /Daily/Delete/5
