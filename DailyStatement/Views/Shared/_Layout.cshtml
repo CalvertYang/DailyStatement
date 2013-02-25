@@ -20,15 +20,28 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">Wintriss Daily Statement</a>
+          <a class="brand" href="@Url.Action("Index","Daily")">Wintriss Daily Statement</a>
           
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li><a href="@Url.Action("Index","Daily")">Daily</a></li>
               <li><a href="@Url.Action("Index", "Employee")">Member</a></li>
+               
             </ul>
           </div>
-         
+          <div class="nav-collapse collapse pull-right">
+              <ul class="nav">
+                   @{
+                    if(User.Identity.IsAuthenticated)
+                    {
+                         <li><a href="@Url.Action("Logout", "Employee")">Logout</a></li>
+                    }else
+                    {
+                        <li><a href="@Url.Action("Login", "Employee")">Login</a></li>
+                    }
+                    }
+                  </ul>
+          </div>
           <!--/.nav-collapse -->
         </div>
       </div>
