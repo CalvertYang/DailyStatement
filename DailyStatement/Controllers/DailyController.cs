@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DailyStatement.Models;
+using DailyStatement.ViewModel;
 using KendoGridBinder;
 
 namespace DailyStatement.Controllers
@@ -26,7 +27,18 @@ namespace DailyStatement.Controllers
         {
             // Sample here: https://github.com/rwhitmire/KendoGridBinder
             db.Configuration.ProxyCreationEnabled = false;
-            var dailies = db.Dailies.Include("WorkCategory").ToList();
+            var dailies = (from d in db.Dailies.Include("WorkCategory")
+                          select new DailyInfoForIndex
+                          {
+                              DailyInfoId = d.DailyInfoId,
+                              CreateDate = d.CreateDate,
+                              EmployeeId = d.DailyInfoId,
+                              Customer = d.Customer,
+                              ProjectNo = d.ProjectNo,
+                              WorkContent = d.WorkContent,
+                              WorkingHours = d.WorkingHours,
+                              WorkCategory = d.WorkCategory.Name
+                          }).ToList();
             
             //var d = new List<DailyInfo> { 
             //    new DailyInfo{ CreateDate = DateTime.Now, Customer="哈哈哈我破關了", DailyInfoId=1, EmployeeId=1, ProjectNo="000001", WorkContent="Fuck 快讓我破關", WorkingHours=10 },
@@ -55,8 +67,8 @@ namespace DailyStatement.Controllers
             //    dailies.Add(d);
             //}
 
-            var grid = new KendoGrid<DailyInfo>(request, dailies);
-            return Json(grid);
+            var grid = new KendoGrid<DailyInfoForIndex>(request, dailies);
+            return Json(grid, JsonRequestBehavior.AllowGet);
 
         }
 

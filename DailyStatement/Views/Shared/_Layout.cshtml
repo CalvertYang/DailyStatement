@@ -21,15 +21,14 @@
             <span class="icon-bar"></span>
           </button>
           <a class="brand" href="#">Wintriss Daily Statement</a>
-          <!--
+          
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li><a href="@Url.Action("Index","Daily")">Daily</a></li>
+              <li><a href="@Url.Action("Index", "Employee")">Member</a></li>
             </ul>
           </div>
-          -->
+         
           <!--/.nav-collapse -->
         </div>
       </div>
@@ -37,6 +36,10 @@
 
     <div class="container">
       @RenderBody()
+
+      <div class="footer">
+        <p>&copy; Wintriss 2013 & Design By Apputu</p>
+      </div>
     </div>
     <!-- /container -->
     
