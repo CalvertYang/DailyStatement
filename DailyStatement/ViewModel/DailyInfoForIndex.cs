@@ -14,6 +14,7 @@ namespace DailyStatement.ViewModel
         public string WorkContent { get; set; }
         public DateTime CreateDate { get; set; }
         public int EmployeeId { get; set; }
+        public string EmployeeName { get; set; }
         public int WorkingHours { get; set; }
     }
 }

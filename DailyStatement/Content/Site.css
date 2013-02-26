@@ -1,6 +1,9 @@
 ﻿body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
+
+
+/*#region form*/
 /* Styles for basic forms
 -----------------------------------------------------------*/
 fieldset {
@@ -53,8 +56,11 @@ textarea {
 .validation-summary-valid {
     display: none;
 }
+/*#endregion*/
 
+/*#region Common*/
 .hide
 {
     display: none;
 }
+/*#endregion*/

@@ -346,6 +346,7 @@
     <Content Include="Dynamic Expressions.html" />
     <Content Include="Global.asax" />
     <Content Include="Content\site.css" />
+    <None Include="Properties\PublishProfiles\DailyStatement.pubxml" />
     <None Include="Properties\PublishProfiles\設定檔.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-1.8.3.intellisense.js" />
