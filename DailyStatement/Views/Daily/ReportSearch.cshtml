@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "ReportSearch";
+}
+
+<div class="row">
+     <div class="span6 offset3">
+<h4>Report Search Condition</h4>
+@using (Html.BeginForm())
+{ 
+    @Html.ValidationSummary(true)
+    <legend></legend>
+    <fieldset>
+        <div class="editor-label">
+            User: 
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("employee",(SelectList)ViewBag.Employee)
+        </div>
+         <div class="editor-label">
+            Month:
+         </div>
+        <div class="editor-field">
+             @Html.DropDownList("months",(SelectList)ViewBag.Months)
+        </div>
+        <div class="editor-label">
+             Weeks:
+        </div>
+         <div class="editor-field">
+            <select id="weeks"></select>
+        </div>
+
+
+        
+    </fieldset>
+    <br />
+    <p>
+      <input type="submit" value="查詢" class="btn btn-small btn-success"/> @Html.ActionLink("返回", "Index", null, new { @class="btn btn-small"})
+    </p>
+
+}
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        // functions
+        
+        // jQuery
+        $(function () {
+            var weeksOfMonth = {};
+            $('input[type=date]').kendoDatePicker({
+                culture: "zh-TW",
+                format: "yyyy/MM/dd"
+            });
+            
+            
+
+            $('#months').change(function () {
+                var today = new Date();
+                var year = today.getFullYear();
+                var month = $(this).val();
+                var daysInMonth = new Date(year, month, 0).getDate();
+                var firstDayOfMonth = new Date(year, month - 1, 1).getDay();
+                var firstWeekEndDay = 7 - firstDayOfMonth;
+                // get first week
+               
+                weeksOfMonth[1] = { start: new Date(year, month - 1, 1), end: new Date(year, month - 1, firstWeekEndDay) }
+                for (i = firstWeekEndDay, j = 2; i < daysInMonth; i = i + 7, j++) {
+                    if (i + 7 > daysInMonth) {
+                        weeksOfMonth[j] = { 'start': new Date(year, month - 1, i + 1), 'end': new Date(year, month, 0) };
+                    } else {
+                        weeksOfMonth[j] = { 'start': new Date(year, month - 1, i + 1), 'end': new Date(year, month - 1, i + 7) };
+                    }
+                }
+                $('#weeks').find('option').remove();
+                var i = 1;
+                $.each(weeksOfMonth, function (key, value) {
+                   
+                    alert(i);
+                    i++;
+                    var start = month + '/' + value['start'].getDate();
+                    var end = month + '/' + value['end'].getDate();
+                    $('#weeks').append('<option value="' + key + '">' + start + ' - ' + end + '</option>');
+
+                });
+            });
+            var today = new Date();
+
+            $('#months').val(today.getMonth() + 1).trigger('change');
+        });
+    </script>
+    }
+
+

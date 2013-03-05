@@ -798,6 +798,8 @@
     <Content Include="Views\Daily\Delete.cshtml" />
     <Content Include="Views\Employee\Login.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Daily\EmployeeList.cshtml" />
+    <Content Include="Views\Daily\ReportSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

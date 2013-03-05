@@ -67,7 +67,7 @@ namespace DailyStatement.Controllers
             }
 
             var grid = new KendoGrid<DailyInfoForIndex>(request, dailies);
-            return Json(grid, JsonRequestBehavior.AllowGet);
+            return Json(grid);
 
         }
 
@@ -170,6 +170,59 @@ namespace DailyStatement.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult EmployeeList()
+        {
+            return View(db.Employees.ToList());
+        }
+
+
+        // UNDONE: 目前先不採用
+        [HttpPost]
+        public JsonResult GetEmployeeNameList(KendoGridRequest request)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+
+            var emp = db.Employees.Where(e => e.Account == User.Identity.Name).FirstOrDefault();
+            
+            
+            if (emp.Rank == "3")
+            {
+                return Json("{}");
+            }
+            else
+            {
+                var employee = db.Employees.ToList();
+                var grid = new KendoGrid<Employee>(request, employee);
+                return Json(grid);
+            }
+        }
+
+        public ActionResult ReportSearch()
+        {
+            List<SelectListItem> months = new List<SelectListItem>();
+            for (int i = 1; i < 13; i++)
+            {
+                months.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+            }
+            ViewBag.Months = new SelectList(months,"Text","Value");
+            var emp = db.Employees.Where(e => e.Account == User.Identity.Name).FirstOrDefault();
+            if(emp.Rank == "3")
+            {
+                ViewBag.LoginUser = emp;
+            }else
+            {
+               
+                ViewBag.LoginUser = emp;
+                ViewBag.Employee = new SelectList(db.Employees,"EmployeeId","Name");
+            }
+            return View();
+        }
+
+        public ActionResult Report(int employeeId, DateTime formDate, DateTime toDate )
+        {
+
+            return View();
+        }
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

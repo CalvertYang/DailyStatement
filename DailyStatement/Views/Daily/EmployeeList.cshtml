@@ -1,0 +1,50 @@
+﻿@model IEnumerable<DailyStatement.Models.Employee>
+
+@{
+    ViewBag.Title = "查詢個人日報";
+}
+@section scripts
+{
+    <script>
+        $(function () {
+            var url = '@Url.Action("GetEmployeeNameList")';
+
+            var dataSource = new kendo.data.DataSource({
+                serverPaging: true,
+                serverSorting: true,
+                serverFiltering: true,
+                pageSize: 20,
+                transport: {
+                    read: {
+                        url: url,
+                        type: 'post',
+                        dataType: 'json'
+                    }
+                },
+                batch: true,
+                schema: {
+                    data: function (d) { return d.data; },
+                    total: function (d) { return d.total },
+                }
+            });
+
+            $("#grid").kendoGrid({
+                columns: [{
+                    title: "姓名",
+                    field: "Name",
+                    template:"<a href='#=EmployeeId #'>#= Name# </a>"
+                }],
+                dataSource: dataSource,
+                height: 600,
+                scrollable: true,
+                sortable: true
+            });
+        });
+    </script>
+    }
+<h4>個人彙報列表</h4>
+<div class="row">
+    <div class="span12">
+        <div id="grid"></div>
+    </div>
+</div>
