@@ -182,10 +182,7 @@ namespace DailyStatement.Controllers
         {
             db.Configuration.ProxyCreationEnabled = false;
 
-            var emp = db.Employees.Where(e => e.Account == User.Identity.Name).FirstOrDefault();
-            
-            
-            if (emp.Rank == "3")
+            if (User.IsInRole("一般人員"))
             {
                 return Json("{}");
             }
@@ -205,15 +202,9 @@ namespace DailyStatement.Controllers
                 months.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
             }
             ViewBag.Months = new SelectList(months,"Text","Value");
-            var emp = db.Employees.Where(e => e.Account == User.Identity.Name).FirstOrDefault();
-            if(emp.Rank == "3")
+            if (!User.IsInRole("一般人員"))
             {
-                ViewBag.LoginUser = emp;
-            }else
-            {
-               
-                ViewBag.LoginUser = emp;
-                ViewBag.Employee = new SelectList(db.Employees,"EmployeeId","Name");
+                ViewBag.Employee = new SelectList(db.Employees, "EmployeeId", "Name");
             }
             return View();
         }

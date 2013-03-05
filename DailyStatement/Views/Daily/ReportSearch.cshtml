@@ -52,8 +52,6 @@
                 culture: "zh-TW",
                 format: "yyyy/MM/dd"
             });
-            
-            
 
             $('#months').change(function () {
                 var today = new Date();
@@ -76,9 +74,9 @@
                 var i = 1;
                 $.each(weeksOfMonth, function (key, value) {
                    
-                    alert(i);
-                    i++;
+                   
                     var start = month + '/' + value['start'].getDate();
+                    alert(start);
                     var end = month + '/' + value['end'].getDate();
                     $('#weeks').append('<option value="' + key + '">' + start + ' - ' + end + '</option>');
 
