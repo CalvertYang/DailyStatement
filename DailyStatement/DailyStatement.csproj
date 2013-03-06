@@ -126,6 +126,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ViewModel\WeekReportOfSingle.cs" />
     <Content Include="App_Code\CustomRoleProvider.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -800,6 +801,7 @@
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Daily\EmployeeList.cshtml" />
     <Content Include="Views\Daily\ReportSearch.cshtml" />
+    <Content Include="Views\Daily\ReportWeekForSingle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

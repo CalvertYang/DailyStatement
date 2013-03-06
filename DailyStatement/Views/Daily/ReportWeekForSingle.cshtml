@@ -1,0 +1,78 @@
+﻿@model IEnumerable<DailyStatement.ViewModel.WeekReportOfSingle>
+@{
+    ViewBag.Title = "ReportWeekForSingle";
+}
+<style>
+    .bg-mark {
+         background:#eee;
+
+    }
+    .row-gray {
+        background:#eee;
+    }
+</style>
+<h4>個人週報 - @ViewBag.EmployeeName</h4>
+
+<div class="row">
+    <div class="span12">
+         W@(ViewBag.WeekNum)
+        <table class="table table-bordered">
+            <caption> </caption>
+            <thead>
+                <tr class="row-gray">
+                    <th>工作項目</th>
+                    <th>SUN</th>
+                    <th>MON</th>
+                    <th>TUE</th>
+                    <th>WED</th>
+                    <th>THU</th>
+                    <th>FRI</th>
+                    <th>SAT</th>
+                    <th>Total</th>
+                </tr>
+                
+            </thead>
+            <tbody>
+                
+                @foreach(var record in Model)
+                {
+                <tr >
+                    <td>@record.WorkName</td>
+                    <td class="bg-mark">@record.Sunday</td>
+                    <td>@record.Monday</td>
+                    <td>@record.Tuesday</td>
+                    <td>@record.Wednesday</td>
+                    <td>@record.Thursday</td>
+                    <td>@record.Friday</td>
+                    <td class="bg-mark">@record.Saturday</td>
+                    <td>@record.Total</td>
+                </tr>
+                }
+                <tr class="success">
+                    <td colspan="7"></td>
+                    <td><strong>Total</strong></td>
+                    <td>@ViewBag.TotalOfAll</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+   
+  
+    <div class="span12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>工作日期</th>
+                    <th>案件進度 & 工作內容</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

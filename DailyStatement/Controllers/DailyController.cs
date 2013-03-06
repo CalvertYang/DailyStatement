@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using DailyStatement.Models;
 using DailyStatement.ViewModel;
 using KendoGridBinder;
+using System.Globalization;
 
 namespace DailyStatement.Controllers
 {
@@ -209,11 +210,33 @@ namespace DailyStatement.Controllers
             return View();
         }
 
-        public ActionResult Report(int employeeId, DateTime formDate, DateTime toDate )
-        {
+        
 
-            return View();
+        public ActionResult ReportWeekForSingle(int employeeId, DateTime formDate, DateTime toDate )
+        {
+            string query = String.Format(@"Select A.ProjectNo + ' - ' +
+                                        (Select top 1 B.customer From DailyInfoes B where B.ProjectNo = A.ProjectNo) as [WorkName],
+                                        SUM(CASE (DATEPART(Weekday, [CreateDate])) WHEN '1' THEN WorkingHours ELSE 0 END) AS [Sunday] ,
+                                        SUM(CASE (DATEPART(Weekday, [CreateDate])) WHEN '2' THEN WorkingHours ELSE 0 END) AS [Monday] ,
+                                        SUM(CASE (DATEPART(Weekday, [CreateDate])) WHEN '3' THEN WorkingHours ELSE 0 END) AS [Tuesday] ,
+                                        SUM(CASE (DATEPART(Weekday, [CreateDate])) WHEN '4' THEN WorkingHours ELSE 0 END) AS [Wednesday] ,
+                                        SUM(CASE (DATEPART(Weekday, [CreateDate])) WHEN '5' THEN WorkingHours ELSE 0 END) AS [Thursday] ,
+                                        SUM(CASE (DATEPART(Weekday, [CreateDate])) WHEN '6' THEN WorkingHours ELSE 0 END) AS [Friday] ,
+                                        SUM(CASE (DATEPART(Weekday, [CreateDate])) WHEN '7' THEN WorkingHours ELSE 0 END) AS [Saturday]
+                                        From DailyInfoes A
+	                                    Where EmployeeId = {0}
+	                                    AND CreateDate Between '{1}' AND '{2}'
+	                                    Group By EmployeeId, ProjectNo", employeeId, formDate.ToShortDateString(), toDate.ToShortDateString());
+            var report = db.Database.SqlQuery<WeekReportOfSingle>(query).ToList();
+
+            ViewBag.TotalOfAll = db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate > formDate && d.CreateDate < toDate)).Select(d => d.WorkingHours).Sum();
+            ViewBag.EmployeeName = db.Employees.Where(e => e.EmployeeId == employeeId).SingleOrDefault().Name;
+            CultureInfo ci = CultureInfo.CurrentCulture;
+            int weekNum = ci.Calendar.GetWeekOfYear(formDate, CalendarWeekRule.FirstDay, DayOfWeek.Sunday);
+            ViewBag.WeekNum = weekNum;
+            return View(report);
         }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();

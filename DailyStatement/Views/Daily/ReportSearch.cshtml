@@ -5,16 +5,18 @@
 <div class="row">
      <div class="span6 offset3">
 <h4>Report Search Condition</h4>
-@using (Html.BeginForm())
+@using (Html.BeginForm("ReportWeekForSingle", "Daily"))
 { 
     @Html.ValidationSummary(true)
     <legend></legend>
     <fieldset>
+        @Html.Hidden("formDate")
+        @Html.Hidden("toDate")
         <div class="editor-label">
             User: 
         </div>
         <div class="editor-field">
-            @Html.DropDownList("employee",(SelectList)ViewBag.Employee)
+            @Html.DropDownList("employeeId",(SelectList)ViewBag.Employee)
         </div>
          <div class="editor-label">
             Month:
@@ -47,13 +49,11 @@
         
         // jQuery
         $(function () {
-            var weeksOfMonth = {};
-            $('input[type=date]').kendoDatePicker({
-                culture: "zh-TW",
-                format: "yyyy/MM/dd"
-            });
+            var weeksOfMonth;
+            $('#employeeId').val('3');
 
             $('#months').change(function () {
+                weeksOfMonth = {};
                 var today = new Date();
                 var year = today.getFullYear();
                 var month = $(this).val();
@@ -61,7 +61,7 @@
                 var firstDayOfMonth = new Date(year, month - 1, 1).getDay();
                 var firstWeekEndDay = 7 - firstDayOfMonth;
                 // get first week
-               
+                // debugger
                 weeksOfMonth[1] = { start: new Date(year, month - 1, 1), end: new Date(year, month - 1, firstWeekEndDay) }
                 for (i = firstWeekEndDay, j = 2; i < daysInMonth; i = i + 7, j++) {
                     if (i + 7 > daysInMonth) {
@@ -70,20 +70,26 @@
                         weeksOfMonth[j] = { 'start': new Date(year, month - 1, i + 1), 'end': new Date(year, month - 1, i + 7) };
                     }
                 }
+                
                 $('#weeks').find('option').remove();
-                var i = 1;
                 $.each(weeksOfMonth, function (key, value) {
-                   
-                   
                     var start = month + '/' + value['start'].getDate();
-                    alert(start);
                     var end = month + '/' + value['end'].getDate();
                     $('#weeks').append('<option value="' + key + '">' + start + ' - ' + end + '</option>');
 
                 });
+                $('#weeks').trigger('change');
+            });
+
+            $('#weeks').change(function () {
+                var d = weeksOfMonth[$(this).val()];
+                var start = d['start'].getFullYear() + '/' + (d['start'].getMonth() + 1) + '/' + d['start'].getDate();
+                var end = d['end'].getFullYear() + '/' + (d['end'].getMonth() + 1) + '/' + d['end'].getDate();
+                $('input[name=formDate]').val(start);
+                $('input[name=toDate]').val(end);
+
             });
             var today = new Date();
-
             $('#months').val(today.getMonth() + 1).trigger('change');
         });
     </script>
