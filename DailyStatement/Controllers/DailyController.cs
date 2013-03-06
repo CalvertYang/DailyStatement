@@ -260,11 +260,50 @@ namespace DailyStatement.Controllers
 	                                    Group By EmployeeId, ProjectNo", employeeId, formDate.ToShortDateString(), toDate.ToShortDateString());
             var report = db.Database.SqlQuery<WeekReportOfSingle>(query).ToList();
 
-            ViewBag.TotalOfAll = db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate > formDate && d.CreateDate < toDate)).Select(d => d.WorkingHours).Sum();
+            ViewBag.TotalOfAll = (db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate > formDate && d.CreateDate < toDate)).Count()>0)?db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate > formDate && d.CreateDate < toDate)).Select(d => d.WorkingHours).Sum():0;
             ViewBag.EmployeeName = db.Employees.Where(e => e.EmployeeId == employeeId).SingleOrDefault().Name;
             CultureInfo ci = CultureInfo.CurrentCulture;
             int weekNum = ci.Calendar.GetWeekOfYear(formDate, CalendarWeekRule.FirstDay, DayOfWeek.Sunday);
             ViewBag.WeekNum = weekNum;
+            ViewBag.Date = formDate.ToString("yyyy年MM月dd日") + "~" + toDate.ToString("yyyy年MM月dd日");
+            var reportList = db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate > formDate && d.CreateDate < toDate)).Select(d => new { Date = d.CreateDate, Content = d.WorkContent });
+
+            if (reportList != null)
+            {
+                ViewBag.Monday = new List<string>();
+                ViewBag.Tuesday = new List<string>();
+                ViewBag.Wednesday = new List<string>();
+                ViewBag.Thursday = new List<string>();
+                ViewBag.Friday = new List<string>();
+                ViewBag.Overtime = new List<string>();
+                foreach (var i in reportList)
+                {
+                    switch (i.Date.DayOfWeek.ToString())
+                    { 
+                        case "Monday":
+                            ViewBag.Monday.Add(i.Content);
+                            break;
+                        case "Tuesday":
+                            ViewBag.Tuesday.Add(i.Content);
+                            break;
+                        case "Wednesday":
+                            ViewBag.Wednesday.Add(i.Content);
+                            break;
+                        case "Thursday":
+                            ViewBag.Thursday.Add(i.Content);
+                            break;
+                        case "Friday":
+                            ViewBag.Friday.Add(i.Content);
+                            break;
+                        default:
+                            ViewBag.Overtime.Add(i.Content);
+                            break;
+                    }
+                }
+
+               
+            }
+
             return View(report);
         }
 

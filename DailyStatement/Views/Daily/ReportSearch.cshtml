@@ -61,20 +61,26 @@
                 var firstDayOfMonth = new Date(year, month - 1, 1).getDay();
                 var firstWeekEndDay = 7 - firstDayOfMonth;
                 // get first week
-                // debugger
-                weeksOfMonth[1] = { start: new Date(year, month - 1, 1), end: new Date(year, month - 1, firstWeekEndDay) }
-                for (i = firstWeekEndDay, j = 2; i < daysInMonth; i = i + 7, j++) {
+                // weeksOfMonth[1] = { start: new Date(year, month - 1, 1), end: new Date(year, month - 1, firstWeekEndDay) }
+                for (i = firstWeekEndDay, j = 1; i < daysInMonth; i = i + 7, j++) {
+                    
                     if (i + 7 > daysInMonth) {
-                        weeksOfMonth[j] = { 'start': new Date(year, month - 1, i + 1), 'end': new Date(year, month, 0) };
+                        if (month < 12) {
+                            var nextFirstDayOfMonth = new Date(year, month, 1).getDay();
+                            var nextFirstWeekEndDay = 7 - nextFirstDayOfMonth;
+                            weeksOfMonth[j] = { 'start': new Date(year, month - 1, i + 1), 'end': new Date(year, month, nextFirstWeekEndDay) };
+                        } else {
+                            weeksOfMonth[j] = { 'start': new Date(year, month - 1, i + 1), 'end': new Date(year, month, 0) };
+                        }
                     } else {
                         weeksOfMonth[j] = { 'start': new Date(year, month - 1, i + 1), 'end': new Date(year, month - 1, i + 7) };
                     }
+                    
                 }
-                
                 $('#weeks').find('option').remove();
                 $.each(weeksOfMonth, function (key, value) {
-                    var start = month + '/' + value['start'].getDate();
-                    var end = month + '/' + value['end'].getDate();
+                    var start = (value['start'].getMonth() + 1) + '/' + value['start'].getDate();
+                    var end = (value['end'].getMonth() + 1) + '/' + value['end'].getDate();
                     $('#weeks').append('<option value="' + key + '">' + start + ' - ' + end + '</option>');
 
                 });

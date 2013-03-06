@@ -8,15 +8,15 @@
 
     }
     .row-gray {
-        background:#eee;
+        background:#d9edf7;
     }
 </style>
 <h4>個人週報 - @ViewBag.EmployeeName</h4>
 
 <div class="row">
     <div class="span12">
-         W@(ViewBag.WeekNum)
-        <table class="table table-bordered">
+         W@(ViewBag.WeekNum) : @ViewBag.Date
+        <table class="table table-bordered table-hover">
             <caption> </caption>
             <thead>
                 <tr class="row-gray">
@@ -59,17 +59,79 @@
    
   
     <div class="span12">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
             <thead>
-                <tr>
+                <tr class="row-gray">
                     <th>工作日期</th>
                     <th>案件進度 & 工作內容</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td></td>
-                    <td></td>
+                    <td>Mon</td>
+                    <td>
+                        <ul>
+                        @foreach (var content in ViewBag.Monday)
+                        { 
+                            <li>@content</li>
+                        }
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Tue</td>
+                    <td>
+                        <ul>
+                        @foreach (var content in ViewBag.Tuesday)
+                        { 
+                            <li>@content</li>
+                        }
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Wed</td>
+                    <td>
+                        <ul>
+                        @foreach (var content in ViewBag.Wednesday)
+                        { 
+                            <li>@content</li>
+                        }
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Thu</td>
+                    <td>
+                        <ul>
+                        @foreach (var content in ViewBag.Thursday)
+                        { 
+                            <li>@content</li>
+                        }
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Fri</td>
+                    <td>
+                        <ul>
+                        @foreach (var content in ViewBag.Friday)
+                        { 
+                            <li>@content</li>
+                        }
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Overtime</td>
+                    <td>
+                        <ul>
+                        @foreach (var content in ViewBag.Overtime)
+                        { 
+                            <li>@content</li>
+                        }
+                        </ul>
+                    </td>
                 </tr>
             </tbody>
         </table>
