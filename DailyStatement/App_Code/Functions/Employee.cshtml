@@ -1,0 +1,18 @@
+﻿@using DailyStatement.Models
+
+@functions
+{
+    public static int GetId(string account)
+    {
+        using(var db = new DailyStatementContext())
+        {
+            var emp = db.Employees.Where(e => e.Account == account).SingleOrDefault();
+            if(emp == null)
+            {
+                return 0;
+            }
+            return emp.EmployeeId;
+        }
+    }
+}
+

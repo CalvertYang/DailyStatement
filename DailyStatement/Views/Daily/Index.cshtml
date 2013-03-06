@@ -69,7 +69,10 @@
                 dataSource: dataSource,
                 height: 700,
                 scrollable: true,
-                pageable: true,
+                pageable: {
+                    input: true,
+                    pageSizes: [15,30,50]
+                },
                 // editable: true,
                 sortable:true
             });

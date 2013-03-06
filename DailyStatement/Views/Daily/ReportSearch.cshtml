@@ -16,7 +16,8 @@
             User: 
         </div>
         <div class="editor-field">
-            @Html.DropDownList("employeeId",(SelectList)ViewBag.Employee)
+            @Html.DropDownList("employeeId", (SelectList)ViewBag.Employee, null,new { @disabled = "disabled" });
+           
         </div>
          <div class="editor-label">
             Month:
@@ -31,7 +32,8 @@
             <select id="weeks"></select>
         </div>
 
-
+       
+        
         
     </fieldset>
     <br />
@@ -50,7 +52,10 @@
         // jQuery
         $(function () {
             var weeksOfMonth;
-            $('#employeeId').val('3');
+             @if (User.Identity.IsAuthenticated && (User.IsInRole("超級管理員") || User.IsInRole("一般管理員")))
+             {
+                @:$('#employeeId').attr('disabled', false);
+             }
 
             $('#months').change(function () {
                 weeksOfMonth = {};
