@@ -64,3 +64,70 @@ textarea {
     display: none;
 }
 /*#endregion*/
+
+/*#region Topbar*/
+/* wrap the whole thing up, nice and tight */
+#topbar {
+	background: #597EA2;
+	background: -moz-linear-gradient(#597EA2, #000);
+	background: -ms-linear-gradient(#597EA2, #000);
+	background: -o-linear-gradient(#597EA2, #000);
+	background: -webkit-linear-gradient(#597EA2, #000);
+	background: linear-gradient(#597EA2, #000);
+	left: 0;
+	overflow: visible;
+	padding-left: 15px;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 10000;
+}
+
+/* where the real work happens */
+#topbar ul {
+	font: bold 16px Verdana, Arial;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#topbar ul li {
+	display: block;
+	float: left;
+	position: relative;
+}
+
+#topbar li ul { display: none; }
+#topbar ul li a {
+	background: #597EA2;
+	background: -moz-linear-gradient(#597EA2, #000);
+	background: -ms-linear-gradient(#597EA2, #000);
+	background: -o-linear-gradient(#597EA2, #000);
+	background: -webkit-linear-gradient(#597EA2, #000);
+	background: linear-gradient(#597EA2, #000);
+	color: #fff;
+	display: block;
+	margin-left: 1px;
+	padding: 8px 15px 9px 15px;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+#topbar ul li a:hover { 
+	background: #4F6752;
+}
+
+#topbar li:hover ul { 
+	display: block; 
+	position: absolute;
+}
+
+#topbar li:hover li { 
+	border-top: 1px solid #fff;
+	float: none;
+	font-size: 14px;
+}
+
+#topbar li:hover a { background: #4F6752; }
+#topbar li:hover li a:hover { background: #674F61; }
+/*#endregion*/

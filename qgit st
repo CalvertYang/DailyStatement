@@ -1,0 +1,198 @@
+* b70a33a 2013-03-06 | fixed topbar reponsive web design (HEAD, master) [AndyYou]
+* 3529eae 2013-03-06 | complete issue for report rank (origin/master, origin/HEAD) [AndyYou]
+*   5bd991c 2013-03-06 | Merge branch 'master' of github.com:AndyYou/DailyStatement [AndyYou]
+[32m|[m[33m\[m  
+[32m|[m *   e0c12de 2013-03-05 | Merge pull request #15 from CalvertYang/master [AndyYou]
+[32m|[m [34m|[m[35m\[m  
+[32m|[m [34m|[m * e1e4374 2013-03-06 | Employee list default value assign by codebehind [Calvert Yang]
+[32m|[m [34m|[m * 283128e 2013-03-06 | Admin can specific user of dailyinfo [Calvert Yang]
+[32m|[m [34m|[m *   9addbc1 2013-03-06 | Merge branch 'master' of github.com:CalvertYang/DailyStatement [Calvert Yang]
+[32m|[m [34m|[m [36m|[m[1;31m\[m  
+[32m|[m [34m|[m [36m|[m *   b7b8d5e 2013-03-05 | Merge pull request #14 from AndyYou/master [Calvert]
+[32m|[m [34m|[m [36m|[m [1;32m|[m[34m\[m  
+[32m|[m [34m|[m [36m|[m[34m_[m[1;32m|[m[34m/[m  
+[32m|[m [34m|[m[34m/[m[36m|[m [1;32m|[m   
+[32m|[m [34m|[m * [1;32m|[m ce4c217 2013-03-06 | Admin can specific dailyinfo's user not finished [Calvert Yang]
+[32m|[m [34m|[m [1;32m|[m[1;32m/[m  
+[32m|[m [34m|[m *   ce25cf2 2013-03-04 | Merge pull request #13 from AndyYou/master [Calvert]
+[32m|[m [34m|[m [1;34m|[m[1;35m\[m  
+[32m|[m [34m|[m * [1;35m\[m   398b6b4 2013-03-04 | Merge pull request #12 from AndyYou/master [Calvert]
+[32m|[m [34m|[m [1;36m|[m[31m\[m [1;35m\[m  
+* [34m|[m [1;36m|[m [31m|[m [1;35m|[m a8f6913 2013-03-06 | complete report for week [AndyYou]
+[34m|[m[34m/[m [1;36m/[m [31m/[m [1;35m/[m  
+* [1;36m|[m [31m|[m [1;35m|[m c7ccec7 2013-03-05 | update report result page [AndyYou]
+[1;35m|[m [1;36m|[m[1;35m_[m[31m|[m[1;35m/[m  
+[1;35m|[m[1;35m/[m[1;36m|[m [31m|[m   
+* [1;36m|[m [31m|[m 13de9a3 2013-03-05 | fixed Rank bug [AndyYou]
+[31m|[m [1;36m|[m[31m/[m  
+[31m|[m[31m/[m[1;36m|[m   
+* [1;36m|[m   4840e89 2013-03-05 | for merge [AndyYou]
+[32m|[m[33m\[m [1;36m\[m  
+[32m|[m * [1;36m\[m   5634bbb 2013-03-04 | Merge pull request #14 from CalvertYang/master [AndyYou]
+[32m|[m [34m|[m[1;36m\[m [1;36m\[m  
+[32m|[m [34m|[m [1;36m|[m[1;36m/[m  
+[32m|[m [34m|[m * 2f635f4 2013-03-05 | Fix some rank issue [Calvert Yang]
+[32m|[m [34m|[m * 1e2278d 2013-03-04 | Add custom role provider [Calvert Yang]
+[32m|[m [34m|[m * 73ccfbc 2013-03-04 | Add rank table [Calvert Yang]
+[32m|[m [34m|[m *   dc9bb1c 2013-02-26 | Merge pull request #11 from AndyYou/master [Calvert]
+[32m|[m [34m|[m [36m|[m[34m\[m  
+[32m|[m [34m|[m [36m|[m[34m/[m  
+[32m|[m [34m|[m[34m/[m[36m|[m   
+* [34m|[m [36m|[m 6655a6c 2013-03-05 | change report filter UI and add Javascript [AndyYou]
+* [34m|[m [36m|[m 937cbf0 2013-03-04 | Add report search page [AndyYou]
+[34m|[m[34m/[m [36m/[m  
+* [36m|[m   623ce58 2013-02-26 | Merge for deploy [AndyYou]
+[1;32m|[m[1;33m\[m [36m\[m  
+[1;32m|[m * [36m\[m   b81277d 2013-02-26 | Merge pull request #13 from CalvertYang/master [AndyYou]
+[1;32m|[m [1;34m|[m[36m\[m [36m\[m  
+[1;32m|[m [1;34m|[m [36m|[m[36m/[m  
+[1;32m|[m [1;34m|[m * 379e8dc 2013-02-26 | Add change password feature [Calvert Yang]
+* [1;34m|[m [1;35m|[m 232cf08 2013-02-26 | add working person column [AndyYou]
+* [1;34m|[m [1;35m|[m   c502da4 2013-02-26 | Merge branch 'master' of github.com:AndyYou/DailyStatement [AndyYou]
+[1;36m|[m[1;34m\[m [1;34m\[m [1;35m\[m  
+[1;36m|[m [1;34m|[m[1;34m/[m [1;35m/[m  
+[1;36m|[m * [1;35m|[m   add99e1 2013-02-25 | Merge pull request #12 from CalvertYang/master [AndyYou]
+[1;36m|[m [32m|[m[1;35m\[m [1;35m\[m  
+[1;36m|[m [32m|[m [1;35m|[m[1;35m/[m  
+[1;36m|[m [32m|[m * 3b49dbe 2013-02-26 | Fix many issues [Calvert Yang]
+[1;36m|[m [32m|[m * e69c3de 2013-02-26 | Modify authorize filter and kendogrid's pagesize [Calvert Yang]
+* [32m|[m [33m|[m cff48bd 2013-02-26 | add some javascript modify [AndyYou]
+[32m|[m[32m/[m [33m/[m  
+* [33m|[m   42e915b 2013-02-25 | Merge pull request #11 from CalvertYang/master [AndyYou]
+[34m|[m[33m\[m [33m\[m  
+[34m|[m [33m|[m[33m/[m  
+[34m|[m * 21ac768 2013-02-25 | Check dup and reload dailyinfo after delete [Calvert Yang]
+[34m|[m *   77602f2 2013-02-25 | Merge pull request #10 from AndyYou/master [Calvert]
+[34m|[m [36m|[m[34m\[m  
+[34m|[m [36m|[m[34m/[m  
+[34m|[m[34m/[m[36m|[m   
+* [36m|[m 5af4fb7 2013-02-25 | add ajax for delete data [AndyYou]
+* [36m|[m   187389c 2013-02-25 | Merge branch 'master' of github.com:AndyYou/DailyStatement [AndyYou]
+[1;32m|[m[1;33m\[m [36m\[m  
+* [1;33m|[m [36m|[m 13bf8ad 2013-02-25 | issue: javascript can get value [AndyYou]
+* [1;33m|[m [36m|[m d839fdd 2013-02-25 | adjust daily table [AndyYou]
+[1;33m|[m [1;33m|[m *   2a5aafa 2013-02-25 | Merge pull request #9 from AndyYou/master [Calvert]
+[1;33m|[m [1;33m|[m [1;34m|[m[1;33m\[m  
+[1;33m|[m [1;33m|[m [1;34m|[m[1;33m/[m  
+[1;33m|[m [1;33m|[m[1;33m/[m[1;34m|[m   
+[1;33m|[m * [1;34m|[m   fdb40f0 2013-02-25 | Merge pull request #10 from CalvertYang/master [AndyYou]
+[1;33m|[m [1;33m|[m[1;34m\[m [1;34m\[m  
+[1;33m|[m[1;33m/[m [1;34m/[m [1;34m/[m  
+[1;33m|[m [1;34m|[m [1;34m_[m   
+[1;33m|[m * 96d8366 2013-02-25 | Bind rank to view [Calvert Yang]
+* [31m|[m   2378ce1 2013-02-24 | Merge pull request #9 from CalvertYang/master [AndyYou]
+[32m|[m[31m\[m [31m\[m  
+[32m|[m [31m|[m[31m/[m  
+[32m|[m * eff774b 2013-02-25 | Add authorize to dailycontroller [Calvert Yang]
+* [33m|[m   3a04d89 2013-02-24 | Merge pull request #8 from CalvertYang/master [AndyYou]
+[34m|[m[33m\[m [33m\[m  
+[34m|[m [33m|[m[33m/[m  
+[34m|[m *   e32de64 2013-02-25 | Merge branch 'master' of github.com:CalvertYang/DailyStatement [Calvert Yang]
+[34m|[m [36m|[m[1;31m\[m  
+[34m|[m [36m|[m *   b87ff60 2013-02-24 | Merge pull request #8 from AndyYou/master [Calvert]
+[34m|[m [36m|[m [1;32m|[m[34m\[m  
+[34m|[m [36m|[m[34m_[m[1;32m|[m[34m/[m  
+[34m|[m[34m/[m[36m|[m [1;32m|[m   
+* [36m|[m [1;32m|[m ec2974c 2013-02-25 | add view models and edit css [AndyYou]
+[1;33m|[m * [1;32m|[m 24d1a2e 2013-02-25 | Modify employee view [Calvert Yang]
+[1;33m|[m * [1;32m|[m   95741c5 2013-02-25 | Merge branch 'master' of github.com:CalvertYang/DailyStatement [Calvert Yang]
+[1;33m|[m [1;34m|[m[1;32m\[m [1;32m\[m  
+[1;33m|[m [1;34m|[m [1;32m|[m[1;32m/[m  
+[1;33m|[m [1;34m|[m *   c3a4324 2013-02-24 | Merge pull request #7 from AndyYou/master [Calvert]
+[1;33m|[m [1;34m|[m [1;36m|[m[1;33m\[m  
+[1;33m|[m [1;34m|[m[1;33m_[m[1;36m|[m[1;33m/[m  
+[1;33m|[m[1;33m/[m[1;34m|[m [1;36m|[m   
+* [1;34m|[m [1;36m|[m 47dd812 2013-02-25 | completed all view [AndyYou]
+* [1;34m|[m [1;36m|[m   3450c9c 2013-02-24 | Merge pull request #7 from CalvertYang/master [AndyYou]
+[32m|[m[1;36m\[m [1;34m\[m [1;36m\[m  
+[32m|[m [1;36m|[m [1;34m|[m[1;36m/[m  
+[32m|[m [1;36m|[m[1;36m/[m[1;34m|[m   
+[32m|[m [1;36m|[m * 8829968 2013-02-25 | Modify employeecontroller [Calvert Yang]
+[32m|[m [1;36m|[m[1;36m/[m  
+[32m|[m * 34bc40b 2013-02-25 | Merge code [Calvert Yang]
+[32m|[m *   8003e71 2013-02-25 | Merge branch 'master' of github.com:CalvertYang/DailyStatement [Calvert Yang]
+[32m|[m [34m|[m[35m\[m  
+[32m|[m [34m|[m *   a04f5d6 2013-02-24 | Merge pull request #6 from AndyYou/master [Calvert]
+[32m|[m [34m|[m [36m|[m[32m\[m  
+[32m|[m [34m|[m[32m_[m[36m|[m[32m/[m  
+[32m|[m[32m/[m[34m|[m [36m|[m   
+* [34m|[m [36m|[m 444f833 2013-02-25 | Add Select List for WorkCategory [AndyYou]
+[1;31m|[m * [36m|[m 6f580eb 2013-02-25 | Modify employeecontroller [Calvert Yang]
+[1;31m|[m * [36m|[m   682f123 2013-02-22 | Merge branch 'master' of github.com:CalvertYang/DailyStatement [Calvert Yang]
+[1;31m|[m [1;32m|[m[36m\[m [36m\[m  
+[1;31m|[m [1;32m|[m [36m|[m[36m/[m  
+[1;31m|[m [1;32m|[m *   5b0b5ec 2013-02-22 | Merge pull request #5 from AndyYou/master [Calvert]
+[1;31m|[m [1;32m|[m [1;34m|[m[1;31m\[m  
+[1;31m|[m [1;32m|[m[1;31m_[m[1;34m|[m[1;31m/[m  
+[1;31m|[m[1;31m/[m[1;32m|[m [1;34m|[m   
+* [1;32m|[m [1;34m|[m 5a1e116 2013-02-22 | soulation 1 for get KendoGridBinder data source [AndyYou]
+[1;35m|[m * [1;34m|[m   376ea5c 2013-02-22 | Modify model [Calvert Yang]
+[1;35m|[m [1;36m|[m[1;34m\[m [1;34m\[m  
+[1;35m|[m [1;36m|[m [1;34m|[m[1;34m/[m  
+[1;35m|[m [1;36m|[m *   ecc43d0 2013-02-22 | Merge pull request #4 from AndyYou/master [Calvert]
+[1;35m|[m [1;36m|[m [32m|[m[1;35m\[m  
+[1;35m|[m [1;36m|[m[1;35m_[m[32m|[m[1;35m/[m  
+[1;35m|[m[1;35m/[m[1;36m|[m [32m|[m   
+* [1;36m|[m [32m|[m 49653a9 2013-02-22 | add KendoGridBinder [AndyYou]
+* [1;36m|[m [32m|[m   c66ddfa 2013-02-21 | Merge pull request #6 from CalvertYang/master [AndyYou]
+[34m|[m[32m\[m [1;36m\[m [32m\[m  
+[34m|[m [32m|[m [1;36m|[m[32m/[m  
+[34m|[m [32m|[m[32m/[m[1;36m|[m   
+* [32m|[m [1;36m|[m   81a11ae 2013-02-21 | Merge pull request #5 from CalvertYang/master [AndyYou]
+[36m|[m[1;31m\[m [32m\[m [1;36m\[m  
+[36m|[m [1;31m|[m [32m|[m * 1a78ba7 2013-02-22 | Add editortemplate to change time format [Calvert Yang]
+[36m|[m [1;31m|[m [32m|[m * 8518322 2013-02-22 | Fix employee and dailyinfo can't edit issue [Calvert Yang]
+[36m|[m [1;31m|[m [32m|[m[32m/[m  
+[36m|[m [1;31m|[m * f935976 2013-02-22 | Disable automatic migrations and add metadata to employee [Calvert Yang]
+[36m|[m [1;31m|[m[1;31m/[m  
+[36m|[m *   fa0e017 2013-02-22 | Merge git://github.com/AndyYou/DailyStatement [Calvert Yang]
+[36m|[m [1;32m|[m[36m\[m  
+[36m|[m [1;32m|[m[36m/[m  
+[36m|[m[36m/[m[1;32m|[m   
+* [1;32m|[m 6f796cf 2013-02-22 | Add sample of Kendo Grid [AndyYou]
+[1;33m|[m *   3296889 2013-02-22 | Merge branch 'master' of github.com:CalvertYang/DailyStatement [Calvert Yang]
+[1;33m|[m [1;34m|[m[1;35m\[m  
+[1;33m|[m [1;34m|[m *   37dab2e 2013-02-21 | Merge pull request #3 from AndyYou/master [Calvert]
+[1;33m|[m [1;34m|[m [1;36m|[m[1;33m\[m  
+[1;33m|[m [1;34m|[m[1;33m_[m[1;36m|[m[1;33m/[m  
+[1;33m|[m[1;33m/[m[1;34m|[m [1;36m|[m   
+* [1;34m|[m [1;36m|[m   4d1bed1 2013-02-22 | Merge branch 'master' of github.com:AndyYou/DailyStatement [AndyYou]
+[32m|[m[33m\[m [1;34m\[m [1;36m\[m  
+* [33m|[m [1;34m|[m [1;36m|[m e251750 2013-02-22 | Add KendoWebUI and Bootstrap [AndyYou]
+[33m|[m [33m|[m * [1;36m|[m   e96cbb8 2013-02-22 | Merge branch 'master' of github.com:CalvertYang/DailyStatement [Calvert Yang]
+[33m|[m [33m|[m [34m|[m[1;36m\[m [1;36m\[m  
+[33m|[m [33m|[m [34m|[m [1;36m|[m[1;36m/[m  
+[33m|[m [33m|[m [34m|[m *   8318e1b 2013-02-21 | Merge pull request #2 from AndyYou/master [Calvert]
+[33m|[m [33m|[m [34m|[m [36m|[m[33m\[m  
+[33m|[m [33m|[m [34m|[m[33m_[m[36m|[m[33m/[m  
+[33m|[m [33m|[m[33m/[m[34m|[m [36m|[m   
+[33m|[m * [34m|[m [36m|[m   2e46975 2013-02-21 | Merge pull request #4 from CalvertYang/master [AndyYou]
+[33m|[m [33m|[m[36m\[m [34m\[m [36m\[m  
+[33m|[m[33m/[m [36m/[m [34m/[m [36m/[m  
+[33m|[m [36m|[m [34m|[m [36m_[m   
+[33m|[m [36m|[m *   bb5b407 2013-02-22 | Merge branch 'master' of github.com:CalvertYang/DailyStatement [Calvert Yang]
+[33m|[m [36m|[m [1;34m|[m[36m\[m  
+[33m|[m [36m|[m [1;34m|[m[36m/[m  
+[33m|[m [36m|[m[36m/[m[1;34m|[m   
+[33m|[m * [1;34m|[m   306a9e2 2013-02-21 | Merge pull request #1 from AndyYou/master [Calvert]
+[33m|[m [1;36m|[m[33m\[m [1;34m\[m  
+[33m|[m [1;36m|[m[33m/[m [1;34m/[m  
+[33m|[m[33m/[m[1;36m|[m [1;34m|[m   
+* [1;36m|[m [1;34m|[m 0a567f6 2013-02-22 | Add KendoWebUI Framework [AndyYou]
+* [1;36m|[m [1;34m|[m   3c2dfb3 2013-02-21 | Merge pull request #3 from CalvertYang/master [AndyYou]
+[32m|[m[1;36m\[m [1;36m\[m [1;34m\[m  
+[32m|[m [1;36m|[m[1;36m/[m [1;34m/[m  
+* [1;36m|[m [1;34m|[m   2405c19 2013-02-21 | Merge pull request #2 from CalvertYang/master [AndyYou]
+[34m|[m[35m\[m [1;36m\[m [1;34m\[m  
+* [35m\[m [1;36m\[m [1;34m\[m   6145d89 2013-02-21 | Merge pull request #1 from CalvertYang/master [AndyYou]
+[36m|[m[1;31m\[m [35m\[m [1;36m\[m [1;34m\[m  
+[36m|[m [1;31m|[m [35m|[m [1;36m|[m * 1772644 2013-02-22 | Add displayname to model [Calvert Yang]
+[36m|[m [1;31m|[m [35m|[m [1;36m|[m[1;36m/[m  
+[36m|[m [1;31m|[m [35m|[m * 8c827db 2013-02-22 | Fix automatic migrations not work issue and modify model [Calvert Yang]
+[36m|[m [1;31m|[m [35m|[m[35m/[m  
+[36m|[m [1;31m|[m * bd186ae 2013-02-22 | Fix bind exclude fail issue and enable automatic migrations [Calvert Yang]
+[36m|[m [1;31m|[m[1;31m/[m  
+[36m|[m * 56f9bbc 2013-02-21 | Bind exclude fail [Calvert Yang]
+[36m|[m[36m/[m  
+* b693c45 2013-02-21 | Modify models and connectionstring [Calvert Yang]
+* c28c957 2013-02-21 | Initial [Calvert Yang]
