@@ -1,51 +1,9 @@
 ﻿@{
-    ViewBag.Title = "ReportSearch";
+    ViewBag.Title = "報表查詢";
 }
-
-<div class="row">
-     <div class="span6 offset3">
-<h4>Report Search Condition</h4>
-@using (Html.BeginForm("ReportWeekForSingle", "Daily"))
-{ 
-    @Html.ValidationSummary(true)
-    <legend></legend>
-    <fieldset>
-        @Html.Hidden("formDate")
-        @Html.Hidden("toDate")
-        <div class="editor-label">
-            User: 
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("employeeId", (SelectList)ViewBag.Employee, null,new { @disabled = "disabled" });
-           
-        </div>
-         <div class="editor-label">
-            Month:
-         </div>
-        <div class="editor-field">
-             @Html.DropDownList("months",(SelectList)ViewBag.Months)
-        </div>
-        <div class="editor-label">
-             Weeks:
-        </div>
-         <div class="editor-field">
-            <select id="weeks"></select>
-        </div>
-
-       
-        
-        
-    </fieldset>
-    <br />
-    <p>
-      <input type="submit" value="查詢" class="btn btn-small btn-success"/> @Html.ActionLink("返回", "Index", null, new { @class="btn btn-small"})
-    </p>
-
-}
-    </div>
-</div>
 @section scripts
 {
+    
     <script>
         // functions
         
@@ -56,6 +14,18 @@
              {
                 @:$('#employeeId').attr('disabled', false);
              }
+
+            var window = $("#dialog").kendoWindow({
+                draggable: true,
+                resizable: false,
+                width: 360,
+                height: 300,
+                title: "Query",
+                actions: ["Refresh"]
+               
+            });
+            
+            
 
             $('#months').change(function () {
                 weeksOfMonth = {};
@@ -105,5 +75,44 @@
         });
     </script>
     }
+
+
+<div class="row">
+     <div class="offset4">
+@using (Html.BeginForm("ReportWeekForSingle", "Daily", FormMethod.Post, new { id="dialog"}))
+{ 
+    @Html.ValidationSummary(true)
+    <div style="padding-left:50px;">
+        @Html.Hidden("formDate")
+        @Html.Hidden("toDate")
+        <div class="editor-label">
+            User: 
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("employeeId", (SelectList)ViewBag.Employee, null, new { @disabled = "disabled" })
+           
+        </div>
+         <div class="editor-label">
+            Month:
+         </div>
+        <div class="editor-field">
+             @Html.DropDownList("months", (SelectList)ViewBag.Months)
+        </div>
+        <div class="editor-label">
+             Weeks:
+        </div>
+         <div class="editor-field">
+            <select id="weeks"></select>
+        </div>
+    </div>
+    <div class="pull-right span2">
+      <input type="submit" value="查詢" class="btn btn-small btn-success"/> @Html.ActionLink("返回", "Index", null, new { @class = "btn btn-small" })
+    </div>
+
+}
+        
+    </div>
+</div>
+
 
 

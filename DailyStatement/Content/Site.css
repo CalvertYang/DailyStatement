@@ -1,4 +1,8 @@
-﻿body {
+﻿html {
+    overflow: -moz-scrollbars-vertical; 
+    overflow-y: scroll;
+}
+body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       }
 
@@ -23,8 +27,9 @@ textarea {
 
 .editor-label {
     margin: 1em 0 0 0;
-    color:#808080;
-    font-family:sans-serif;
+    color:#696969;
+    font-size:12px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: bold;
 }
 

@@ -2,17 +2,30 @@
 @{
     ViewBag.Title = "登入";
 }
+@section scripts{
+    <script>
+        $(function(){
+            var window = $("form").kendoWindow({
+                draggable: true,
+                resizable: false,
+                width: 310,
+                height: 270,
+                title: "Identity",
+                actions: ["Refresh"]
 
+            });
+        });
+            
+    </script>
+    }
 <div class="container">
-
+<div class="offset4">
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         @Html.ValidationSummary(true)
-
-        <fieldset>
-            <legend>請輸入您的帳號、密碼</legend>
-
+        <div style="width:auto;display:block;">
+        <fieldset style="width:220px;margin:0 auto;">
             <div class="editor-label">
                 @Html.LabelFor(model => model.Account)
             </div>
@@ -28,11 +41,16 @@
                 @Html.EditorFor(model => model.Password)
                 @Html.ValidationMessageFor(model => model.Password)
             </div>
-        
-            <p>
-                <button class="btn btn-large btn-primary" type="submit">登入</button>
-            </p>
-        </fieldset>
-    }
+            <div class="row">
 
+                <div class="span1"><a href="#">忘記密碼</a></div>
+                <div class="pull-right span1">
+
+                    <button class="btn btn-primary" type="submit">登入</button>
+                </div>
+            </div>
+        </fieldset>
+        </div>
+    }
+</div>
 </div> <!-- /container -->
