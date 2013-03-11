@@ -23,7 +23,7 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-        @Html.ValidationSummary(true)
+        
         <div style="width:auto;display:block;">
         <fieldset style="width:220px;margin:0 auto;">
             <div class="editor-label">
@@ -42,7 +42,7 @@
                 @Html.ValidationMessageFor(model => model.Password)
             </div>
             <div class="row">
-
+                @Html.ValidationSummary(true)
                 <div class="span1"><a href="#">忘記密碼</a></div>
                 <div class="pull-right span1">
 

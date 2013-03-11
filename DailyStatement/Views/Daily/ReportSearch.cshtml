@@ -78,39 +78,50 @@
 
 
 <div class="row">
-     <div class="offset4">
-@using (Html.BeginForm("ReportWeekForSingle", "Daily", FormMethod.Post, new { id="dialog"}))
-{ 
-    @Html.ValidationSummary(true)
-    <div style="padding-left:50px;">
-        @Html.Hidden("formDate")
-        @Html.Hidden("toDate")
-        <div class="editor-label">
-            User: 
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("employeeId", (SelectList)ViewBag.Employee, null, new { @disabled = "disabled" })
+    <div class="offset4">
+        @using (Html.BeginForm("ReportWeekForSingle", "Daily", FormMethod.Post, new { id = "dialog" }))
+        { 
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div style="width:auto;display:block;">
+            <fieldset style="width:300px;margin:0 auto;">
+                
+                @Html.Hidden("formDate")
+                @Html.Hidden("toDate")
+
+                <div class="editor-label">
+                    User: 
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownList("employeeId", (SelectList)ViewBag.Employee, null, new { @disabled = "disabled" })
+
+                </div>
+                <div class="editor-label">
+                    Month:
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownList("months", (SelectList)ViewBag.Months)
+                </div>
+                <div class="editor-label">
+                    Weeks:
+                </div>
+                <div class="editor-field">
+                    <select id="weeks"></select>
+                </div>
+                <div class="row">
+                    <div class="pull-right span2">
+                        <input type="submit" value="查詢" class="btn btn-small btn-success" />
+                        @Html.ActionLink("返回", "Index", null, new { @class = "btn btn-small" })
+                    </div>
+                </div>
+                </fieldset>
+            </div>
+            
+            
            
-        </div>
-         <div class="editor-label">
-            Month:
-         </div>
-        <div class="editor-field">
-             @Html.DropDownList("months", (SelectList)ViewBag.Months)
-        </div>
-        <div class="editor-label">
-             Weeks:
-        </div>
-         <div class="editor-field">
-            <select id="weeks"></select>
-        </div>
-    </div>
-    <div class="pull-right span2">
-      <input type="submit" value="查詢" class="btn btn-small btn-success"/> @Html.ActionLink("返回", "Index", null, new { @class = "btn btn-small" })
-    </div>
 
 }
-        
+
     </div>
 </div>
 
