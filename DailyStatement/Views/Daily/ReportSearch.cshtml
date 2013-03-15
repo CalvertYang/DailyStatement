@@ -13,8 +13,14 @@
             @if (User.Identity.IsAuthenticated && (User.IsInRole("超級管理員") || User.IsInRole("一般管理員") || User.IsInRole("助理")))
             {
                 @:$('#employeeId').attr('disabled', false);
-            }
+               
 
+            }
+            @if (User.Identity.IsAuthenticated &&  (User.IsInRole("一般管理員") || User.IsInRole("助理")))
+            {
+                 @:$("#tab-item-2").remove();
+                 @:$("#tabs-2").remove();
+            }
             @*var window = $("#dialog").kendoWindow({
                 draggable: true,
                 resizable: false,
@@ -78,7 +84,7 @@
     <div id="tabs">
         <ul>
             <li><a href="#tabs-1">個人週報表</a></li>
-            <li><a href="#tabs-2">專案報表</a></li>
+            <li id="tab-item-2"><a href="#tabs-2">專案報表</a></li>
         </ul>
         <div id="tabs-1">
             @using (Html.BeginForm("ReportWeekForSingle", "Daily", FormMethod.Post, new { id = "dialog" }))
