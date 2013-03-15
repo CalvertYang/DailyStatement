@@ -248,6 +248,10 @@ namespace DailyStatement.Controllers
             ViewBag.Months = new SelectList(months, "Text", "Value");
 
             ViewBag.Employee = new SelectList(db.Employees, "EmployeeId", "Name", UserId(User.Identity.Name));
+
+            ViewBag.WorkCategory = new SelectList(db.Categories, "WorkCategoryId", "Name");
+            var projectNoList = db.Dailies.Select(d => d.ProjectNo).Distinct();
+            ViewBag.ProjectNoList = new SelectList(projectNoList);
             return View();
         }
 
@@ -365,7 +369,7 @@ namespace DailyStatement.Controllers
         }
 
         [Authorize(Roles = "超級管理員,一般管理員,助理")]
-        public ActionResult GenerateProjectReport(string projectNo = "", int WorkCategoryId = 0)
+        public ActionResult GenerateProjectReport(string projectNo = "", int workCategoryId = 0)
         {
             try
             {
@@ -376,7 +380,7 @@ namespace DailyStatement.Controllers
 
                 string conn = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
                 // Get data from DailyInfoes
-                string condition = String.Format("SELECT * FROM [DailyStatement].[dbo].[DailyInfoes] WHERE (('{0}' = '' AND [ProjectNo] >= '') OR [ProjectNo] = '{0}') AND (({1} = 0 AND [WorkCategoryId] >= 0) OR [WorkCategoryId] = {1})", projectNo, WorkCategoryId);
+                string condition = String.Format("SELECT * FROM [DailyStatement].[dbo].[DailyInfoes] WHERE (('{0}' = '' AND [ProjectNo] >= '') OR [ProjectNo] = '{0}') AND (({1} = 0 AND [WorkCategoryId] >= 0) OR [WorkCategoryId] = {1})", projectNo, workCategoryId);
                 SqlDataAdapter da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.DailyInfoes);
                 // Get data from Employees
@@ -388,7 +392,7 @@ namespace DailyStatement.Controllers
                 da = new SqlDataAdapter(condition, conn);
                 da.Fill(ds.WorkCategories);
                 // Due to SetParameterValue always return error, so use datatable to store parameter
-                ds.ParameterForProjectRpt.Rows.Add(projectNo, WorkCategoryId);
+                ds.ParameterForProjectRpt.Rows.Add(projectNo, workCategoryId);
 
                 rpt.SetDataSource(ds);
 

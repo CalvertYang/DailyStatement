@@ -3,6 +3,7 @@
 }
 @section scripts
 {
+    @Scripts.Render("~/bundles/jqueryui")
     <script>
         // functions
         
@@ -67,82 +68,92 @@
             });
             var today = new Date();
             $('#months').val(today.getMonth() + 1).trigger('change');
+
+            $("#tabs").tabs();
         });
     </script>
 }
 
 <div class="row">
-    <div>
-        @using (Html.BeginForm("ReportWeekForSingle", "Daily", FormMethod.Post, new { id = "dialog" }))
-        { 
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
-            <div style="width:auto;display:block;">
-            <fieldset style="width:300px;margin:0 auto;">
-                
-                @Html.Hidden("fromDate")
-                @Html.Hidden("toDate")
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1">個人週報表</a></li>
+            <li><a href="#tabs-2">專案報表</a></li>
+        </ul>
+        <div id="tabs-1">
+            @using (Html.BeginForm("ReportWeekForSingle", "Daily", FormMethod.Post, new { id = "dialog" }))
+            { 
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div style="width: auto; display: block;">
+                    <fieldset style="width: 300px; margin: 0 auto;">
 
-                <div class="editor-label">
-                    User: 
-                </div>
-                <div class="editor-field">
-                    @Html.DropDownList("employeeId", (SelectList)ViewBag.Employee, null, new { @disabled = "disabled" })
+                        @Html.Hidden("fromDate")
+                        @Html.Hidden("toDate")
 
+                        <div class="editor-label">
+                            User: 
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownList("employeeId", (SelectList)ViewBag.Employee, null, new { @disabled = "disabled" })
+
+                        </div>
+                        <div class="editor-label">
+                            Month:
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownList("months", (SelectList)ViewBag.Months)
+                        </div>
+                        <div class="editor-label">
+                            Weeks:
+                        </div>
+                        <div class="editor-field">
+                            <select id="weeks"></select>
+                        </div>
+                        <div class="row">
+                            <div class="pull-right span2">
+                                <input type="submit" value="查詢" class="btn btn-small btn-success" />
+                                @Html.ActionLink("返回", "Index", null, new { @class = "btn btn-small" })
+                            </div>
+                        </div>
+                    </fieldset>
                 </div>
-                <div class="editor-label">
-                    Month:
-                </div>
-                <div class="editor-field">
-                    @Html.DropDownList("months", (SelectList)ViewBag.Months)
-                </div>
-                <div class="editor-label">
-                    Weeks:
-                </div>
-                <div class="editor-field">
-                    <select id="weeks"></select>
-                </div>
-                <div class="row">
-                    <div class="pull-right span2">
-                        <input type="submit" value="查詢" class="btn btn-small btn-success" />
-                        @Html.ActionLink("返回", "Index", null, new { @class = "btn btn-small" })
-                    </div>
-                </div>
-                </fieldset>
-            </div>
         }
+        </div>
+
+        <div id="tabs-2">
+            @using (Html.BeginForm("GenerateProjectReport", "Daily", FormMethod.Post, new { id = "dialog" }))
+            { 
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div style="width: auto; display: block;">
+                    <fieldset style="width: 300px; margin: 0 auto;">
+
+                        <div class="editor-label">
+                            Project No: 
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownList("projectNo", (SelectList)ViewBag.ProjectNoList)
+                        </div>
+                        <div class="editor-label">
+                            Work Category:
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownList("workCategoryId", (SelectList)ViewBag.WorkCategory, "全部", null)
+                        </div>
+                        <div class="row">
+                            <div class="pull-right span2">
+                                <input type="submit" value="查詢" class="btn btn-small btn-success" />
+                                @Html.ActionLink("返回", "Index", null, new { @class = "btn btn-small" })
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+        }
+        </div>
     </div>
 
-    <div>
-        @using (Html.BeginForm("ReportForProject", "Daily", FormMethod.Post, new { id = "dialog" }))
-        { 
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true)
-            <div style="width:auto;display:block;">
-            <fieldset style="width:300px;margin:0 auto;">
-                
-                <div class="editor-label">
-                    Project No: 
-                </div>
-                <div class="editor-field">
-                    
-                </div>
-                <div class="editor-label">
-                    Work Category:
-                </div>
-                <div class="editor-field">
-                    
-                </div>
-                <div class="row">
-                    <div class="pull-right span2">
-                        <input type="submit" value="查詢" class="btn btn-small btn-success" />
-                        @Html.ActionLink("返回", "Index", null, new { @class = "btn btn-small" })
-                    </div>
-                </div>
-                </fieldset>
-            </div>
-        }
-    </div>
+
 </div>
 
 

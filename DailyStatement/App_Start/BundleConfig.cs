@@ -44,6 +44,8 @@ namespace DailyStatement
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
+
+            
             // Kendo Scripts
             bundles.Add(new ScriptBundle("~/bundles/kendoUI").Include("~/Scripts/kendo/2012.3.1114/kendo.web.min.js", "~/Scripts/kendo/2012.3.1114/cultures/kendo.culture.zh-TW.min.js", "~/Scripts/bootstrap.min.js"));
             // Kendo CSS
