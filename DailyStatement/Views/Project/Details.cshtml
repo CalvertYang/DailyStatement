@@ -14,17 +14,25 @@
                     <th></th>
         		</tr>
         	</thead>
-        	<tbody>
-        		@foreach (var item in Model.Predictions)
+            <tbody>
+
+
+                @foreach (var item in Model.Predictions)
                 {
                     <tr>
                         <td>@item.WorkCategory.Name</td>
                         <td>@item.PredictHours</td>
-                        <!--// Todo here -->
+                        @using (Html.BeginForm("DetailsEditedPredictions", "Project"))
+                        {
+                            @Html.ValidationSummary(true)
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(model => model.ProjectId)
+                            @Html.Hidden("predictionid",item.PredictionId)
+                            <td>@Html.TextBox("predicthours", item.PredictHours)</td>
+                            }
                     </tr>
-                }
-        
-        	</tbody>
+                    }
+            </tbody>
         </table>
         </div>
     </div>

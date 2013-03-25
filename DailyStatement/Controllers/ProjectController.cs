@@ -54,6 +54,30 @@ namespace DailyStatement.Controllers
             return View(project);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DetailsEditedPredictions(int projectId, int predictionId, int predictHours )
+        {
+            var project = db.Projects.Find(projectId);
+            if (project == null)
+            {
+                return HttpNotFound();
+            }
+            Prediction prediction = project.Predictions.Where(x => x.PredictionId == predictionId).SingleOrDefault();
+            if (prediction == null)
+            {
+                return HttpNotFound();
+            }
+            prediction.PredictHours = predictHours;
+            if (ModelState.IsValid)
+            {
+                db.Entry(project).State = EntityState.Modified;
+                db.Entry(prediction).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Details");
+        }
+
         //
         // GET: /Project/Create
 
