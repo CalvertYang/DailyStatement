@@ -26,15 +26,23 @@
                 <li class="divider-vertical"></li>
                 @if (User.Identity.IsAuthenticated)
                 {
-                if (!User.IsInRole("助理"))
-                {
-                <li><a href="@Url.Action("Index","Daily")">Daily</a></li>
-                }
-                <li><a href="@Url.Action("ReportSearch","Daily")">Report</a></li>
-                if (User.IsInRole("超級管理員") || User.IsInRole("一般管理員"))
-                {
-                <li><a href="@Url.Action("Index", "Employee")">Member</a></li>
-                }
+                    if (!User.IsInRole("助理"))
+                    {
+                        <li><a href="@Url.Action("Index","Daily")">Daily</a></li>
+                    }
+                    
+                    <li><a href="@Url.Action("ReportSearch","Daily")">Report</a></li>
+                    
+                    if (User.IsInRole("超級管理員") || User.IsInRole("一般管理員"))
+                    {
+                        <li><a href="@Url.Action("Index", "Employee")">Member</a></li>
+                    }
+
+                    
+                    if (!User.IsInRole("一般人員"))
+                    {
+                        <li><a href="@Url.Action("Index","Project")">Project</a></li>
+                    }
                 }
             </ul>
           </div>

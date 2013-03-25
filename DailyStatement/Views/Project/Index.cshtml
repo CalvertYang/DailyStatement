@@ -1,0 +1,86 @@
+﻿@model IEnumerable<DailyStatement.Models.Project>
+@{
+    ViewBag.Title = "專案資料一覽";
+}
+@section scripts{
+    <script>
+        $(function () {
+            debugger
+            var urlRead = '@Url.Action("Grid")';
+
+            var dataSource = new kendo.data.DataSource({
+                serverPaging: true,
+                serverSorting: true,
+                serverFiltering: true,
+                pageSize: 15,
+                transport: {
+                    read: {
+                        url: urlRead,
+                        type: 'post',
+                        dataType: 'json'
+                    }
+                },
+                batch: true,
+                schema: {
+                    data: function (d) { return d.data; },
+                    total: function (d) { return d.total; },
+                    model: {
+                        id: 'ProjectId',
+                        fields: {
+                            ProjectId: {editable: false}
+                        },
+                        ProjectNo: { type: 'string' },
+                        Comment: { type: 'string' },
+                        StartOn: { type: 'date' },
+                        EndOn: { type: 'date' }
+                    }
+                }
+            });
+
+            $('#grid').kendoGrid({
+                columns: [{ title: "案號", field: "ProjectNo", width: 100 },
+                    { title: "起始日", field: "StartOn", width: 150 },
+                    { title: "結案曰", field: "EndOn", width: 150 },
+                    { title: "備註", field: "Comment", width: 300 },
+                     {
+                         title: "操作",
+                         field: "ProjectId",
+                         template: "<a href='@Url.Action("Edit")/#=ProjectId#' class='btn btn-small btn-info'>編輯</a> <button class='delete-button btn btn-small btn-danger' onclick='DeleteWithConfirm(#=ProjectId#);'>刪除</button>", width: 120
+                     }
+                ],
+                toolbar: [{ name: "create", template: "<a href='@Url.Action("Create")' class='btn btn-small btn-success pull-right' style='margin-right:22px;'>新增</a>" }],
+                dataSource: dataSource,
+                height: 700,
+                scrollable: true,
+                pageable: {
+                    input: true,
+                    pageSizes: [15, 30, 50]
+                },
+
+                // editable: true,
+                sortable: true
+            });
+        });
+
+        // functions --
+        function DeleteWithConfirm(did) {
+
+            var url = '@Url.Action("Delete", "Daily")';
+            var destination = url + '/' + did;
+            if (window.confirm('確認刪除?')) {
+                $.post(destination, function (data) {
+                }).done(function () { $("#grid").data("kendoGrid").dataSource.read(); });
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+    </script>
+}
+<div class="row">
+    <div class="span12">
+        <h4>專案資料一覽</h4>
+        <div id="grid"></div>
+    </div>
+</div>

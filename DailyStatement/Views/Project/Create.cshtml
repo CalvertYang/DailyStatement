@@ -1,0 +1,60 @@
+﻿@model DailyStatement.Models.Project
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Project</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProjectNo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ProjectNo)
+            @Html.ValidationMessageFor(model => model.ProjectNo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Comment)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Comment)
+            @Html.ValidationMessageFor(model => model.Comment)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StartOn)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.StartOn)
+            @Html.ValidationMessageFor(model => model.StartOn)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EndOn)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EndOn)
+            @Html.ValidationMessageFor(model => model.EndOn)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

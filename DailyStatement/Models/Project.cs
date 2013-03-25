@@ -15,6 +15,9 @@ namespace DailyStatement.Models
         [DisplayName("案號")]
         public string ProjectNo { get; set; }
 
+        [DisplayName("客戶名稱")]
+        public string CustomerName { get; set; }
+
         [DisplayName("備註")]
         public string Comment { get; set; }
 
