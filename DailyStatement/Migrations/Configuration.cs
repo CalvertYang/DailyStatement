@@ -70,6 +70,8 @@ namespace DailyStatement.Migrations
                     new Rank { RankId = 3, Name = "¤@¯ë¤H­û" }
                 );
             }
+
+            context.Database.ExecuteSqlCommand("CREATE UNIQUE IX_Project_ProjectNo ON Projects(ProjectNo)");
         }
     }
 }

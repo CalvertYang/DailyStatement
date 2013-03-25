@@ -23,6 +23,7 @@ namespace DailyStatement.Controllers
         {
             db.Configuration.ProxyCreationEnabled = false;
             var proj = db.Projects.Include("Predictions").OrderByDescending(d => d.StartOn).ToList();
+            
             var grid = new KendoGrid<Project>(request, proj);
             return Json(grid);
         }
@@ -94,30 +95,34 @@ namespace DailyStatement.Controllers
             return View(project);
         }
 
-        //
-        // GET: /Project/Delete/5
 
-        public ActionResult Delete(int id = 0)
+        [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
+        public ActionResult DeleteConfirmed(int id)
         {
             Project project = db.Projects.Find(id);
             if (project == null)
             {
                 return HttpNotFound();
             }
-            return View(project);
-        }
-
-        //
-        // POST: /Project/Delete/5
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Project project = db.Projects.Find(id);
             db.Projects.Remove(project);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        // 檢查帳號是否已存在
+        public JsonResult CheckProjectNoDup(string projectNo, int projectId = 0)
+        {
+            var proj = db.Projects.Where(p => p.ProjectNo == projectNo && p.ProjectId != projectId ).FirstOrDefault();
+
+            if (proj != null)
+            {
+                return Json(false);
+            }
+            else
+            {
+                return Json(true);
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -1,62 +1,81 @@
 ﻿@model DailyStatement.Models.Project
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "編輯專案";
 }
 
-<h2>Edit</h2>
+<div class="row">
+    <div class="span6 offset3">
 
-@using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>Project</legend>
+            <fieldset>
+                <legend>編輯專案</legend>
 
-        @Html.HiddenFor(model => model.ProjectId)
+                @Html.HiddenFor(model => model.ProjectId)
+                @Html.HiddenFor(model => model.RowVersion)
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ProjectNo)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ProjectNo)
-            @Html.ValidationMessageFor(model => model.ProjectNo)
-        </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ProjectNo)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.ProjectNo)
+                    @Html.ValidationMessageFor(model => model.ProjectNo)
+                </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Comment)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Comment)
-            @Html.ValidationMessageFor(model => model.Comment)
-        </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.CustomerName)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.CustomerName)
+                    @Html.ValidationMessageFor(model => model.CustomerName)
+                </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.StartOn)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.StartOn)
-            @Html.ValidationMessageFor(model => model.StartOn)
-        </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Comment)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Comment)
+                    @Html.ValidationMessageFor(model => model.Comment)
+                </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.EndOn)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.EndOn)
-            @Html.ValidationMessageFor(model => model.EndOn)
-        </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.StartOn)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.StartOn)
+                    @Html.ValidationMessageFor(model => model.StartOn)
+                </div>
 
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    </fieldset>
-}
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.IsClosed)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.IsClosed)
+                    @Html.ValidationMessageFor(model => model.IsClosed)
+                </div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+                <p>
+                    <input type="submit" value="儲存" class="btn btn-small btn-success" />
+                    @Html.ActionLink("返回", "Index", null, new { @class = "btn btn-small" })
+                </p>
+            </fieldset>
+        }
+
+    </div>
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $('#StartOn').kendoDatePicker({
+                    culture: "zh-TW",
+                    format: "yyyy/MM/dd"
+                });
+        }); 
+    </script>
 }

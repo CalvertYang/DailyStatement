@@ -7,7 +7,7 @@
         $(function () {
             debugger
             var urlRead = '@Url.Action("Grid")';
-
+            debugger
             var dataSource = new kendo.data.DataSource({
                 serverPaging: true,
                 serverSorting: true,
@@ -27,17 +27,18 @@
                     model: {
                         id: 'ProjectId',
                         fields: {
-                            ProjectId: {editable: false}
-                        },
-                        ProjectNo: { type: 'string' },
-                        CustomerName: {type: 'string'},
-                        Comment: { type: 'string' },
-                        StartOn: { type: 'date' },
-                        IsClosed: { type: 'bool' }
+                            ProjectId: { editable: false },
+                            ProjectNo: { type: 'string' },
+                            CustomerName: { type: 'string' },
+                            Comment: { type: 'string' },
+                            StartOn: { type: 'date' },
+                            IsClosed: { type: 'bool' }
+                        }
+                       
                     }
                 }
             });
-
+            
             $('#grid').kendoGrid({
                 columns: [{ title: "案號", field: "ProjectNo", width: 100 },
                     { title: "客戶名稱", field: "CustomerName", width: 150 },
@@ -67,7 +68,7 @@
         // functions --
         function DeleteWithConfirm(did) {
 
-            var url = '@Url.Action("Delete", "Daily")';
+            var url = '@Url.Action("Delete", "Project")';
             var destination = url + '/' + did;
             if (window.confirm('確認刪除?')) {
                 $.post(destination, function (data) {

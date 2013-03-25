@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace DailyStatement.Models
 {
@@ -12,8 +13,8 @@ namespace DailyStatement.Models
         [Key]
         public int ProjectId { get; set; }
 
-        [ConcurrencyCheck]
         [DisplayName("案號")]
+        [Remote("CheckProjectNoDup", "Project", HttpMethod = "POST", ErrorMessage = "您輸入案號已經有了！", AdditionalFields = "ProjectId")]
         public string ProjectNo { get; set; }
 
         [DisplayName("客戶名稱")]
