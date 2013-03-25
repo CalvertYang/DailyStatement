@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "ReportSummaryOfYear";
+}
+
+@section scripts
+{
+    <script>
+        @if(ViewBag.TotalOfAll != 0)
+        {
+            @:$('#print').attr('disabled', false);
+        }
+    </script>
+}
+<h4>年度專案進度報表</h4>
+
+<div class="row">
+    <div class="span12">
+    </div>
+</div>

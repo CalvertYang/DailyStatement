@@ -420,6 +420,11 @@ namespace DailyStatement.Controllers
             base.Dispose(disposing);
         }
 
+        public ActionResult ReportSummaryOfYear()
+        {
+            return View();
+        }
+
         [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
         private int UserId(string account)
         {
