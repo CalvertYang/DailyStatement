@@ -422,6 +422,7 @@ namespace DailyStatement.Controllers
 
         public ActionResult ReportSummaryOfYear()
         {
+            
             return View();
         }
 

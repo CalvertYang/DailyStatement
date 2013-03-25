@@ -27,8 +27,10 @@ namespace DailyStatement.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            
-            context.Employees.AddOrUpdate(new Employee {
+            if (context.Employees.Count() == 0)
+            {
+                context.Employees.AddOrUpdate(new Employee
+                {
                     EmployeeId = 1,
                     Account = "admin",
                     Password = "F50102B11D7088627E8C6DC39C0DFC7C181D2D0B",
@@ -39,28 +41,35 @@ namespace DailyStatement.Migrations
                     Rank = new Rank { RankId = 1, Name = "超級管理員" },
                     CreateDate = DateTime.Now,
                     LastLoginDate = null
-            });
+                });
+            }
 
-            context.Categories.AddOrUpdate(
-                new WorkCategory { WorkCategoryId = 1, Name = "裝機" },
-                new WorkCategory { WorkCategoryId = 2, Name = "維修" },
-                new WorkCategory { WorkCategoryId = 3, Name = "測試" },
-                new WorkCategory { WorkCategoryId = 4, Name = "DEMO" },
-                new WorkCategory { WorkCategoryId = 5, Name = "KOM" },
-                new WorkCategory { WorkCategoryId = 6, Name = "驗收" },
-                new WorkCategory { WorkCategoryId = 7, Name = "教育訓練" },
-                new WorkCategory { WorkCategoryId = 8, Name = "研發" },
-                new WorkCategory { WorkCategoryId = 9, Name = "設計規劃" },
-                new WorkCategory { WorkCategoryId = 10, Name = "其他" },
-                new WorkCategory { WorkCategoryId = 11, Name = "備料" },
-                new WorkCategory { WorkCategoryId = 12, Name = "組裝" }
-            );
+            if (context.Categories.Count() == 0)
+            {
+                context.Categories.AddOrUpdate(
+                    new WorkCategory { WorkCategoryId = 1, Name = "裝機" },
+                    new WorkCategory { WorkCategoryId = 2, Name = "維修" },
+                    new WorkCategory { WorkCategoryId = 3, Name = "測試" },
+                    new WorkCategory { WorkCategoryId = 4, Name = "DEMO" },
+                    new WorkCategory { WorkCategoryId = 5, Name = "KOM" },
+                    new WorkCategory { WorkCategoryId = 6, Name = "驗收" },
+                    new WorkCategory { WorkCategoryId = 7, Name = "教育訓練" },
+                    new WorkCategory { WorkCategoryId = 8, Name = "研發" },
+                    new WorkCategory { WorkCategoryId = 9, Name = "設計規劃" },
+                    new WorkCategory { WorkCategoryId = 10, Name = "其他" },
+                    new WorkCategory { WorkCategoryId = 11, Name = "備料" },
+                    new WorkCategory { WorkCategoryId = 12, Name = "組裝" }
+                );
+            }
 
-            context.Ranks.AddOrUpdate(
-                //new Rank { RankId = 1, Name = "超級管理員" },
-                new Rank { RankId = 2, Name = "一般管理員" },
-                new Rank { RankId = 3, Name = "一般人員" }
-            );
+            if (context.Ranks.Count() == 0)
+            {
+                context.Ranks.AddOrUpdate(
+                    //new Rank { RankId = 1, Name = "超級管理員" },
+                    new Rank { RankId = 2, Name = "一般管理員" },
+                    new Rank { RankId = 3, Name = "一般人員" }
+                );
+            }
         }
     }
 }

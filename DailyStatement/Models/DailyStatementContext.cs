@@ -21,6 +21,7 @@ namespace DailyStatement.Models
         public DbSet<WorkCategory> Categories { get; set; }
         public DbSet<DailyInfo> Dailies { get; set; }
         public DbSet<Rank> Ranks { get; set; }
+        public DbSet<Project> Projects { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -28,6 +29,8 @@ namespace DailyStatement.Models
             modelBuilder.Configurations.Add(new WorkCategoryConfigurations());
             modelBuilder.Configurations.Add(new EmployeeConfigurations());
             modelBuilder.Configurations.Add(new RankConfigurations());
+            modelBuilder.Configurations.Add(new ProjectConfigurations());
+            modelBuilder.Configurations.Add(new PredictionConfigurations());
         }
     }
 }

@@ -144,6 +144,12 @@
     <Compile Include="Migrations\201303080231011_AlterDailyInfo.Designer.cs">
       <DependentUpon>201303080231011_AlterDailyInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303250211552_AddProjectModel.cs" />
+    <Compile Include="Migrations\201303250211552_AddProjectModel.Designer.cs">
+      <DependentUpon>201303250211552_AddProjectModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Prediction.cs" />
+    <Compile Include="Models\Project.cs" />
     <Compile Include="Report\ProjectReport.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -847,6 +853,7 @@
     <Content Include="Views\Daily\EmployeeList.cshtml" />
     <Content Include="Views\Daily\ReportSearch.cshtml" />
     <Content Include="Views\Daily\ReportWeekForSingle.cshtml" />
+    <Content Include="Views\Daily\ReportSummaryOfYear.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -884,6 +891,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303080231011_AlterDailyInfo.resx">
       <DependentUpon>201303080231011_AlterDailyInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303250211552_AddProjectModel.resx">
+      <DependentUpon>201303250211552_AddProjectModel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Report\ProjectReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

@@ -32,6 +32,22 @@ namespace DailyStatement.Models
         }
     }
 
+    public class ProjectConfigurations : EntityTypeConfiguration<Project>
+    {
+        public ProjectConfigurations()
+        {
+            // Fluent API 設定建置在此
+        }
+    }
+
+    public class PredictionConfigurations : EntityTypeConfiguration<Prediction>
+    {
+        public PredictionConfigurations()
+        {
+            // Fluent API 設定建置在此
+        }
+    }
+
     public class RankConfigurations : EntityTypeConfiguration<Rank>
     {
         public RankConfigurations()
