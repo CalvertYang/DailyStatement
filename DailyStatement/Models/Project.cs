@@ -12,6 +12,7 @@ namespace DailyStatement.Models
         [Key]
         public int ProjectId { get; set; }
 
+        [ConcurrencyCheck]
         [DisplayName("案號")]
         public string ProjectNo { get; set; }
 
@@ -24,8 +25,8 @@ namespace DailyStatement.Models
         [DisplayName("開始日")]
         public DateTime? StartOn { get; set; }
 
-        [DisplayName("結案日")]
-        public DateTime? EndOn { get; set; }
+        [DisplayName("是否結案")]
+        public bool IsClosed { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }

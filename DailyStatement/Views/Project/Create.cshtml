@@ -1,17 +1,16 @@
 ﻿@model DailyStatement.Models.Project
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "新增專案";
 }
 
-<h2>Create</h2>
-
+<div class="row">
+    <div class="span6 offset3">
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-
     <fieldset>
-        <legend>Project</legend>
+        <legend>新增專案</legend>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.ProjectNo)
@@ -19,6 +18,14 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.ProjectNo)
             @Html.ValidationMessageFor(model => model.ProjectNo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CustomerName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CustomerName)
+            @Html.ValidationMessageFor(model => model.CustomerName)
         </div>
 
         <div class="editor-label">
@@ -38,23 +45,32 @@
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.EndOn)
+            @Html.LabelFor(model => model.IsClosed)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.EndOn)
-            @Html.ValidationMessageFor(model => model.EndOn)
+            @Html.EditorFor(model => model.IsClosed)
+            @Html.ValidationMessageFor(model => model.IsClosed)
         </div>
+        
 
         <p>
-            <input type="submit" value="Create" />
+            <br />
+            <input type="submit" value="確認" class="btn btn-small btn-success" />  @Html.ActionLink("返回", "Index", null, new { @class="btn btn-small" })
         </p>
     </fieldset>
 }
+</div></div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () {
+            $('#StartOn').kendoDatePicker({
+                    culture: "zh-TW",
+                    format: "yyyy/MM/dd"
+            });
+            
+        }); 
+    </script>
 }

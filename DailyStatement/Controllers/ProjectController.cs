@@ -22,7 +22,7 @@ namespace DailyStatement.Controllers
         public JsonResult Grid(KendoGridRequest request)
         {
             db.Configuration.ProxyCreationEnabled = false;
-            var proj = db.Projects.Include("Predictions");
+            var proj = db.Projects.Include("Predictions").OrderByDescending(d => d.StartOn).ToList();
             var grid = new KendoGrid<Project>(request, proj);
             return Json(grid);
         }

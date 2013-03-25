@@ -157,6 +157,10 @@
     <Compile Include="Migrations\201303250311292_AddCustomerNameToProject.Designer.cs">
       <DependentUpon>201303250311292_AddCustomerNameToProject.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303250340280_ModifyProject.cs" />
+    <Compile Include="Migrations\201303250340280_ModifyProject.Designer.cs">
+      <DependentUpon>201303250340280_ModifyProject.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Prediction.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Report\ProjectReport.cs">
@@ -914,6 +918,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303250311292_AddCustomerNameToProject.resx">
       <DependentUpon>201303250311292_AddCustomerNameToProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303250340280_ModifyProject.resx">
+      <DependentUpon>201303250340280_ModifyProject.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Report\ProjectReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
