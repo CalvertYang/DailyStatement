@@ -38,7 +38,12 @@ namespace DailyStatement.Controllers
             {
                 return HttpNotFound();
             }
-            List<WorkCategory> category = db.Categories.Except(project.Predictions.Select(x => x.WorkCategory).ToList()).ToList();
+            // List<WorkCategory> category = db.Categories.Except(project.Predictions.Select(x => x.WorkCategory).ToList()).ToList();
+            List<WorkCategory> category = db.Categories.ToList();
+            foreach (var c in project.Predictions)
+            {
+                category.Remove(c.WorkCategory);
+            }
             if(category.Count > 0)
             {
                 if(project.Predictions == null)
@@ -56,26 +61,29 @@ namespace DailyStatement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DetailsEditedPredictions(int projectId, int predictionId, int predictHours )
+        public ActionResult DetailsEditedPredictions(Project project)
         {
-            var project = db.Projects.Find(projectId);
-            if (project == null)
-            {
-                return HttpNotFound();
-            }
-            Prediction prediction = project.Predictions.Where(x => x.PredictionId == predictionId).SingleOrDefault();
-            if (prediction == null)
-            {
-                return HttpNotFound();
-            }
-            prediction.PredictHours = predictHours;
+            project.Predictions.ForEach(x => x.WorkCategory = db.Categories.Find(x.WorkCategory.WorkCategoryId));
+            
             if (ModelState.IsValid)
             {
+                foreach (var i in project.Predictions)
+                {
+                    if (i.PredictionId == 0)
+                    {
+                        db.Categories.Attach(i.WorkCategory);
+                        db.Entry(i).State = EntityState.Added;
+                    }
+                    else
+                    {
+                        db.Categories.Attach(i.WorkCategory);
+                        db.Entry(i).State = EntityState.Modified;
+                    }
+                }
                 db.Entry(project).State = EntityState.Modified;
-                db.Entry(prediction).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            return RedirectToAction("Details");
+            return RedirectToAction("Details", new { id = project.ProjectId });
         }
 
         //
