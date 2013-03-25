@@ -52,6 +52,9 @@ namespace DailyStatement
             bundles.Add(new StyleBundle("~/Content/kendo/css").Include("~/Content/kendo/kendo.common.min.css", "~/Content/kendo/kendo.bootstrap.min.css"));
             // Bootstrap
             bundles.Add(new StyleBundle("~/Content/bootstrap/css").Include("~/Content/bootstrap.css", "~/Content/bootstrap-responsive.css"));
+
+            // Knockout
+            bundles.Add(new ScriptBundle("~/bundles/knockout").Include("~/Scripts/knockout-{version}.js"));
         }
     }
 }

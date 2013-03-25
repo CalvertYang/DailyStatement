@@ -43,12 +43,12 @@
                 columns: [{ title: "案號", field: "ProjectNo", width: 100 },
                     { title: "客戶名稱", field: "CustomerName", width: 150 },
                     { title: "起始日", field: "StartOn", format: "{0:yyyy/MM/dd}", width: 100 },
-                    { title: "結案", field: "IsClosed", width: 150 },
+                    { title: "結案", field: "IsClosed", width: 150,  template: "<input type='checkbox' #= (IsClosed === true) ? checked='checked' : '' # disabled />" },
                     { title: "備註", field: "Comment", width: 300 },
                     {
                          title: "操作",
                          field: "ProjectId",
-                         template: "<a href='@Url.Action("Edit")/#=ProjectId#' class='btn btn-small btn-info'>編輯</a> <button class='delete-button btn btn-small btn-danger' onclick='DeleteWithConfirm(#=ProjectId#);'>刪除</button>", width: 120
+                         template: "<a href='@Url.Action("Details")/#=ProjectId#' class='btn btn-small'>預估資料</a> <a href='@Url.Action("Edit")/#=ProjectId#' class='btn btn-small btn-info'>編輯</a> <button class='delete-button btn btn-small btn-danger' onclick='DeleteWithConfirm(#=ProjectId#);'>刪除</button>", width: 190
                     }
                 ],
                 toolbar: [{ name: "create", template: "<a href='@Url.Action("Create")' class='btn btn-small btn-success pull-right' style='margin-right:22px;'>新增</a>" }],

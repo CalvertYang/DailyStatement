@@ -33,11 +33,24 @@ namespace DailyStatement.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            Project project = db.Projects.Find(id);
+            Project project = db.Projects.Include("Predictions").SingleOrDefault(p => p.ProjectId == id);
             if (project == null)
             {
                 return HttpNotFound();
             }
+            List<WorkCategory> category = db.Categories.Except(project.Predictions.Select(x => x.WorkCategory).ToList()).ToList();
+            if(category.Count > 0)
+            {
+                if(project.Predictions == null)
+                {
+                    project.Predictions = new List<Prediction>();
+                }
+                foreach (var c in category)
+                {
+                    project.Predictions.Add(new Prediction { WorkCategory = c, PredictHours = 0 });
+                }
+            }
+            
             return View(project);
         }
 

@@ -3,40 +3,38 @@
 @{
     ViewBag.Title = "Details";
 }
+<div class="row">
+    <div class="span12">
+        <h4>專案預估</h4>
+        <table class="table table-striped table-bordered">
+        	<thead>
+                <tr>
+        			<th>工作類別</th>
+                    <th>預計工時</th>
+                    <th></th>
+        		</tr>
+        	</thead>
+        	<tbody>
+        		@foreach (var item in Model.Predictions)
+                {
+                    <tr>
+                        <td>@item.WorkCategory.Name</td>
+                        <td>@item.PredictHours</td>
+                        <!--// Todo here -->
+                    </tr>
+                }
+        
+        	</tbody>
+        </table>
+        </div>
+    </div>
 
-<h2>Details</h2>
+@section scripts{
+    @Scripts.Render("~/bundles/knockout")
+    <script>
 
-<fieldset>
-    <legend>Project</legend>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.ProjectNo)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.ProjectNo)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Comment)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Comment)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.StartOn)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.StartOn)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.EndOn)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.EndOn)
-    </div>
-</fieldset>
+    </script>
+    }
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.ProjectId }) |
     @Html.ActionLink("Back to List", "Index")
