@@ -18,7 +18,7 @@
                     <tr>
                         <th>工作類別</th>
                         <th>預計工時</th>
-                        <th></th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -28,8 +28,7 @@
                     {
                         <tr>
                             <td>@item.WorkCategory.Name</td>
-                            <td>@item.PredictHours</td>
-                            <td>@Html.TextBox("Predictions["+ @i +"].PredictHours", item.PredictHours)</td>
+                            <td>@Html.TextBox("Predictions[" + @i + "].PredictHours", item.PredictHours)</td>
                             @Html.Hidden("Predictions["+ @i +"].WorkCategory.WorkCategoryId", item.WorkCategory.WorkCategoryId)
                             @Html.Hidden("Predictions["+ @i +"].PredictionId", item.PredictionId)
                             @Html.Hidden("Predictions["+ @i +"].WorkCategory.Name", item.WorkCategory.Name)
@@ -44,11 +43,48 @@
                 }
     </div>
     </div>
+<h2>Your seat reservations</h2>
 
+<table>
+    <thead><tr>
+        <th>Category Name</th>
+        <th>Hours</th>
+    </tr></thead>
+    <tbody data-bind="foreach: predictions">
+        <tr>
+            <td data-bind="text: category().name"></td>
+            <td data-bind="text: category().hours"></td>
+        </tr>    
+    </tbody>
+</table>
 @section scripts{
     @Scripts.Render("~/bundles/knockout")
     <script>
+        function Prediction(category) {
+            var self = this;
+            self.category = ko.observable(category);
+        }
 
+        function PredictionsViewModel() {
+            var self = this;
+            debugger
+            self.avaliable = [];
+            @foreach(var item in Model.Predictions)
+            {
+                @:self.avaliable.push({name:'@item.WorkCategory.Name', hours:@item.PredictHours});
+            }
+            
+
+            // Editable data
+            self.predictions = ko.observableArray([
+                new Prediction(self.available[0]),
+                new Prediction(self.available[0])
+            ]);
+        }
+
+        ko.applyBindings(new PredictionsViewModel());
+       
+        
     </script>
     }
 <p>
