@@ -71,7 +71,7 @@ namespace DailyStatement.Migrations
                 );
             }
 
-            context.Database.ExecuteSqlCommand("CREATE UNIQUE IX_Project_ProjectNo ON Projects(ProjectNo)");
+            // context.Database.ExecuteSqlCommand("CREATE UNIQUE IX_Project_ProjectNo ON Projects(ProjectNo)");
         }
     }
 }

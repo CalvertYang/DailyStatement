@@ -60,6 +60,8 @@ namespace DailyStatement.Models
         public byte[] RowVersion { get; set; }
 
         public virtual List<DailyInfo> DailyInfos { get; set; }
+
+        public string Company { get; set; }
     }
 
     
