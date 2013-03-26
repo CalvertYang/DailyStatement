@@ -45,21 +45,36 @@
     </div>
 <h2>Your seat reservations</h2>
 
-<table>
+<table class="table table-striped table-bordered" id="tp">
     <thead><tr>
         <th>Category Name</th>
         <th>Hours</th>
+        
     </tr></thead>
     <tbody data-bind="foreach: predictions">
         <tr>
             <td data-bind="text: category().name"></td>
-            <td data-bind="text: category().hours"></td>
+            <td class="data-row span6"><div data-bind="text: category().hours"></div>
+                <input class="v" type="text" data-bind="value: category().hours, attr:{name:'Predictions[' + $parent.predictions.indexOf($data) + '].PredictHours'}"  />
+                <input type="hidden" data-bind="value: category().pid, attr:{name:'Predictions[' + $parent.predictions.indexOf($data) + '].PredictionId'}"  />
+                <input type="hidden" data-bind="value: category().categoryid,attr:{name:'Predictions[' + $parent.predictions.indexOf($data) + '].WorkCategory.WorkCategoryId'}" />
+                <input type="hidden" data-bind="value: category().name, attr:{name:'Predictions[' + $parent.predictions.indexOf($data) + '].WorkCategory.Name'}"  />
+            </td>
+            
         </tr>    
     </tbody>
 </table>
 @section scripts{
     @Scripts.Render("~/bundles/knockout")
     <script>
+        // string.format sample
+        //String.prototype.format = function() {
+        //    var formatted = this;
+        //    for(arg in arguments) {
+        //        formatted = formatted.replace("{" + arg + "}", arguments[arg]);
+        //    }
+        //    return formatted;
+        //};
         function Prediction(category) {
             var self = this;
             self.category = ko.observable(category);
@@ -67,24 +82,37 @@
 
         function PredictionsViewModel() {
             var self = this;
-            debugger
+            
             self.avaliable = [];
             @foreach(var item in Model.Predictions)
             {
-                @:self.avaliable.push({name:'@item.WorkCategory.Name', hours:@item.PredictHours});
+                @:self.avaliable.push({name:'@item.WorkCategory.Name', hours:@item.PredictHours, pid:@item.PredictionId, categoryid:@item.WorkCategory.WorkCategoryId});
+            }
+
+            self.predictions = ko.observableArray();
+            for(var i in self.avaliable)
+            {
+                self.predictions.push(new Prediction(self.avaliable[i]));
             }
             
-
-            // Editable data
-            self.predictions = ko.observableArray([
-                new Prediction(self.available[0]),
-                new Prediction(self.available[0])
-            ]);
         }
 
         ko.applyBindings(new PredictionsViewModel());
        
-        
+        $(function(){
+            $('.v').css('display',"none");
+            $('#tp td').not($('.data-row')).click(function(){
+                $('.v').css('display',"none");
+                $('.data-row div').css('display',"block");
+            });
+           
+            $('.data-row').click(function(){
+                $('.v').css('display',"none");
+                $('.data-row div').css('display',"block");
+                $(this).find('.v').css('display',"block");
+                $(this).find('div').css('display',"none");
+            });
+        });
     </script>
     }
 <p>
