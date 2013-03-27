@@ -42,7 +42,7 @@ namespace DailyStatement.Models
 
         [Timestamp]
         public byte[] RowVersion { get; set; }
-
+      
         public virtual Project Project { get; set; }
     }
 }

@@ -5,13 +5,13 @@ namespace DailyStatement.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    public sealed partial class AddProject : IMigrationMetadata
+    public sealed partial class ModifyDailyInfoProjectAttribute : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddProject));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ModifyDailyInfoProjectAttribute));
         
         string IMigrationMetadata.Id
         {
-            get { return "201303270745167_AddProject"; }
+            get { return "201303270820345_ModifyDailyInfoProjectAttribute"; }
         }
         
         string IMigrationMetadata.Source

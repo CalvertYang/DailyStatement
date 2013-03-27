@@ -3,11 +3,11 @@ namespace DailyStatement.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddProject : DbMigration
+    public partial class AddProjectToDailyInof : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.DailyInfoes", "Project_ProjectId", c => c.Int(nullable: false));
+            AddColumn("dbo.DailyInfoes", "Project_ProjectId", c => c.Int());
             AddForeignKey("dbo.DailyInfoes", "Project_ProjectId", "dbo.Projects", "ProjectId");
             CreateIndex("dbo.DailyInfoes", "Project_ProjectId");
         }

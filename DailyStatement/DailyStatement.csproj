@@ -173,9 +173,13 @@
     <Compile Include="Migrations\201303270228270_AddCustomerCode.Designer.cs">
       <DependentUpon>201303270228270_AddCustomerCode.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201303270745167_AddProject.cs" />
-    <Compile Include="Migrations\201303270745167_AddProject.Designer.cs">
-      <DependentUpon>201303270745167_AddProject.cs</DependentUpon>
+    <Compile Include="Migrations\201303270809218_AddProjectToDailyInof.cs" />
+    <Compile Include="Migrations\201303270809218_AddProjectToDailyInof.Designer.cs">
+      <DependentUpon>201303270809218_AddProjectToDailyInof.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201303270820345_ModifyDailyInfoProjectAttribute.cs" />
+    <Compile Include="Migrations\201303270820345_ModifyDailyInfoProjectAttribute.Designer.cs">
+      <DependentUpon>201303270820345_ModifyDailyInfoProjectAttribute.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Prediction.cs" />
     <Compile Include="Models\Project.cs" />
@@ -953,8 +957,11 @@
     <EmbeddedResource Include="Migrations\201303270228270_AddCustomerCode.resx">
       <DependentUpon>201303270228270_AddCustomerCode.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201303270745167_AddProject.resx">
-      <DependentUpon>201303270745167_AddProject.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201303270809218_AddProjectToDailyInof.resx">
+      <DependentUpon>201303270809218_AddProjectToDailyInof.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303270820345_ModifyDailyInfoProjectAttribute.resx">
+      <DependentUpon>201303270820345_ModifyDailyInfoProjectAttribute.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Report\ProjectReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

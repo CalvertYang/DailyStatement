@@ -38,7 +38,6 @@ namespace DailyStatement.Models
         public ProjectConfigurations()
         {
             // Fluent API 設定建置在此
-            HasMany(p => p.DailyInfoes).WithRequired(d => d.Project).WillCascadeOnDelete(false);
         }
     }
 
