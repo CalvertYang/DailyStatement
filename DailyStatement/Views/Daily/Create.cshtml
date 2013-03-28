@@ -3,11 +3,7 @@
 @{
     ViewBag.Title = "新增工時日誌";
 }
-<style>
-    .error {
-        background-color: Pink;
-    }
-</style>
+<link href="~/Content/chosen.css" rel="stylesheet" />
 <div class="row">
     <div class="span6 offset3">
 <h4>新增</h4>
@@ -21,7 +17,8 @@
             @Html.LabelFor(model => model.Project.ProjectNo)
         </div>
         <div class="editor-field">
-            <input type="text" name="projectid" id="projectid" />
+            @Html.DropDownListFor(model => model.Project.ProjectId, (SelectList)ViewData["Projects"])
+            @Html.ValidationMessageFor(model => model.Project)
         </div>
 
         <div class="editor-label">
@@ -78,6 +75,7 @@
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/chosen.jquery.js")
     <script>
         var dataSource = new kendo.data.DataSource({
             transport: {
@@ -88,45 +86,17 @@
             }
         });
 
-        var _combobox = $("#projectid").kendoComboBox({
-            dataSource: dataSource,
-            dataTextField: "ProjectNo",
-            dataValueField: "ProjectId",
-            filter: "contains"
-            
-        }).data("kendoComboBox");
-
-        _combobox.input.on("blur", _combobox, function (e) {
-            var inputField = $(e.currentTarget);
-            var combobox = e.data;
-            var found = false;
-            var tooltip = "";
-            if (inputField.val().length == 0) {
-                found = true;
-            } else {
-                $.each(_combobox.dataSource._data, function (idx, project) {
-                    if (project.ProjectId === inputField.val()) {
-                        found = true;
-                        tooltip = project.ProjectNo;
-                        return false;
-                    }
-                });
-            }
-            if (found == false) {
-                e.preventDefault();
-                $(e.currentTarget).addClass("error").removeAttr("title");
-                setTimeout(function () {
-                    inputField.focus().select();
-                }, 100);
-            } else {
-                $(e.currentTarget).removeClass("error").attr("title", tooltip);
-            }
-        });
+        
 
         $(function () {
             $('#CreateDate').kendoDatePicker({
                     culture: "zh-TW",
                     format: "yyyy/MM/dd"
+            });
+            $("#Project_ProjectId").chosen({
+                no_results_text: "無此案號",
+                enable_split_word_search: true,
+                search_contains: true
             });
         }); 
     </script>

@@ -90,7 +90,7 @@ namespace DailyStatement.Controllers
         public ActionResult Create()
         {
             ViewData["Categories"] = new SelectList(db.Categories.ToList(), "WorkCategoryId", "Name", "");
-           
+            ViewData["Projects"] = new SelectList(db.Projects.ToList(), "ProjectId", "ProjectNo", "");
             if (!User.IsInRole("一般人員"))
             {
                 int empId = db.Employees.Where(e => e.Account == User.Identity.Name).FirstOrDefault().EmployeeId;
@@ -105,10 +105,10 @@ namespace DailyStatement.Controllers
 
         [HttpPost]
         [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
-        public ActionResult Create(int projectid, int? WorkCategoryId, string Customer, string WorkContent, DateTime CreateDate, int WorkingHours, int? EmployeeList )
+        public ActionResult Create(Project project, int? WorkCategoryId, string WorkContent, DateTime CreateDate, int WorkingHours, int? EmployeeList )
         {
             DailyInfo dailyinfo = new DailyInfo();
-            dailyinfo.Project = db.Projects.Find(projectid);
+            dailyinfo.Project = db.Projects.Find(project.ProjectId);
             dailyinfo.WorkCategoryId = WorkCategoryId;
             dailyinfo.WorkContent = WorkContent;
             dailyinfo.CreateDate = CreateDate;
@@ -141,6 +141,7 @@ namespace DailyStatement.Controllers
             }
 
             ViewData["Categories"] = new SelectList(db.Categories.ToList(), "WorkCategoryId", "Name", "");
+            ViewData["Projects"] = new SelectList(db.Projects.ToList(), "ProjectId", "ProjectNo", "");
             if (!User.IsInRole("一般人員"))
             {
                 ViewData["EmployeeList"] = new SelectList(db.Employees.ToList(), "EmployeeId", "Name", dailyinfo.EmployeeId);
@@ -154,7 +155,7 @@ namespace DailyStatement.Controllers
 
         [HttpPost]
         [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
-        public ActionResult Edit(int DailyInfoId, string ProjectNo, int? WorkCategoryId, string Customer, string WorkContent, DateTime CreateDate, int WorkingHours, int? EmployeeList, byte[] RowVersion)
+        public ActionResult Edit(int DailyInfoId, Project project, int? WorkCategoryId, string WorkContent, DateTime CreateDate, int WorkingHours, int? EmployeeList, byte[] RowVersion)
         {
             DailyInfo dailyinfo = db.Dailies.Where(d => d.DailyInfoId == DailyInfoId && d.RowVersion == RowVersion).FirstOrDefault();
             
@@ -163,9 +164,8 @@ namespace DailyStatement.Controllers
                 return View("Error");
             };
             
-            dailyinfo.ProjectNo = ProjectNo;
+            dailyinfo.Project = db.Projects.Find(project.ProjectId);
             dailyinfo.WorkCategoryId = WorkCategoryId;
-            dailyinfo.Customer = Customer;
             dailyinfo.WorkContent = WorkContent;
             dailyinfo.CreateDate = CreateDate;
             dailyinfo.WorkingHours = WorkingHours;
@@ -250,8 +250,8 @@ namespace DailyStatement.Controllers
             ViewBag.Employee = new SelectList(db.Employees, "EmployeeId", "Name", UserId(User.Identity.Name));
 
             ViewBag.WorkCategory = new SelectList(db.Categories, "WorkCategoryId", "Name");
-            var projectNoList = db.Dailies.Select(d => d.ProjectNo).Distinct();
-            ViewBag.ProjectNoList = new SelectList(projectNoList);
+
+            ViewData["Projects"] = new SelectList(db.Projects.ToList(), "ProjectId", "ProjectNo", "");
             return View();
         }
 
@@ -455,12 +455,29 @@ namespace DailyStatement.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult ReportSummaryOfYear()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ReportSummaryOfYear(int projectid = 0)
         {
-            
+            if (projectid == 0)
+            {
+
+            }
+            else
+            {
+                var project = db.Projects.Find(projectid);
+                var current = from daily in db.Dailies.Include("WorkCategory")
+                        group daily by new { daily.WorkCategory } into g
+                              select new { Category = g.Key.WorkCategory.Name, SumHours = g.Sum(daily => daily.WorkingHours) };
+               
+                ViewBag.Predictions = project.Predictions.ToList();
+                ViewBag.Current = current;
+
+            }
             return View();
         }
 
+        
         [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
         private int UserId(string account)
         {

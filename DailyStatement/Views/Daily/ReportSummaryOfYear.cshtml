@@ -4,16 +4,121 @@
 
 @section scripts
 {
+    <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="/Scripts/flot/excanvas.min.js"></script><![endif]-->
+    @Scripts.Render("~/Scripts/flot/jquery.flot.js")
+    @Scripts.Render("~/Scripts/flot/jquery.flot.categories.js")
     <script>
         @if(ViewBag.TotalOfAll != 0)
         {
             @:$('#print').attr('disabled', false);
         }
+
+        
+
+        $(function () {
+            var prediction = [];
+            var current = [];
+            @foreach(var i in ViewBag.Predictions as List<DailyStatement.Models.Prediction>)
+            {
+                @:prediction.push(['@i.WorkCategory.Name', @i.PredictHours]);
+                
+            }
+            @foreach (var i in ViewBag.Current)
+            {
+                 @:current.push(['@i.GetType().GetProperty("Category").GetValue(i, null)', @i.GetType().GetProperty("SumHours").GetValue(i, null)]);
+            }
+
+            $.plot("#placeholder",
+                [{ label: "預測工時", data: prediction, bars: {show: true, barWidth: 0.5, align: "center"}},
+                 { label: "實際工時", data: current, lines: { show: true }, points: { show: true ,hoverable:true} }
+                ],
+                {
+                    grid: {
+                        hoverable: true
+                    },
+                    xaxis: {
+                        mode: "categories",
+                        tickLength: 0
+                    }
+            });
+            
+            // chart tooltip function
+            function showTooltip(x, y, contents) {
+                $("<div id='tooltip'>" + contents + "</div>").css({
+                    position: "absolute",
+                    display: "none",
+                    top: y + 5,
+                    left: x + 5,
+                    border: "1px solid #9dbf8f",
+                    font: "14px arial,sans-serif",
+                    padding: "3px",
+                    "background-color": "#b7d9a9",
+                    opacity: 0.80
+                }).appendTo("body").fadeIn(250);
+            }
+            //--end chart tooltip function
+
+            // bind event
+            var previousPoint = null;
+            $("#placeholder").bind("plothover", function (event, pos, item) {
+                if (item) {
+                    if (previousPoint != item.dataIndex) {
+                        previousPoint = item.dataIndex;
+                        $("#tooltip").remove();
+                        var x = item.datapoint[0].toFixed(2),
+                        y = item.datapoint[1].toFixed(0);
+                        showTooltip(item.pageX, item.pageY,
+                            item.series.label + ": " + y + "H");
+                    }
+                } else {
+                    $("#tooltip").remove();
+                    previousPoint = null;
+                }
+            });
+            
+        });
     </script>
 }
 <h4>年度專案進度報表</h4>
 
 <div class="row">
     <div class="span12">
+        <!---->
+            <style>
+                .demo-container {
+                    box-sizing: border-box;
+                    width: 850px;
+                    height: 450px;
+                    padding: 20px 15px 15px 15px;
+                    margin: 15px auto 30px auto;
+                    border: 1px solid #ddd;
+                    background: #fff;
+                    background: linear-gradient(#f6f6f6 0, #fff 50px);
+                    background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
+                    background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
+                    background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
+                    background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
+                    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+                    -o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+                    -ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+                    -moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+                    -webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+                }
+
+                .demo-placeholder {
+                    width: 100%;
+                    height: 100%;
+                    font-size: 14px;
+                    line-height: 12px;
+                }
+
+            </style>
+           
+            <div class="demo-container">
+                <div id="placeholder" class="demo-placeholder"></div>
+            </div>
+           
+
+            <!---->
     </div>
 </div>

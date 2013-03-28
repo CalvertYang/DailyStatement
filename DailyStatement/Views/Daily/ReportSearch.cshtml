@@ -4,6 +4,8 @@
 @section scripts
 {
     @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/Scripts/chosen.jquery.js")
+   
     <script>
         // functions
         
@@ -77,10 +79,23 @@
             $('#months').val(today.getMonth() + 1).trigger('change');
 
             $("#tabs").tabs();
+
+            $("#projectNo").chosen({
+                no_results_text: "無此案號",
+                enable_split_word_search: true,
+                search_contains: true
+            });
+            $(".chosn").chosen({
+                no_results_text: "無此案號",
+                enable_split_word_search: true,
+                search_contains: true
+            });
+            
+            
         });
     </script>
 }
-
+<link href="~/Content/chosen.css" rel="stylesheet" />
 <div class="row">
     <div id="tabs">
         <ul>
@@ -140,7 +155,7 @@
                             Project No: 
                         </div>
                         <div class="editor-field">
-                            @Html.DropDownList("projectNo", (SelectList)ViewBag.ProjectNoList)
+                            @Html.DropDownList("projectNo", (SelectList)ViewData["Projects"])
                         </div>
                         <div class="editor-label">
                             Work Category:
@@ -160,12 +175,35 @@
         </div>
 
         <div id="tabs-3">
-            @Html.ActionLink("年度專案進度報表", "ReportSummaryOfYear", null, new { @class="btn btn-small"})
+             @using (Html.BeginForm("ReportSummaryOfYear", "Daily", FormMethod.Post, new { id = "dialog" }))
+            { 
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <div style="width: auto; display: block;">
+                    <fieldset style="width: 300px; margin: 0 auto;">
+
+                        <div class="editor-label">
+                            Project No: 
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownList("projectid", (SelectList)ViewData["Projects"], "全部", new {@class="chosn" })
+                        </div>
+                        <div class="row">
+                            <div class="pull-right span2">
+                                <input type="submit" value="查詢" class="btn btn-small btn-success" />
+                                @Html.ActionLink("返回", "Index", null, new { @class = "btn btn-small" })
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+        }
         </div>
+
     </div>
 
 
 </div>
+
 
 
 

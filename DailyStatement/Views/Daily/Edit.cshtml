@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "編輯工時日誌";
 }
-
+<link href="~/Content/chosen.css" rel="stylesheet" />
 <div class="row">
     <div class="span6 offset3">
 <h4>編輯</h4>
@@ -16,12 +16,12 @@
         @Html.HiddenFor(model => model.DailyInfoId)
         @Html.HiddenFor(model => model.RowVersion)
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ProjectNo)
+       <div class="editor-label">
+            @Html.LabelFor(model => model.Project.ProjectNo)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.ProjectNo)
-            @Html.ValidationMessageFor(model => model.ProjectNo)
+            @Html.DropDownListFor(model => model.Project.ProjectId, (SelectList)ViewData["Projects"])
+            @Html.ValidationMessageFor(model => model.Project)
         </div>
 
          <div class="editor-label">
@@ -35,13 +35,7 @@
         </div>
 
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Customer)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Customer)
-            @Html.ValidationMessageFor(model => model.Customer)
-        </div>
+        
 
         <div class="editor-label">
             @Html.LabelFor(model => model.WorkContent)
@@ -87,12 +81,19 @@
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/chosen.jquery.js")
     <script>
         $(function () {
             $('#CreateDate').kendoDatePicker({
                     culture: "zh-TW",
                     format: "yyyy/MM/dd"
-                });
+            });
+
+            $("#Project_ProjectId").chosen({
+                no_results_text: "無此案號",
+                enable_split_word_search: true,
+                search_contains: true
+            });
         }); 
     </script>
 }
