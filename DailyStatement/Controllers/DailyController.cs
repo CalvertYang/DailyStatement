@@ -21,12 +21,14 @@ namespace DailyStatement.Controllers
     public class DailyController : Controller
     {
         private DailyStatementContext db = new DailyStatementContext();
+        
         //
         // GET: /Daily/
 
         [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
         public ActionResult Index()
         {
+           
             return View();
         }
 
@@ -41,15 +43,15 @@ namespace DailyStatement.Controllers
             List<DailyInfoForIndex> dailies = new List<DailyInfoForIndex>();
             if (emp.Rank.Name == "一般人員")
             {
-                dailies = (from d in db.Dailies.Include("WorkCategory")
+                dailies = (from d in db.Dailies.Include("WorkCategory").Include("Project")
                            where d.EmployeeId == emp.EmployeeId
                                select new DailyInfoForIndex
                                {
                                    DailyInfoId = d.DailyInfoId,
                                    CreateDate = d.CreateDate,
                                    EmployeeId = d.DailyInfoId,
-                                   Customer = d.Customer,
-                                   ProjectNo = d.ProjectNo,
+                                   Customer = d.Project.CustomerName,
+                                   ProjectNo = d.Project.ProjectNo,
                                    WorkContent = d.WorkContent,
                                    WorkingHours = d.WorkingHours,
                                    WorkCategory = d.WorkCategory.Name,
@@ -58,14 +60,14 @@ namespace DailyStatement.Controllers
             }
             else
             {
-                dailies = (from d in db.Dailies.Include("WorkCategory")
+                dailies = (from d in db.Dailies.Include("WorkCategory").Include("Project")
                                select new DailyInfoForIndex
                                {
                                    DailyInfoId = d.DailyInfoId,
                                    CreateDate = d.CreateDate,
                                    EmployeeId = d.DailyInfoId,
-                                   Customer = d.Customer,
-                                   ProjectNo = d.ProjectNo,
+                                   Customer = d.Project.CustomerName,
+                                   ProjectNo = d.Project.ProjectNo,
                                    WorkContent = d.WorkContent,
                                    WorkingHours = d.WorkingHours,
                                    WorkCategory = d.WorkCategory.Name,
@@ -77,26 +79,18 @@ namespace DailyStatement.Controllers
             return Json(grid);
         }
 
-        //
-        // GET: /Daily/Details/5
-
-        //public ActionResult Details(int id = 0)
-        //{
-        //    DailyInfo dailyinfo = db.Dailies.Find(id);
-        //    if (dailyinfo == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(dailyinfo);
-        //}
-
-        //
-        // GET: /Daily/Create
+        [HttpPost]
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
+        public JsonResult GetProjects()
+        {
+            return Json(db.Projects.Select(x => new { ProjectId = x.ProjectId, ProjectNo = x.ProjectNo }).ToList());
+        }
 
         [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
         public ActionResult Create()
         {
             ViewData["Categories"] = new SelectList(db.Categories.ToList(), "WorkCategoryId", "Name", "");
+           
             if (!User.IsInRole("一般人員"))
             {
                 int empId = db.Employees.Where(e => e.Account == User.Identity.Name).FirstOrDefault().EmployeeId;
@@ -111,7 +105,7 @@ namespace DailyStatement.Controllers
 
         [HttpPost]
         [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
-        public ActionResult Create(string ProjectNo, int? WorkCategoryId, string Customer, string WorkContent, DateTime CreateDate, int WorkingHours, int? EmployeeList)
+        public ActionResult Create(string ProjectNo, int? WorkCategoryId, string Customer, string WorkContent, DateTime CreateDate, int WorkingHours, int? EmployeeList, int ProjectId)
         {
             DailyInfo dailyinfo = new DailyInfo();
             dailyinfo.ProjectNo = ProjectNo;

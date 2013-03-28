@@ -85,11 +85,28 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
+        var dataSource = new kendo.data.DataSource({
+            transport: {
+                read: {
+                    url: "/Daily/GetProjects",
+                    type: "post"
+                }
+            }
+        });
+
+        $("#ProjectNo").kendoComboBox({
+            dataTextField: "ProjectNo",
+            filter: "contains",
+            dataValueField: "ProjectId",
+            dataSource: dataSource
+        });
+
+
         $(function () {
             $('#CreateDate').kendoDatePicker({
                     culture: "zh-TW",
                     format: "yyyy/MM/dd"
-                });
+            });
         }); 
     </script>
 }
