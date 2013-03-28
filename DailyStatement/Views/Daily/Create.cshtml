@@ -3,7 +3,11 @@
 @{
     ViewBag.Title = "新增工時日誌";
 }
-
+<style>
+    .error {
+        background-color: Pink;
+    }
+</style>
 <div class="row">
     <div class="span6 offset3">
 <h4>新增</h4>
@@ -17,8 +21,7 @@
             @Html.LabelFor(model => model.Project.ProjectNo)
         </div>
         <div class="editor-field">
-            <input type="text" name="projectid" id="projectid" data-val-required="案號 欄位是必要項。" data-val="true" />
-            @Html.ValidationMessageFor(model => model.Project.ProjectId)
+            <input type="text" name="projectid" id="projectid" />
         </div>
 
         <div class="editor-label">
@@ -85,13 +88,40 @@
             }
         });
 
-        $("#projectid").kendoComboBox({
+        var _combobox = $("#projectid").kendoComboBox({
+            dataSource: dataSource,
             dataTextField: "ProjectNo",
-            filter: "contains",
             dataValueField: "ProjectId",
-            dataSource: dataSource
-        });
+            filter: "contains"
+            
+        }).data("kendoComboBox");
 
+        _combobox.input.on("blur", _combobox, function (e) {
+            var inputField = $(e.currentTarget);
+            var combobox = e.data;
+            var found = false;
+            var tooltip = "";
+            if (inputField.val().length == 0) {
+                found = true;
+            } else {
+                $.each(_combobox.dataSource._data, function (idx, project) {
+                    if (project.ProjectId === inputField.val()) {
+                        found = true;
+                        tooltip = project.ProjectNo;
+                        return false;
+                    }
+                });
+            }
+            if (found == false) {
+                e.preventDefault();
+                $(e.currentTarget).addClass("error").removeAttr("title");
+                setTimeout(function () {
+                    inputField.focus().select();
+                }, 100);
+            } else {
+                $(e.currentTarget).removeClass("error").attr("title", tooltip);
+            }
+        });
 
         $(function () {
             $('#CreateDate').kendoDatePicker({
