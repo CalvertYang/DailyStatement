@@ -18,7 +18,7 @@ namespace DailyStatement.Models
         [DisplayName("工作類型")]
         public virtual WorkCategory WorkCategory { get; set; }
 
-        [ConcurrencyCheck, Required, MaxLength(200)]
+       
         [DisplayName("案號")]
         [Description("若尚未成案，則設為 'N'")]
         public string ProjectNo { get; set; }

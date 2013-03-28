@@ -181,6 +181,10 @@
     <Compile Include="Migrations\201303270820345_ModifyDailyInfoProjectAttribute.Designer.cs">
       <DependentUpon>201303270820345_ModifyDailyInfoProjectAttribute.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201303280206280_RremoveRequiredToDailyInfoProjectNo.cs" />
+    <Compile Include="Migrations\201303280206280_RremoveRequiredToDailyInfoProjectNo.Designer.cs">
+      <DependentUpon>201303280206280_RremoveRequiredToDailyInfoProjectNo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Prediction.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Report\ProjectReport.cs">
@@ -962,6 +966,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201303270820345_ModifyDailyInfoProjectAttribute.resx">
       <DependentUpon>201303270820345_ModifyDailyInfoProjectAttribute.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201303280206280_RremoveRequiredToDailyInfoProjectNo.resx">
+      <DependentUpon>201303280206280_RremoveRequiredToDailyInfoProjectNo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Report\ProjectReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
