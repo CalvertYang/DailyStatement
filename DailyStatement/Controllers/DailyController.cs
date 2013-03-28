@@ -105,12 +105,11 @@ namespace DailyStatement.Controllers
 
         [HttpPost]
         [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
-        public ActionResult Create(string ProjectNo, int? WorkCategoryId, string Customer, string WorkContent, DateTime CreateDate, int WorkingHours, int? EmployeeList, int ProjectId)
+        public ActionResult Create(int projectid, int? WorkCategoryId, string Customer, string WorkContent, DateTime CreateDate, int WorkingHours, int? EmployeeList )
         {
             DailyInfo dailyinfo = new DailyInfo();
-            dailyinfo.ProjectNo = ProjectNo;
+            dailyinfo.Project = db.Projects.Find(projectid);
             dailyinfo.WorkCategoryId = WorkCategoryId;
-            dailyinfo.Customer = Customer;
             dailyinfo.WorkContent = WorkContent;
             dailyinfo.CreateDate = CreateDate;
             dailyinfo.WorkingHours = WorkingHours;

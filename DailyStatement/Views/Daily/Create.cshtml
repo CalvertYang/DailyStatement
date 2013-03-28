@@ -14,11 +14,11 @@
         <legend>工時日誌</legend>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.ProjectNo)
+            @Html.LabelFor(model => model.Project.ProjectNo)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.ProjectNo)
-            @Html.ValidationMessageFor(model => model.ProjectNo)
+            <input type="text" name="projectid" id="projectid" data-val-required="案號 欄位是必要項。" data-val="true" />
+            @Html.ValidationMessageFor(model => model.Project.ProjectId)
         </div>
 
         <div class="editor-label">
@@ -29,15 +29,6 @@
             @Html.DropDownListFor(model => model.WorkCategoryId, ViewData["Categories"] as SelectList)
             @*Html.DropDownList("categories", ViewData["Categories"] as SelectList, "請選擇", Model.WorkCategoryId)*@
             @Html.ValidationMessageFor(model => model.WorkCategoryId)
-        </div>
-
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Customer)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Customer)
-            @Html.ValidationMessageFor(model => model.Customer)
         </div>
 
         <div class="editor-label">
@@ -94,7 +85,7 @@
             }
         });
 
-        $("#ProjectNo").kendoComboBox({
+        $("#projectid").kendoComboBox({
             dataTextField: "ProjectNo",
             filter: "contains",
             dataValueField: "ProjectId",

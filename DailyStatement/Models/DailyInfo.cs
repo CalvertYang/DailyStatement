@@ -23,7 +23,6 @@ namespace DailyStatement.Models
         [Description("若尚未成案，則設為 'N'")]
         public string ProjectNo { get; set; }
 
-        [Required, MaxLength(100)]
         [DisplayName("客戶名稱")]
         public string Customer { get; set; }
 
