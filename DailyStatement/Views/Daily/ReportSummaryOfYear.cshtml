@@ -8,7 +8,7 @@
     @Scripts.Render("~/Scripts/flot/jquery.flot.js")
     @Scripts.Render("~/Scripts/flot/jquery.flot.categories.js")
     <script>
-        @if(ViewBag.TotalOfAll != 0)
+        @if (ViewBag.TotalOfAll != 0)
         {
             @:$('#print').attr('disabled', false);
         }
@@ -18,15 +18,22 @@
         $(function () {
             var prediction = [];
             var current = [];
-            @foreach(var i in ViewBag.Predictions as List<DailyStatement.Models.Prediction>)
+            @if (ViewBag.Predictions != null)
             {
-                @:prediction.push(['@i.WorkCategory.Name', @i.PredictHours]);
-                
+                foreach (var i in ViewBag.Predictions as List<DailyStatement.Models.Prediction>)
+                {
+                    @:prediction.push(['@i.WorkCategory.Name', @i.PredictHours]);
+                }
             }
-            @foreach (var i in ViewBag.Current)
+            
+            @if (ViewBag.Current != null)
             {
-                 @:current.push(['@i.GetType().GetProperty("Category").GetValue(i, null)', @i.GetType().GetProperty("SumHours").GetValue(i, null)]);
+                foreach (var i in ViewBag.Current)
+                {
+                   @:current.push(['@i.GetType().GetProperty("Category").GetValue(i, null)', @i.GetType().GetProperty("SumHours").GetValue(i, null)]);
+                }
             }
+            
 
             $.plot("#placeholder",
                 [{ label: "預測工時", data: prediction, bars: {show: true, barWidth: 0.5, align: "center"}},
@@ -49,10 +56,11 @@
                     display: "none",
                     top: y + 5,
                     left: x + 5,
-                    border: "1px solid #9dbf8f",
-                    font: "14px arial,sans-serif",
+                    border: "1px solid #fff",
+                    color: "#eee",
+                    font: "14px bold arial,sans-serif",
                     padding: "3px",
-                    "background-color": "#b7d9a9",
+                    "background-color": "#333333",
                     opacity: 0.80
                 }).appendTo("body").fadeIn(250);
             }

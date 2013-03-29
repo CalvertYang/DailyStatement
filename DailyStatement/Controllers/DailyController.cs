@@ -459,9 +459,10 @@ namespace DailyStatement.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ReportSummaryOfYear(int projectid = 0)
         {
+           
             if (projectid == 0)
             {
-
+                
             }
             else
             {
