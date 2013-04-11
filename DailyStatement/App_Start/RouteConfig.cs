@@ -13,6 +13,12 @@ namespace DailyStatement
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //routes.MapRoute(
+            //    name: "Maintain",
+            //    url: "{controller}/{action}/{id}",
+            //    defaults: new { controller = "Announcement", action = "Index", id = UrlParameter.Optional }
+            //);
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

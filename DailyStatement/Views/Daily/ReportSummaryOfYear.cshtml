@@ -125,15 +125,18 @@
             <div id="placeholder" class="demo-placeholder"></div>
         </div>
 
-        <div>
-            @Html.ActionLink("返回", "ReportSearch", null, new { @class = "btn btn-small pull-right" })
-            <form action="/Daily/GenerateProjectSummaryReport" method="post">
-                <input name="projectId" type="hidden" value="@ViewBag.ProjectId" />
-                <input id="print" type="submit" value="列印" class="btn btn-small pull-right" disabled="disabled" />
-            </form>
-        </div>
+        
            
         
         <!---->
+    </div>
+</div>
+<div class="row">
+    <div class="span3 offset9">
+            <form action="/Daily/GenerateProjectSummaryReport" method="post" style="display:inline-block;">
+                <input name="projectId" type="hidden" value="@ViewBag.ProjectId" />
+                <input id="print" type="submit" value="列印" class="btn btn-small" disabled="disabled" />
+            </form>
+            @Html.ActionLink("返回", "ReportSearch", null, new { @class = "btn btn-small", style="margin-left:5px;" })
     </div>
 </div>
