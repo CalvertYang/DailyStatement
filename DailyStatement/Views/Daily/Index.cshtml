@@ -55,13 +55,20 @@
                     {
                         title: "客戶名稱", field: "Customer"
                     },
-                    { title: "工作內容", field: "WorkContent" },
-                    { title: "人員", field: "EmployeeName", width:120 },
-                    { title: "日期 ", field: "CreateDate", format: "{0:yyyy/MM/dd}", width:100 },
-                    { title: "工時", field: "WorkingHours", width:50 },
+                    { title: "工作內容", filterable: false, field: "WorkContent" },
+                    { title: "人員", field: "EmployeeName", filterable: false, width: 120 },
+                    {
+                        title: "日期 ",
+                        field: "CreateDate",
+                        format: "{0:yyyy/MM/dd}",
+                        width: 100
+                        
+                    },
+                    { title: "工時", field: "WorkingHours", width:70 },
                     {
                         title: "操作",
                         field: "DailyInfoId",
+                        filterable: false,
                         template: "<a href='@Url.Action("Edit")/#=DailyInfoId#' class='btn btn-small btn-info'>編輯</a> <button class='delete-button btn btn-small btn-danger' onclick='DeleteWithConfirm(#=DailyInfoId#);'>刪除</button>", width: 120 
                     }
                 ],
@@ -92,6 +99,11 @@
                         },
                         {
                             field: "WorkContent",
+                            operator: "contains",
+                            value: val
+                        },
+                        {
+                            field: "EmployeeName",
                             operator: "contains",
                             value: val
                         }
