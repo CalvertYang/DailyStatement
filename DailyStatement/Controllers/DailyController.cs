@@ -29,32 +29,32 @@ namespace DailyStatement.Controllers
 		[Authorize(Roles = "超級管理員,一般管理員,一般人員")]
 		public ActionResult Index()
 		{
-            var emp = db.Employees.Include("Rank").Where(e => e.Account == User.Identity.Name).FirstOrDefault();
-            DateTime today = DateTime.Today;
-            DateTime tomorrow = DateTime.Today.AddDays(1);
-            var todaySumHours = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId && d.CreateDate >= today && d.CreateDate < tomorrow).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
+			var emp = db.Employees.Include("Rank").Where(e => e.Account == User.Identity.Name).FirstOrDefault();
+			DateTime today = DateTime.Today;
+			DateTime tomorrow = DateTime.Today.AddDays(1);
+			var todaySumHours = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId && d.CreateDate >= today && d.CreateDate < tomorrow).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
 
-            var todayWintrissHours = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId && d.CreateDate >= today && d.CreateDate < tomorrow && d.Project.ProjectId == 2).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
-            
+			var todayWintrissHours = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId && d.CreateDate >= today && d.CreateDate < tomorrow && d.Project.ProjectId == 2).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
+			
 
-            if (emp.Rank.Name == "一般人員")
-            {
-                if (todaySumHours < 8)
-                {
-                    string notify = string.Format("本日未達工時仍有 {0} 小時。", 8 - todaySumHours);
-                    ViewBag.NotifyOfSumHours = notify;
-                }
+			if (emp.Rank.Name == "一般人員")
+			{
+				if (todaySumHours < 8)
+				{
+					string notify = string.Format("本日未達工時仍有 {0} 小時。", 8 - todaySumHours);
+					ViewBag.NotifyOfSumHours = notify;
+				}
 
-                if (todayWintrissHours < 1)
-                {
-                    ViewBag.NotifyOfInternal = "本日內部紀錄(WINTRISS)尚未填寫。";
-                }
-                
-            }
+				if (todayWintrissHours < 1)
+				{
+					ViewBag.NotifyOfInternal = "本日內部紀錄(WINTRISS)尚未填寫。";
+				}
+				
+			}
 			return View();
 		}
 
-        [HttpPost]
+		[HttpPost]
 		[Authorize(Roles = "超級管理員,一般管理員,一般人員")]
 		public JsonResult Grid(KendoGridRequest request)
 		{
@@ -164,7 +164,7 @@ namespace DailyStatement.Controllers
 			}
 
 			ViewData["Categories"] = new SelectList(db.Categories.ToList(), "WorkCategoryId", "Name", "");
-            ViewData["Projects"] = new SelectList(db.Projects.OrderBy(p => p.ProjectNo).ToList(), "ProjectId", "ProjectNo", "");
+			ViewData["Projects"] = new SelectList(db.Projects.OrderBy(p => p.ProjectNo).ToList(), "ProjectId", "ProjectNo", "");
 			if (!User.IsInRole("一般人員"))
 			{
 				ViewData["EmployeeList"] = new SelectList(db.Employees.ToList(), "EmployeeId", "Name", dailyinfo.EmployeeId);
@@ -268,13 +268,23 @@ namespace DailyStatement.Controllers
 			{
 				months.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
 			}
+			List<SelectListItem> years = new List<SelectListItem>();
+			int yearStart = DateTime.Now.Year;
+			for (int i = yearStart ; i > yearStart - 3; i--)
+			{
+				years.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
+			}
+
+
 			ViewBag.Months = new SelectList(months, "Text", "Value");
+
+			ViewBag.Years = new SelectList(years, "Text", "Value");
 
 			ViewBag.Employee = new SelectList(db.Employees, "EmployeeId", "Name", UserId(User.Identity.Name));
 
 			ViewBag.WorkCategory = new SelectList(db.Categories, "WorkCategoryId", "Name");
 
-            ViewData["Projects"] = new SelectList(db.Projects.OrderBy(p => p.ProjectNo).ToList(), "ProjectId", "ProjectNo", "");
+			 ViewData["Projects"] = new SelectList(db.Projects.OrderBy(p => p.ProjectNo).ToList(), "ProjectId", "ProjectNo", "");
 			return View();
 		}
 
@@ -508,87 +518,164 @@ namespace DailyStatement.Controllers
 			}
 			return View();
 		}
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		[Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
+		public ActionResult AnalysisHoursPersonal(int years, int months)
+		{
+			// TODO: here
+			int numberOfDays = DateTime.DaysInMonth(years, months);
+			DateTime startDay = new DateTime(years,months,1);
+			DateTime lastDay = new DateTime(years, months, numberOfDays);
+			CultureInfo ci = new CultureInfo("zh-TW");
+			List<DateTime> holidays = new List<DateTime>();
+			for (int i = 1; i <= ci.Calendar.GetDaysInMonth(years, months); i++)
+			{
+				DateTime dt = new DateTime(years, months, i);
+				if (dt.DayOfWeek == DayOfWeek.Saturday || dt.DayOfWeek == DayOfWeek.Sunday)
+					holidays.Add(dt);
+			}
 
-        [Authorize(Roles = "超級管理員,一般管理員,助理")]
-        public ActionResult CategoryIndex()
-        {
-            return View();
-        }
 
-        [Authorize(Roles = "超級管理員,一般管理員,助理")]
-        public ActionResult CategoryCreate()
-        {
-            return View();
-        }
+			List<PersonalWorkingHours> pwh = new List<PersonalWorkingHours>();
+			List<Employee> employee = new List<Employee>();
+			employee = db.Employees.ToList();
+			foreach (var emp in employee)
+			{
+				PersonalWorkingHours p = new PersonalWorkingHours();
+				p.EmployeeName = emp.Name;
+				// Wintriss
+				p.InternalHours = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId &&
+								  d.Project.ProjectId == 2 &&
+								  !d.Project.ProjectNo.StartsWith("N/A") &&
+								  d.CreateDate >= startDay &&
+								  d.CreateDate <= lastDay
+								  ).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
+				// CN,CP,CO,C*,LINPO
+				p.ProjectHours = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId &&
+								  !d.Project.ProjectNo.StartsWith("ST") &&
+								  !d.Project.ProjectNo.StartsWith("DO") &&
+								  !d.Project.ProjectNo.StartsWith("CR") &&
+								  !d.Project.ProjectNo.StartsWith("N/A") &&
+								  // d.Project.ProjectId != 13 &&
+								  d.Project.ProjectId != 2 &&
+								  d.CreateDate >= startDay &&
+								  d.CreateDate <= lastDay
+								  ).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
+				// ST
+				p.UndefineHours = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId &&
+								  d.Project.ProjectNo.StartsWith("ST") &&
+								  !d.Project.ProjectNo.StartsWith("N/A") &&
+								  d.CreateDate >= startDay &&
+								  d.CreateDate <= lastDay
+								  ).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
+				// DO
+				p.DemoHours = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId &&
+								  d.Project.ProjectNo.StartsWith("DO") &&
+								  !d.Project.ProjectNo.StartsWith("N/A") &&
+								  d.CreateDate >= startDay &&
+								  d.CreateDate <= lastDay
+								  ).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
+				// CR
+				p.ResearchHours = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId &&
+								  d.Project.ProjectNo.StartsWith("CR") &&
+								  !d.Project.ProjectNo.StartsWith("N/A") &&
+								  d.CreateDate >= startDay &&
+								  d.CreateDate <= lastDay
+								  ).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
+				// 加班
+				p.Overtime = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId &&
+								  d.WorkCategoryId == 13 &&
+								  !d.Project.ProjectNo.StartsWith("N/A") &&
+								  d.CreateDate >= startDay &&
+								  d.CreateDate <= lastDay &&
+								  !holidays.Contains(d.CreateDate)
+								  ).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "超級管理員,一般管理員,助理")]
-        public ActionResult CategoryCreate(WorkCategory workCategory)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Categories.Add(workCategory);
-                db.SaveChanges();
-                return RedirectToAction("CategoryIndex");
-            }
+			}
+			return View(pwh);
+		}
 
-            return View(workCategory);
-        }
+		[Authorize(Roles = "超級管理員,一般管理員,助理")]
+		public ActionResult CategoryIndex()
+		{
+			return View();
+		}
 
-        [Authorize(Roles = "超級管理員,一般管理員,助理")]
-        public ActionResult CategoryEdit(int id = 0)
-        {
-            WorkCategory workCategory = db.Categories.Find(id);
-            if (workCategory == null)
-            {
-                return HttpNotFound();
-            }
+		[Authorize(Roles = "超級管理員,一般管理員,助理")]
+		public ActionResult CategoryCreate()
+		{
+			return View();
+		}
 
-            return View(workCategory);
-        }
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		[Authorize(Roles = "超級管理員,一般管理員,助理")]
+		public ActionResult CategoryCreate(WorkCategory workCategory)
+		{
+			if (ModelState.IsValid)
+			{
+				db.Categories.Add(workCategory);
+				db.SaveChanges();
+				return RedirectToAction("CategoryIndex");
+			}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CategoryEdit(WorkCategory workCategory)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(workCategory).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("CategoryIndex");
-            }
+			return View(workCategory);
+		}
 
-            return View(workCategory);
-        }
+		[Authorize(Roles = "超級管理員,一般管理員,助理")]
+		public ActionResult CategoryEdit(int id = 0)
+		{
+			WorkCategory workCategory = db.Categories.Find(id);
+			if (workCategory == null)
+			{
+				return HttpNotFound();
+			}
 
-        [HttpPost, ActionName("CategoryDelete")]
-        [Authorize(Roles = "超級管理員,一般管理員,一般人員")]
-        public ActionResult CategoryDeleteConfirmed(int id)
-        {
-            WorkCategory workCategory = db.Categories.Find(id);
-            db.Categories.Remove(workCategory);
-            db.SaveChanges();
-            return RedirectToAction("CategoryIndex");
-        }
+			return View(workCategory);
+		}
 
-        // 回傳所有帳號相關資料
-        [HttpPost]
-        [Authorize(Roles = "超級管理員,一般管理員,助理")]
-        public JsonResult CategoryGrid(KendoGridRequest request)
-        {
-            db.Configuration.ProxyCreationEnabled = false;
-            var categories = (from c in db.Categories
-                              select new CategoryForIndex
-                              {
-                                  WorkCategoryId = c.WorkCategoryId,
-                                  Name = c.Name
-                              }).ToList();
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult CategoryEdit(WorkCategory workCategory)
+		{
+			if (ModelState.IsValid)
+			{
+				db.Entry(workCategory).State = EntityState.Modified;
+				db.SaveChanges();
+				return RedirectToAction("CategoryIndex");
+			}
 
-            var grid = new KendoGrid<CategoryForIndex>(request, categories);
+			return View(workCategory);
+		}
 
-            return Json(grid);
-        }
+		[HttpPost, ActionName("CategoryDelete")]
+		[Authorize(Roles = "超級管理員,一般管理員,一般人員")]
+		public ActionResult CategoryDeleteConfirmed(int id)
+		{
+			WorkCategory workCategory = db.Categories.Find(id);
+			db.Categories.Remove(workCategory);
+			db.SaveChanges();
+			return RedirectToAction("CategoryIndex");
+		}
+
+		// 回傳所有帳號相關資料
+		[HttpPost]
+		[Authorize(Roles = "超級管理員,一般管理員,助理")]
+		public JsonResult CategoryGrid(KendoGridRequest request)
+		{
+			db.Configuration.ProxyCreationEnabled = false;
+			var categories = (from c in db.Categories
+							  select new CategoryForIndex
+							  {
+								  WorkCategoryId = c.WorkCategoryId,
+								  Name = c.Name
+							  }).ToList();
+
+			var grid = new KendoGrid<CategoryForIndex>(request, categories);
+
+			return Json(grid);
+		}
 		
 		[Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
 		private int UserId(string account)
@@ -601,11 +688,11 @@ namespace DailyStatement.Controllers
 			return emp.EmployeeId;
 		}
 
-        [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
-        }
+		[Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
+		protected override void Dispose(bool disposing)
+		{
+			db.Dispose();
+			base.Dispose(disposing);
+		}
 	}
 }

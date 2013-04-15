@@ -1,0 +1,19 @@
+﻿@model IEnumerable<DailyStatement.ViewModel.PersonalWorkingHours>
+@{
+    ViewBag.Title = "個人工時分析";
+}
+<div class="row">
+    <div class="span12">
+        <h4>個人工時分析</h4>
+        @foreach (var item in Model)
+        { 
+             <span>EmployeeName @item.EmployeeName </span>
+             <span>DemoHours @item.DemoHours </span>
+             <span>InternalHours @item.InternalHours </span>
+             <span>Overtime @item.Overtime </span>
+             <span>ProjectHours @item.ProjectHours </span>
+             <span>ResearchHours @item.ResearchHours </span>
+             <span>UndefineHours @item.UndefineHours </span>
+        }
+    </div>
+</div>

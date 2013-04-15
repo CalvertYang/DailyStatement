@@ -215,6 +215,7 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="ViewModel\PersonalWorkingHours.cs" />
     <Compile Include="ViewModel\CategoryForIndex.cs" />
     <Compile Include="ViewModel\WeekReportOfSingle.cs" />
     <Content Include="App_Code\CustomRoleProvider.cs" />
@@ -940,6 +941,7 @@
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Delete.cshtml" />
     <Content Include="Views\Announcement\Index.cshtml" />
+    <Content Include="Views\Daily\AnalysisHoursPersonal.cshtml" />
     <Content Include="Views\Daily\CategoryIndex.cshtml" />
     <Content Include="Views\Daily\CategoryCreate.cshtml" />
     <Content Include="Views\Daily\CategoryEdit.cshtml" />
