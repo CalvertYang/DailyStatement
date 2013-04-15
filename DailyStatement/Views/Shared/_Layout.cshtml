@@ -7,9 +7,12 @@
     <meta content="Apputu Co, Ltd" name="author">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/themes/base/css", "~/Content/css", "~/Content/kendo/css", "~/Content/bootstrap/css" )
+    @Styles.Render("/Content/jquery.pnotify.default.css")
+    @Styles.Render("/Content/jquery.pnotify.default.icons.css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/kendoUI")
+   
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -69,6 +72,7 @@
     </div>
     <!-- /container -->
     @RenderSection("scripts", required: false)
+   
 </body>
 </html>
 

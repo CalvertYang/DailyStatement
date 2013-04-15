@@ -4,6 +4,7 @@
     ViewBag.Title = "工作時數日誌";
 }
 @section scripts{
+    @Scripts.Render("~/Scripts/jquery.pnotify.js")
     <script>
         
         $(function () {
@@ -126,6 +127,17 @@
            
         });
 
+        // Set notificy box Source: http://pinesframework.org/pnotify/
+        $.pnotify.defaults.styling = "jqueryui";
+        @if (ViewBag.NotifyOfSumHours != null)
+        {
+            @:$.pnotify({ text: '@ViewBag.NotifyOfSumHours', delay: 3000 });
+        }
+        @if (ViewBag.NotifyOfInternal != null)
+        {
+            @:$.pnotify({ text: '@ViewBag.NotifyOfInternal', delay: 3500 });
+        }
+        
 
         // functions --
         function DeleteWithConfirm(did) {
