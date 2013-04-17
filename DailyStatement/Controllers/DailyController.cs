@@ -32,14 +32,14 @@ namespace DailyStatement.Controllers
 			var emp = db.Employees.Include("Rank").Where(e => e.Account == User.Identity.Name).FirstOrDefault();
 			DateTime today = DateTime.Today;
 			DateTime tomorrow = DateTime.Today.AddDays(1);
-            DateTime weekAgo = DateTime.Today.AddDays(-7);
+			DateTime weekAgo = DateTime.Today.AddDays(-7);
 			var todaySumHours = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId && d.CreateDate >= today && d.CreateDate < tomorrow).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
 
 			var todayWintrissHours = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId && d.CreateDate >= today && d.CreateDate < tomorrow && d.Project.ProjectId == 2).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
 
-            var unClassifyDailies = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId && d.Project.ProjectId == 306);
+			var unClassifyDailies = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId && d.Project.ProjectId == 306);
 
-            string[] noDailyEmployee = db.Employees.Where(e => e.DailyInfos.Where(d => d.WorkingHours > 0 && (d.CreateDate >= weekAgo && d.CreateDate <= today)).Count() < 1 && e.Rank.RankId == 3 && e.Activity == true).Select(d => d.Name).ToArray();
+			string[] noDailyEmployee = db.Employees.Where(e => e.DailyInfos.Where(d => d.WorkingHours > 0 && (d.CreateDate >= weekAgo && d.CreateDate <= today)).Count() < 1 && e.Rank.RankId == 3 && e.Activity == true).Select(d => d.Name).ToArray();
 
 			if (emp.Rank.Name == "一般人員")
 			{
@@ -56,15 +56,15 @@ namespace DailyStatement.Controllers
 				
 			}
 
-            if (unClassifyDailies.Count() > 0)
-            {
-                ViewBag.NotifyOfUnClassify = "請盡速修正案號為 N/A 之工時日誌。";
-            }
+			if (unClassifyDailies.Count() > 0)
+			{
+				ViewBag.NotifyOfUnClassify = "請盡速修正案號為 N/A 之工時日誌。";
+			}
 
-            if (noDailyEmployee.Count() > 0 && emp.Rank.Name != "一般人員")
-            {
-                ViewBag.NotifyOfNoDaily = "以下人員本週未依規定填寫工作日誌：" + string.Join(", ", noDailyEmployee);
-            }
+			if (noDailyEmployee.Count() > 0 && emp.Rank.Name != "一般人員")
+			{
+				ViewBag.NotifyOfNoDaily = "以下人員本週未依規定填寫工作日誌：" + string.Join(", ", noDailyEmployee);
+			}
 
 			return View();
 		}
@@ -301,7 +301,7 @@ namespace DailyStatement.Controllers
 
 			ViewData["Projects"] = new SelectList(db.Projects.OrderBy(p => p.ProjectNo).ToList(), "ProjectId", "ProjectNo", "");
 			
-            return View();
+			return View();
 		}
 
 
@@ -500,43 +500,43 @@ namespace DailyStatement.Controllers
 			}
 		}
 
-        [HttpPost]
-        [Authorize(Roles = "超級管理員,一般管理員,助理")]
-        public ActionResult GenerateWorkHoursAnalysisReport(int year, int month, string company)
-        {
-            try
-            {
-                ReportDocument rpt = new ReportDocument();
-                rpt.Load(Server.MapPath("~/Report/WorkHoursAnalysisReport.rpt"));
+		[HttpPost]
+		[Authorize(Roles = "超級管理員,一般管理員,助理")]
+		public ActionResult GenerateWorkHoursAnalysisReport(int year, int month, string company)
+		{
+			try
+			{
+				ReportDocument rpt = new ReportDocument();
+				rpt.Load(Server.MapPath("~/Report/WorkHoursAnalysisReport.rpt"));
 
-                DailyStatementDS ds = new DailyStatementDS();
+				DailyStatementDS ds = new DailyStatementDS();
 
-                string conn = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
-                // Get data from DailyInfoes
-                string condition = "SELECT * FROM [dbo].[DailyInfoes];";
-                SqlDataAdapter da = new SqlDataAdapter(condition, conn);
-                da.Fill(ds.DailyInfoes);
-                // Get data from Employees
-                condition = "SELECT * FROM [dbo].[Employees];";
-                da = new SqlDataAdapter(condition, conn);
-                da.Fill(ds.Employees);
-                // Get data from Projects
-                condition = "SELECT * FROM [dbo].[Projects];";
-                da = new SqlDataAdapter(condition, conn);
-                da.Fill(ds.Projects);
-                // Due to SetParameterValue always return error, so use datatable to store parameter
-                ds.ParameterForAnalysisRpt.Rows.Add(year, month, company);
+				string conn = System.Configuration.ConfigurationManager.ConnectionStrings["DailyStatementContext"].ConnectionString;
+				// Get data from DailyInfoes
+				string condition = "SELECT * FROM [dbo].[DailyInfoes];";
+				SqlDataAdapter da = new SqlDataAdapter(condition, conn);
+				da.Fill(ds.DailyInfoes);
+				// Get data from Employees
+				condition = "SELECT * FROM [dbo].[Employees];";
+				da = new SqlDataAdapter(condition, conn);
+				da.Fill(ds.Employees);
+				// Get data from Projects
+				condition = "SELECT * FROM [dbo].[Projects];";
+				da = new SqlDataAdapter(condition, conn);
+				da.Fill(ds.Projects);
+				// Due to SetParameterValue always return error, so use datatable to store parameter
+				ds.ParameterForAnalysisRpt.Rows.Add(year, month, company);
 
-                rpt.SetDataSource(ds);
+				rpt.SetDataSource(ds);
 
-                Stream stream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
-                return File(stream, "application/pdf");
-            }
-            catch (Exception e)
-            {
-                return Content(e.ToString());
-            }
-        }
+				Stream stream = rpt.ExportToStream(ExportFormatType.PortableDocFormat);
+				return File(stream, "application/pdf");
+			}
+			catch (Exception e)
+			{
+				return Content(e.ToString());
+			}
+		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
@@ -590,19 +590,19 @@ namespace DailyStatement.Controllers
 					holidays.Add(dt);
 			}
 
-            int internalTotal = 0;
-            int projectTotal = 0;
-            int undefineTotal = 0;
-            int demoTotal = 0;
-            int researchTotal = 0;
-            int overtimeTotal = 0;
+			int internalTotal = 0;
+			int projectTotal = 0;
+			int undefineTotal = 0;
+			int demoTotal = 0;
+			int researchTotal = 0;
+			int overtimeTotal = 0;
 
 			List<PersonalWorkingHours> pwh = new List<PersonalWorkingHours>();
 			List<Employee> employee = new List<Employee>();
 			employee = db.Employees.Where(e => e.EmployeeId > 1 &&
-                       e.Activity == true &&
-                       e.Rank.Name != "助理" &&
-                       e.Company == company).ToList();
+					   e.Activity == true &&
+					   e.Rank.Name != "助理" &&
+					   e.Company == company).ToList();
 			foreach (var emp in employee)
 			{
 				PersonalWorkingHours p = new PersonalWorkingHours();
@@ -612,9 +612,9 @@ namespace DailyStatement.Controllers
 								  d.Project.ProjectId == 2 &&
 								  !d.Project.ProjectNo.StartsWith("N/A") &&
 								  d.CreateDate >= startDay &&
-                                  d.CreateDate <= lastDay
+								  d.CreateDate <= lastDay
 								  ).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
-                internalTotal += p.InternalHours;
+				internalTotal += p.InternalHours;
 				// CN,CP,CO,C*,LINPO
 				p.ProjectHours = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId &&
 								  !d.Project.ProjectNo.StartsWith("ST") &&
@@ -624,25 +624,25 @@ namespace DailyStatement.Controllers
 								  // d.Project.ProjectId != 13 &&
 								  d.Project.ProjectId != 2 &&
 								  d.CreateDate >= startDay &&
-                                  d.CreateDate <= lastDay
+								  d.CreateDate <= lastDay
 								  ).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
-                projectTotal += p.ProjectHours;
+				projectTotal += p.ProjectHours;
 				// ST
 				p.UndefineHours = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId &&
 								  d.Project.ProjectNo.StartsWith("ST") &&
 								  !d.Project.ProjectNo.StartsWith("N/A") &&
 								  d.CreateDate >= startDay &&
-                                  d.CreateDate <= lastDay
+								  d.CreateDate <= lastDay
 								  ).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
-                undefineTotal += p.UndefineHours;
+				undefineTotal += p.UndefineHours;
 				// DO
 				p.DemoHours = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId &&
 								  d.Project.ProjectNo.StartsWith("DO") &&
 								  !d.Project.ProjectNo.StartsWith("N/A") &&
 								  d.CreateDate >= startDay &&
-                                  d.CreateDate <= lastDay
+								  d.CreateDate <= lastDay
 								  ).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
-                demoTotal += p.DemoHours;
+				demoTotal += p.DemoHours;
 				// CR
 				p.ResearchHours = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId &&
 								  d.Project.ProjectNo.StartsWith("CR") &&
@@ -650,7 +650,7 @@ namespace DailyStatement.Controllers
 								  d.CreateDate >= startDay &&
 								  d.CreateDate <= lastDay
 								  ).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
-                researchTotal += p.ResearchHours;
+				researchTotal += p.ResearchHours;
 				// 加班
 				p.Overtime = db.Dailies.Where(d => d.EmployeeId == emp.EmployeeId &&
 								  (d.WorkCategoryId == 13 ||
@@ -659,19 +659,19 @@ namespace DailyStatement.Controllers
 								  d.CreateDate >= startDay &&
 								  d.CreateDate <= lastDay
 								  ).Select(d => (int?)d.WorkingHours).Sum() ?? 0;
-                overtimeTotal += p.Overtime;
-                pwh.Add(p);
+				overtimeTotal += p.Overtime;
+				pwh.Add(p);
 			}
-            ViewBag.Year = years;
-            ViewBag.Month = months;
-            ViewBag.Company = company;
-            ViewBag.InternalTotal = internalTotal;
-            ViewBag.ProjectTotal = projectTotal;
-            ViewBag.UndefineTotal = undefineTotal;
-            ViewBag.DemoTotal = demoTotal;
-            ViewBag.ResearchTotal = researchTotal;
-            ViewBag.OvertimeTotal = overtimeTotal;
-            ViewBag.GrandTotal = internalTotal + projectTotal + undefineTotal + demoTotal + researchTotal;
+			ViewBag.Year = years;
+			ViewBag.Month = months;
+			ViewBag.Company = company;
+			ViewBag.InternalTotal = internalTotal;
+			ViewBag.ProjectTotal = projectTotal;
+			ViewBag.UndefineTotal = undefineTotal;
+			ViewBag.DemoTotal = demoTotal;
+			ViewBag.ResearchTotal = researchTotal;
+			ViewBag.OvertimeTotal = overtimeTotal;
+			ViewBag.GrandTotal = internalTotal + projectTotal + undefineTotal + demoTotal + researchTotal;
 
 			return View(pwh);
 		}
@@ -716,8 +716,8 @@ namespace DailyStatement.Controllers
 		}
 
 		[HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "超級管理員,一般管理員,助理")]
+		[ValidateAntiForgeryToken]
+		[Authorize(Roles = "超級管理員,一般管理員,助理")]
 		public ActionResult CategoryEdit(WorkCategory workCategory)
 		{
 			if (ModelState.IsValid)
@@ -730,8 +730,8 @@ namespace DailyStatement.Controllers
 			return View(workCategory);
 		}
 
-        [HttpPost, ActionName("CategoryDelete")]
-        [Authorize(Roles = "超級管理員,一般管理員,助理")]
+		[HttpPost, ActionName("CategoryDelete")]
+		[Authorize(Roles = "超級管理員,一般管理員,助理")]
 		public ActionResult CategoryDeleteConfirmed(int id)
 		{
 			WorkCategory workCategory = db.Categories.Find(id);
