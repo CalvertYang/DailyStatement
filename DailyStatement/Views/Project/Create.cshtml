@@ -3,22 +3,48 @@
 @{
     ViewBag.Title = "新增專案";
 }
-
+<style>
+    .sales {
+       
+    }
+</style>
 <div class="row">
     <div class="span6 offset3">
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>新增專案</legend>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ProjectNo)
+        <legend>新增專案</legend>
+        <div class="basic">
+            <div class="alert alert-error">必需</div>
+            <div class="input-prepend">
+                <span class="add-on">@@</span>
+                <input class="span2" id="prependedInput" type="text" placeholder="Username">
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.ProjectNo)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.ProjectNo)
+                @Html.ValidationMessageFor(model => model.ProjectNo)
+            </div>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ProjectNo)
-            @Html.ValidationMessageFor(model => model.ProjectNo)
+        <!--/ basic-->
+        <div class="sales">
+            <div class="alert">業務</div>
         </div>
+        <!--/ sales-->
+         <div class="engineer">
+            <div class="alert alert-info">工程師</div>
+        </div>
+        <!--/ engineer-->
+         <div class="account">
+            <div class="alert alert-success">會計</div>
+        </div>
+        <!--/ account-->
+        
 
         <div class="editor-label">
             @Html.LabelFor(model => model.CustomerCode)
@@ -76,18 +102,12 @@
             @Html.ValidationMessageFor(model => model.WarrantyEnd)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IsClosed)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.IsClosed)
-            @Html.ValidationMessageFor(model => model.IsClosed)
-        </div>
-        
+
 
         <p>
             <br />
-            <input type="submit" value="確認" class="btn btn-small btn-success" />  @Html.ActionLink("返回", "Index", null, new { @class="btn btn-small" })
+            <input type="submit" value="確認" class="btn btn-small btn-success" />
+            @Html.ActionLink("返回", "Index", null, new { @class = "btn btn-small" })
         </p>
     </fieldset>
 }

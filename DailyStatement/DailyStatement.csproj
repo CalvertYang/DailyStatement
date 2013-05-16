@@ -206,6 +206,14 @@
     <Compile Include="Migrations\201304260840140_Add warranty date range to project.Designer.cs">
       <DependentUpon>201304260840140_Add warranty date range to project.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201305160653407_ChangeProject.cs" />
+    <Compile Include="Migrations\201305160653407_ChangeProject.Designer.cs">
+      <DependentUpon>201305160653407_ChangeProject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201305160735183_ModifyDatatypeOfProject.cs" />
+    <Compile Include="Migrations\201305160735183_ModifyDatatypeOfProject.Designer.cs">
+      <DependentUpon>201305160735183_ModifyDatatypeOfProject.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Prediction.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Report\ProjectReport.cs">
@@ -1052,6 +1060,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201304260840140_Add warranty date range to project.resx">
       <DependentUpon>201304260840140_Add warranty date range to project.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201305160653407_ChangeProject.resx">
+      <DependentUpon>201305160653407_ChangeProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201305160735183_ModifyDatatypeOfProject.resx">
+      <DependentUpon>201305160735183_ModifyDatatypeOfProject.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Report\ProjectReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
