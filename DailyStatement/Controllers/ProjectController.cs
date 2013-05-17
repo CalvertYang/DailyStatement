@@ -99,6 +99,8 @@ namespace DailyStatement.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.Engineeers = new SelectList(db.Employees.Where(e => e.Rank.RankId == 3), "EmployeeId", "Name");
+            ViewBag.Sales = new SelectList(db.Employees.Where(e => e.Rank.RankId == 5), "EmployeeId", "Name");
             return View();
         }
 
@@ -175,6 +177,18 @@ namespace DailyStatement.Controllers
             {
                 return Json(true);
             }
+        }
+
+
+        [Authorize(Roles = "超級管理員,一般管理員,一般人員,助理")]
+        private int UserId(string account)
+        {
+            var emp = db.Employees.Where(e => e.Account == account).SingleOrDefault();
+            if (emp == null)
+            {
+                return 0;
+            }
+            return emp.EmployeeId;
         }
 
         protected override void Dispose(bool disposing)
