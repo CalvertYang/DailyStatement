@@ -19,17 +19,13 @@
         <legend>新增專案</legend>
         <div class="basic">
             <div class="alert alert-error">必需</div>
-            <div class="input-prepend">
-                <span class="add-on">@@</span>
-                <input class="span2" id="prependedInput" type="text" placeholder="Username">
-            </div>
-            <div class="editor-label">
-                @Html.LabelFor(model => model.ProjectNo)
-            </div>
-            <div class="editor-field">
+            
+            <div class="input-prepend offset1">
+                @Html.LabelFor(model => model.ProjectNo, new { @class="add-on"})
                 @Html.EditorFor(model => model.ProjectNo)
                 @Html.ValidationMessageFor(model => model.ProjectNo)
             </div>
+            
         </div>
         <!--/ basic-->
         <div class="sales">
@@ -46,37 +42,33 @@
         <!--/ account-->
         
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CustomerCode)
-        </div>
-        <div class="editor-field">
+        <div class="input-prepend offset1">
+            @Html.LabelFor(model => model.CustomerCode, new { @class="add-on" })
             @Html.EditorFor(model => model.CustomerCode)
             @Html.ValidationMessageFor(model => model.CustomerCode)
         </div>
+        
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CustomerName)
-        </div>
-        <div class="editor-field">
+        <div class="input-prepend offset1">
+            @Html.LabelFor(model => model.CustomerName, new { @class="add-on" })
             @Html.EditorFor(model => model.CustomerName)
             @Html.ValidationMessageFor(model => model.CustomerName)
         </div>
+        
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Comment)
-        </div>
-        <div class="editor-field">
+        <div class="input-prepend offset1">
+            @Html.LabelFor(model => model.Comment, new { @class="add-on" })
             @Html.EditorFor(model => model.Comment)
             @Html.ValidationMessageFor(model => model.Comment)
         </div>
+        
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Price)
-        </div>
-        <div class="editor-field">
+        <div class="input-prepend offset1">
+            @Html.LabelFor(model => model.Price, new { @class="add-on" })
             @Html.EditorFor(model => model.Price)
             @Html.ValidationMessageFor(model => model.Price)
         </div>
+        
 
         <div class="editor-label">
             @Html.LabelFor(model => model.StartOn)
@@ -122,7 +114,7 @@
                     culture: "zh-TW",
                     format: "yyyy/MM/dd"
             });
-            
+           
         }); 
     </script>
 }
