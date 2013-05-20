@@ -47,7 +47,7 @@
                     <!--UNDONE: use DropdownList-->
                     <div class="input-prepend offset1">
                         @Html.LabelFor(model => model.Sale, new { @class = "add-on" })
-                        @Html.DropDownListFor(model => model.Sale.EmployeeId, ViewBag.Sales as SelectList, new { })
+                        @Html.DropDownListFor(model => model.Sale.EmployeeId, ViewBag.Sales as SelectList,"請選擇", new { })
                     </div>
 
                     <div class="input-prepend offset1">
@@ -234,10 +234,10 @@
                 </div>
                 <!--/ account-->
 
-                <p>
+                <div class="controls pull-right">
                     <input type="submit" value="儲存" class="btn btn-small btn-success" />
                     @Html.ActionLink("返回", "Index", null, new { @class = "btn btn-small" })
-                </p>
+                </div>
             </fieldset>
         }
 

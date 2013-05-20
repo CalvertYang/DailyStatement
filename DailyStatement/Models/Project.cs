@@ -13,8 +13,7 @@ namespace DailyStatement.Models
     {
         public Project()
         {
-            this.Sale = new Employee();
-            this.Engineer = new Employee();
+            
         }
 
         #region Basic Required 

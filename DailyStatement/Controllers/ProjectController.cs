@@ -140,9 +140,24 @@ namespace DailyStatement.Controllers
             }
 
             if (project.Sale != null)
+            {
                 ViewBag.Sales = new SelectList(db.Employees.Where(e => e.Rank.Name == "業務"), "EmployeeId", "Name", project.Sale.EmployeeId);
+            }
+            else
+            {
+                project.Sale = new Employee();
+                ViewBag.Sales = new SelectList(db.Employees.Where(e => e.Rank.Name == "業務"), "EmployeeId", "Name", 0);
+            }
+
             if (project.Engineer != null)
+            {
                 ViewBag.Engineeers = new SelectList(db.Employees.Where(e => e.Rank.Name == "工程師"), "EmployeeId", "Name", project.Engineer.EmployeeId);
+            }
+            else
+            {
+                project.Engineer = new Employee();
+                ViewBag.Engineeers = new SelectList(db.Employees.Where(e => e.Rank.Name == "工程師"), "EmployeeId", "Name", 0);
+            }
             
             return View(project);
         }
@@ -155,9 +170,22 @@ namespace DailyStatement.Controllers
         public ActionResult Edit([Bind(Exclude = "Sale, Engineer")]Project project)
         {
             if (project.Sale.EmployeeId != 0)
+            {
                 project.Sale = db.Employees.Where(e => e.EmployeeId == project.Sale.EmployeeId).SingleOrDefault();
+            }
+            else
+            {
+                project.Sale = null;
+            }
+
             if (project.Engineer.EmployeeId != 0)
+            {
                 project.Engineer = db.Employees.Where(e => e.EmployeeId == project.Engineer.EmployeeId).SingleOrDefault();
+            }
+            else
+            {
+                project.Engineer = null;
+            }
 
             if (ModelState.IsValid)
             {
