@@ -39,6 +39,8 @@ namespace DailyStatement.Models
         public ProjectConfigurations()
         {
             // Fluent API 設定建置在此
+            HasOptional(p => p.Sale).WithMany(e => e.SaleFor).HasForeignKey(p => p.SaleId).WillCascadeOnDelete(false);
+            HasOptional(p => p.Engineer).WithMany(e => e.EngineerFor).HasForeignKey(p => p.EngineerId).WillCascadeOnDelete(false);
         }
     }
 

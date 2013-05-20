@@ -167,28 +167,22 @@ namespace DailyStatement.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Exclude = "Sale, Engineer")]Project project)
+        public ActionResult Edit([Bind(Exclude = "Sale, Engineer")]Project project, int SalesId = 0, int EngineersId = 0)
         {
-            if (project.Sale.EmployeeId != 0)
-            {
-                project.Sale = db.Employees.Where(e => e.EmployeeId == project.Sale.EmployeeId).SingleOrDefault();
-            }
-            else
-            {
-                project.Sale = null;
-            }
-
-            if (project.Engineer.EmployeeId != 0)
-            {
-                project.Engineer = db.Employees.Where(e => e.EmployeeId == project.Engineer.EmployeeId).SingleOrDefault();
-            }
-            else
-            {
-                project.Engineer = null;
-            }
-
+            //ModelState.Clear();
+            //TryValidateModel(project);
             if (ModelState.IsValid)
             {
+                if (SalesId > 0)
+                {
+                    project.SaleId = SalesId;
+                }
+                if (EngineersId > 0)
+                {
+                    project.EngineerId = EngineersId;
+                    
+                }
+               
                 db.Entry(project).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

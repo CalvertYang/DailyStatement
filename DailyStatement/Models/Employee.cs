@@ -63,6 +63,10 @@ namespace DailyStatement.Models
 
         [DisplayName("所屬公司")]
         public string Company { get; set; }
+
+        public virtual ICollection<Project> SaleFor { get; set; }
+
+        public virtual ICollection<Project> EngineerFor { get; set; } 
     }
 
     

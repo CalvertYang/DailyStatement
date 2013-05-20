@@ -35,7 +35,9 @@ namespace DailyStatement.Models
         [DisplayName("專案總金額")]
         public int? Price { get; set; }
 
+        public int? SaleId { get; set; }
         [DisplayName("負責業務")]
+        [InverseProperty("SaleFor")] 
         public virtual Employee Sale { get; set; }
 
         [DisplayName("訂金金額")]
@@ -74,7 +76,10 @@ namespace DailyStatement.Models
         #endregion
 
         #region Responsibility of Engineer
+
+        public int? EngineerId { get; set; }
         [DisplayName("負責工程師")]
+        [InverseProperty("EngineerFor")] 
         public virtual Employee Engineer { get; set; }
 
         [DisplayName("專案起始日")]

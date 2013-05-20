@@ -214,6 +214,14 @@
     <Compile Include="Migrations\201305160735183_ModifyDatatypeOfProject.Designer.cs">
       <DependentUpon>201305160735183_ModifyDatatypeOfProject.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201305200537092_Add-InversePropertyForProject.cs" />
+    <Compile Include="Migrations\201305200537092_Add-InversePropertyForProject.Designer.cs">
+      <DependentUpon>201305200537092_Add-InversePropertyForProject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201305200604258_Add-InversePropertyForProjectv2.cs" />
+    <Compile Include="Migrations\201305200604258_Add-InversePropertyForProjectv2.Designer.cs">
+      <DependentUpon>201305200604258_Add-InversePropertyForProjectv2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Prediction.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Report\ProjectReport.cs">
@@ -1066,6 +1074,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201305160735183_ModifyDatatypeOfProject.resx">
       <DependentUpon>201305160735183_ModifyDatatypeOfProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201305200537092_Add-InversePropertyForProject.resx">
+      <DependentUpon>201305200537092_Add-InversePropertyForProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201305200604258_Add-InversePropertyForProjectv2.resx">
+      <DependentUpon>201305200604258_Add-InversePropertyForProjectv2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Report\ProjectReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

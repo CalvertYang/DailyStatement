@@ -47,7 +47,7 @@
                     <!--UNDONE: use DropdownList-->
                     <div class="input-prepend offset1">
                         @Html.LabelFor(model => model.Sale, new { @class = "add-on" })
-                        @Html.DropDownListFor(model => model.Sale.EmployeeId, ViewBag.Sales as SelectList,"請選擇", new { })
+                        @Html.DropDownList("SalesId", ViewBag.Sales as SelectList, "請選擇", new { })
                     </div>
 
                     <div class="input-prepend offset1">
@@ -131,8 +131,7 @@
                     <!--UNDONE: use DropdownList-->
                     <div class="input-prepend offset1">
                         @Html.LabelFor(model => model.Engineer, new { @class = "add-on" })
-                        
-                        @Html.DropDownListFor(model => model.Engineer.EmployeeId, ViewBag.Engineeers as SelectList, "請選擇", new { })
+                        @Html.DropDownList("EngineersId", ViewBag.Engineeers as SelectList, "請選擇", new { })
                     </div>
 
                     <div class="input-prepend offset1">
