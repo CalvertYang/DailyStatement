@@ -57,16 +57,8 @@
                             weeksOfMonth[idx] = { 'start': new Date(year, month - 1, i + 1), 'end': new Date(year, month, nextFirstWeekEndDay) };
                         } else {
                             if (new Date(year, month, 0).getDay() != 6) {
-                                console.log(new Date(year, month - 1, i + 1));
-                                console.log(new Date(year, month, 0));
-                                console.log(new Date(year, month, 0).getDay());
                                 var crossYearFirstDayOfMonth = new Date(year + 1, 0, 1).getDay();
                                 var crossYearFirstWeekEndDay = 7 - crossYearFirstDayOfMonth;
-                                console.log(new Date(year + 1, 0, 1));
-                                console.log(crossYearFirstDayOfMonth);
-                                console.log(crossYearFirstWeekEndDay);
-                                console.log(new Date(year + 1, 0, crossYearFirstWeekEndDay));
-                                //weeksOfMonth[idx] = { 'start': new Date(year, month - 1, i + 1), 'end': new Date(year, month, 0) };
                                 weeksOfMonth[idx] = { 'start': new Date(year, month - 1, i + 1), 'end': new Date(year + 1, 0, crossYearFirstWeekEndDay) };
                             }
                         }
