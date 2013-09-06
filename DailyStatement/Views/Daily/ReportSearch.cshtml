@@ -44,18 +44,34 @@
                 var firstDayOfMonth = new Date(year, month - 1, 1).getDay();
                 var firstWeekEndDay = 7 - firstDayOfMonth;
                 // get first week
-                // weeksOfMonth[1] = { start: new Date(year, month - 1, 1), end: new Date(year, month - 1, firstWeekEndDay) }
-                for (i = firstWeekEndDay, j = 1; i < daysInMonth; i = i + 7, j++) {
+                var idx = 1;
+                if (firstDayOfMonth == 0) {
+                    weeksOfMonth[idx] = { 'start': new Date(year, month - 1, 1), 'end': new Date(year, month - 1, 7) };
+                    idx++;
+                }
+                for (i = firstWeekEndDay; i < daysInMonth; i = i + 7, idx++) {
                     if (i + 7 > daysInMonth) {
                         if (month < 12) {
                             var nextFirstDayOfMonth = new Date(year, month, 1).getDay();
                             var nextFirstWeekEndDay = 7 - nextFirstDayOfMonth;
-                            weeksOfMonth[j] = { 'start': new Date(year, month - 1, i + 1), 'end': new Date(year, month, nextFirstWeekEndDay) };
+                            weeksOfMonth[idx] = { 'start': new Date(year, month - 1, i + 1), 'end': new Date(year, month, nextFirstWeekEndDay) };
                         } else {
-                            weeksOfMonth[j] = { 'start': new Date(year, month - 1, i + 1), 'end': new Date(year, month, 0) };
+                            if (new Date(year, month, 0).getDay() != 6) {
+                                console.log(new Date(year, month - 1, i + 1));
+                                console.log(new Date(year, month, 0));
+                                console.log(new Date(year, month, 0).getDay());
+                                var crossYearFirstDayOfMonth = new Date(year + 1, 0, 1).getDay();
+                                var crossYearFirstWeekEndDay = 7 - crossYearFirstDayOfMonth;
+                                console.log(new Date(year + 1, 0, 1));
+                                console.log(crossYearFirstDayOfMonth);
+                                console.log(crossYearFirstWeekEndDay);
+                                console.log(new Date(year + 1, 0, crossYearFirstWeekEndDay));
+                                //weeksOfMonth[idx] = { 'start': new Date(year, month - 1, i + 1), 'end': new Date(year, month, 0) };
+                                weeksOfMonth[idx] = { 'start': new Date(year, month - 1, i + 1), 'end': new Date(year + 1, 0, crossYearFirstWeekEndDay) };
+                            }
                         }
                     } else {
-                        weeksOfMonth[j] = { 'start': new Date(year, month - 1, i + 1), 'end': new Date(year, month - 1, i + 7) };
+                        weeksOfMonth[idx] = { 'start': new Date(year, month - 1, i + 1), 'end': new Date(year, month - 1, i + 7) };
                     }
                 }
                 $('#weeks').find('option').remove();
