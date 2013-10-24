@@ -356,7 +356,7 @@ namespace DailyStatement.Controllers
 											T1.[EmployeeId], T1.[Project_ProjectId], T2.[ProjectNo]", employeeId, fromDate.ToShortDateString(), toDate.ToShortDateString());
 			var report = db.Database.SqlQuery<WeekReportOfSingle>(query).ToList();
 
-			ViewBag.TotalOfAll = (db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= fromDate && d.CreateDate <= toDate)).Count()>0)?db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= fromDate && d.CreateDate <= toDate)).Select(d => d.WorkingHours).Sum():0;
+            //ViewBag.TotalOfAll = (db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= fromDate && d.CreateDate <= toDate)).Count()>0)?db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= fromDate && d.CreateDate <= toDate)).Select(d => d.WorkingHours).Sum():0;
 			ViewBag.EmployeeId = employeeId;
 			ViewBag.EmployeeName = db.Employees.Where(e => e.EmployeeId == employeeId).SingleOrDefault().Name;
 			CultureInfo ci = CultureInfo.CurrentCulture;
