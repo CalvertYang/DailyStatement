@@ -428,6 +428,10 @@ namespace DailyStatement.Controllers
 				condition = "SELECT * FROM [dbo].[Projects]";
 				da = new SqlDataAdapter(condition, conn);
 				da.Fill(ds.Projects);
+                // Get data from WorkCategories
+                condition = "SELECT * FROM [dbo].[WorkCategories]";
+                da = new SqlDataAdapter(condition, conn);
+                da.Fill(ds.WorkCategories);
 				// Due to SetParameterValue always return error, so use datatable to store parameter
 				ds.ParameterForWeekRpt.Rows.Add(employeeId, fromDate, toDate, weekOfYear);
 				
