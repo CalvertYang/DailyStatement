@@ -44,6 +44,7 @@ namespace DailyStatement.Models
         public int? DownPayment { get; set; }
 
         [DisplayName("下訂單日期")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
         public DateTime? OrderOn { get; set; }
 
         [DisplayName("收訂金日期")]

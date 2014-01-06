@@ -36,14 +36,26 @@
             <tbody>
                 @{
                     int[] overheads = new int[5] { 8, 8, 8, 8, 8 };
+                    int[] sumOfDays = new int[7] { 0, 0, 0, 0, 0, 0, 0 };
+                    int totalOfAll = 0;
                 }
                 @foreach (var record in Model)
                 {
-                    overheads[0] -= record.Monday;
-                    overheads[1] -= record.Tuesday;
-                    overheads[2] -= record.Wednesday;
-                    overheads[3] -= record.Thursday;
-                    overheads[4] -= record.Friday;
+                    overheads[0] = overheads[0] - record.Monday > 0 ? overheads[0] - record.Monday : 0;
+                    overheads[1] = overheads[1] - record.Tuesday > 0 ? overheads[1] - record.Tuesday : 0;
+                    overheads[2] = overheads[2] - record.Wednesday > 0 ? overheads[2] - record.Wednesday : 0;
+                    overheads[3] = overheads[3] - record.Thursday > 0 ? overheads[3] - record.Thursday : 0;
+                    overheads[4] = overheads[4] - record.Friday > 0 ? overheads[4] - record.Friday : 0;
+
+                    sumOfDays[0] += record.Sunday;
+                    sumOfDays[1] += record.Monday;
+                    sumOfDays[2] += record.Tuesday;
+                    sumOfDays[3] += record.Wednesday;
+                    sumOfDays[4] += record.Thursday;
+                    sumOfDays[5] += record.Friday;
+                    sumOfDays[6] += record.Saturday;
+
+                    totalOfAll += record.Total;
                 <tr >
                     <td>@record.WorkName</td>
                     <td class="bg-mark">@record.Sunday</td>
@@ -69,10 +81,23 @@
                         @(overheads.Sum() >= 0 ? overheads.Sum() : 0)
                     </td>
                 </tr>
+                <tr>
+                    <td>加班工時</td>
+                    <td>@(sumOfDays[0] > 0 ? sumOfDays[0] : 0)</td>
+                    <td>@(sumOfDays[1] > 8 ? sumOfDays[1] - 8 : 0)</td>
+                    <td>@(sumOfDays[2] > 8 ? sumOfDays[2] - 8 : 0)</td>
+                    <td>@(sumOfDays[3] > 8 ? sumOfDays[3] - 8 : 0)</td>
+                    <td>@(sumOfDays[4] > 8 ? sumOfDays[4] - 8 : 0)</td>
+                    <td>@(sumOfDays[5] > 8 ? sumOfDays[5] - 8 : 0)</td>
+                    <td>@(sumOfDays[6] > 0 ? sumOfDays[6] : 0)</td>
+                    <td>
+                        @(sumOfDays.Sum() - 40 > 0 ? sumOfDays.Sum() - 40 : 0)
+                    </td>
+                </tr>
                 <tr class="success">
                     <td colspan="7"></td>
                     <td><strong>Total</strong></td>
-                    <td>@ViewBag.TotalOfAll</td>
+                    <td>@(overheads.Sum() >= 0 ? totalOfAll + overheads.Sum() : totalOfAll)</td>
                 </tr>
             </tbody>
         </table>

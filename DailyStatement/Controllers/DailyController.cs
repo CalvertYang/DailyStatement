@@ -356,7 +356,7 @@ namespace DailyStatement.Controllers
 											T1.[EmployeeId], T1.[Project_ProjectId], T2.[ProjectNo]", employeeId, fromDate.ToShortDateString(), toDate.ToShortDateString());
 			var report = db.Database.SqlQuery<WeekReportOfSingle>(query).ToList();
 
-			ViewBag.TotalOfAll = (db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= fromDate && d.CreateDate <= toDate)).Count()>0)?db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= fromDate && d.CreateDate <= toDate)).Select(d => d.WorkingHours).Sum():0;
+            //ViewBag.TotalOfAll = (db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= fromDate && d.CreateDate <= toDate)).Count()>0)?db.Dailies.Where(d => d.EmployeeId == employeeId && (d.CreateDate >= fromDate && d.CreateDate <= toDate)).Select(d => d.WorkingHours).Sum():0;
 			ViewBag.EmployeeId = employeeId;
 			ViewBag.EmployeeName = db.Employees.Where(e => e.EmployeeId == employeeId).SingleOrDefault().Name;
 			CultureInfo ci = CultureInfo.CurrentCulture;
@@ -428,6 +428,10 @@ namespace DailyStatement.Controllers
 				condition = "SELECT * FROM [dbo].[Projects]";
 				da = new SqlDataAdapter(condition, conn);
 				da.Fill(ds.Projects);
+                // Get data from WorkCategories
+                condition = "SELECT * FROM [dbo].[WorkCategories]";
+                da = new SqlDataAdapter(condition, conn);
+                da.Fill(ds.WorkCategories);
 				// Due to SetParameterValue always return error, so use datatable to store parameter
 				ds.ParameterForWeekRpt.Rows.Add(employeeId, fromDate, toDate, weekOfYear);
 				
