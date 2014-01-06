@@ -35,10 +35,14 @@
                
             });*@
             
+            $('#years').change(function () {
+                $('#months').trigger('change');
+            });
+
             $('#months').change(function () {
                 weeksOfMonth = {};
                 var today = new Date();
-                var year = today.getFullYear();
+                var year = parseInt($('#years').val());
                 var month = $(this).val();
                 var daysInMonth = new Date(year, month, 0).getDate();
                 var firstDayOfMonth = new Date(year, month - 1, 1).getDay();
@@ -82,7 +86,6 @@
                 var end = d['end'].getFullYear() + '/' + (d['end'].getMonth() + 1) + '/' + d['end'].getDate();
                 $('input[name=fromDate]').val(start);
                 $('input[name=toDate]').val(end);
-
             });
             var today = new Date();
             $('#months').val(today.getMonth() + 1).trigger('change');
@@ -133,6 +136,12 @@
                         </div>
                         <div class="editor-field">
                             @Html.DropDownList("employeeId", (SelectList)ViewBag.Employee, null, new { @readonly = "readonly" })
+                        </div>
+                        <div class="editor-label">
+                            Year:
+                        </div>
+                        <div class="editor-field">
+                            @Html.DropDownList("years", (SelectList)ViewBag.Years)
                         </div>
                         <div class="editor-label">
                             Month:
