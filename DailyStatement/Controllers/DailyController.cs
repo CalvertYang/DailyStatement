@@ -302,8 +302,9 @@ namespace DailyStatement.Controllers
 				months.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
 			}
 			List<SelectListItem> years = new List<SelectListItem>();
-			int yearStart = DateTime.Now.Year;
-			for (int i = yearStart ; i > yearStart - 3; i--)
+            int yearStart = db.Dailies.OrderBy(d => d.CreateDate).FirstOrDefault().CreateDate.Year;
+			int yearEnd = DateTime.Now.Year;
+            for (int i = yearEnd; i >= yearStart; i--)
 			{
 				years.Add(new SelectListItem { Text = i.ToString(), Value = i.ToString() });
 			}
