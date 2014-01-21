@@ -9,5 +9,6 @@ namespace DailyStatement.ViewModel
     {
         public int WorkCategoryId { get; set; }
         public string Name { get; set; }
+        public int OrderBy { get; set; }
     }
 }

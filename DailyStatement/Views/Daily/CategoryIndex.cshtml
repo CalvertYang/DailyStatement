@@ -9,6 +9,7 @@
 
         $(function () {
             var urlRead = '@Url.Action("CategoryGrid")';
+            var urlUpdate = '@Url.Action("UpdateCategoryGrid")';
 
             var dataSource = new kendo.data.DataSource({
                 serverPaging: true,
@@ -18,11 +19,15 @@
                 transport: {
                     read: {
                         url: urlRead,
-                        type: "post",
+                        type: "POST",
                         dataType: 'json'
+                    },
+                    update: {
+                        url: urlUpdate,
+                        type: "POST"
                     }
                 },
-                batch: true,
+                //batch: true,
                 schema: {
                     //取出資料陣列
                     data: function (d) { return d.data; },
@@ -31,8 +36,22 @@
                     model: {
                         id: 'WorkCategoryId',
                         fields: {
-                            WorkCategoryId: { editable: false },
-                            Name: { type: 'string' }
+                            WorkCategoryId: {
+                                editable: false,
+                                nullable: true
+                            },
+                            Name: {
+                                type: 'string',
+                                validation: {
+                                    required: true
+                                }
+                            },
+                            OrderBy: {
+                                type: 'number',
+                                validation: {
+                                    required: true
+                                }
+                            }
                         }
                     }
                 }
@@ -42,18 +61,25 @@
             $("#grid").kendoGrid({
                 columns: [
                     { title: "工作類型", field: "Name" },
+                    { title: "排序", field: "OrderBy", width: "80px" },
                     {
                         title: "操作",
                         field: "WorkCategoryId",
-                        template: "<a href='@Url.Action("CategoryEdit")/#=WorkCategoryId#' class='btn btn-small btn-info'>編輯</a> <button class='delete-button btn btn-small btn-danger' onclick='DeleteWithConfirm(#=WorkCategoryId#);'>刪除</button>", width: 120
+                        template: "<button class='delete-button btn btn-small btn-danger' onclick='DeleteWithConfirm(#=WorkCategoryId#);'>刪除</button>",
+                        //template: "<a href='@Url.Action("CategoryEdit")/#=WorkCategoryId#' class='btn btn-small btn-info'>編輯</a> <button class='delete-button btn btn-small btn-danger' onclick='DeleteWithConfirm(#=WorkCategoryId#);'>刪除</button>",
+                        width: 80
                     }
                 ],
-                toolbar: [{ name: "create", template: "<a href='@Url.Action("CategoryCreate")' class='btn btn-small btn-success pull-right' style='margin-right:22px;'>新增</a>" }],
+                toolbar: [{ name: "create", template: "<a href='@Url.Action("CategoryCreate")' class='btn btn-small btn-success pull-right' style='margin-right:22px;'>新增</a>" }, { name: "save", text: "儲存變更" }, { name: "cancel", text: "取消變更" }],
                 dataSource: dataSource,
                 height: 700,
                 scrollable: true,
                 pageable: true,
-                sortable: true
+                sortable: true,
+                editable: {
+                    update: true,
+                    destroy: false
+                }
             });
         });
 

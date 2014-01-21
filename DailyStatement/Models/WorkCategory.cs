@@ -22,6 +22,7 @@ namespace DailyStatement.Models
         public virtual List<Prediction> Predictions { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [DisplayName("排序")]
         public int OrderBy { get; set; }
     }
 }

@@ -9,6 +9,7 @@
         
         $(function () {
             var urlRead = '@Url.Action("Grid")';
+            var urlUpdate = '@Url.Action("UpdateGrid")';
 
             var dataSource = new kendo.data.DataSource({
                 serverPaging: true,
@@ -18,11 +19,15 @@
                 transport: {
                     read: {
                         url: urlRead,
-                        type: "post",
+                        type: "POST",
                         dataType: 'json'
+                    },
+                    update: {
+                        url: urlUpdate,
+                        type: "POST"
                     }
                 },
-                batch: true,
+                //batch: true,
                 schema: {
                     //取出資料陣列
                     data: function (d) { return d.data; },
@@ -35,16 +40,27 @@
                                 editable: false
                             },
                             ProjectNo: {
-                                type: 'string'
+                                type: 'string',
+                                editable: false
                             },
-                            WorkCategory: { type: 'string' },
+                            WorkCategory: {
+                                type: 'string',
+                                editable: false
+                            },
                             Customer: {
-                                type: 'string'
+                                type: 'string',
+                                editable: false
                             },
                             WorkContent: { type: 'string' },
-                            CreateDate: { type: 'date' },
-                            WorkingHours: { type: 'string' },
-                            EmployeeName: { type: 'string' }
+                            CreateDate: {
+                                type: 'date',
+                                editable: false
+                            },
+                            WorkingHours: { type: 'number' },
+                            EmployeeName: {
+                                type: 'string',
+                                editable: false
+                            }
                         }
                     }
                 }
@@ -74,7 +90,7 @@
                         template: "<a href='@Url.Action("Edit")/#=DailyInfoId#' class='btn btn-small btn-info'>編輯</a> <button class='delete-button btn btn-small btn-danger' onclick='DeleteWithConfirm(#=DailyInfoId#);'>刪除</button>", width: 120 
                     }
                 ],
-                toolbar: [{ name: "create", template: "<a href='@Url.Action("Create")' class='btn btn-small btn-success pull-right' style='margin-right:22px;'>新增</a>" }],
+                toolbar: [{ name: "create", template: "<a href='@Url.Action("Create")' class='btn btn-small btn-success pull-right' style='margin-right:22px;'>新增</a>" }, { name: "save", text: "儲存變更" }, { name: "cancel", text: "取消變更" }],
                 dataSource: dataSource,
                 height: 700,
                 scrollable: true,
@@ -83,7 +99,10 @@
                     pageSizes: [15,30,50]
                 },
                 
-                // editable: true,
+                editable: {
+                    update: true,
+                    destroy: false
+                },
                 sortable: true,
                 filterable: true
             });

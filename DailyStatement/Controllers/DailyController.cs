@@ -117,6 +117,14 @@ namespace DailyStatement.Controllers
 			return Json(grid);
 		}
 
+        // 快速修改工作日誌
+        [HttpPost]
+        [Authorize(Roles = "超級管理員,一般管理員,工程師,業務")]
+        public void UpdateGrid(DailyInfo dailyinfo)
+        {
+            db.Database.ExecuteSqlCommand("UPDATE DailyInfoes SET WorkContent = {0}, WorkingHours = {1} WHERE DailyInfoId = {2}", dailyinfo.WorkContent, dailyinfo.WorkingHours, dailyinfo.DailyInfoId);
+        }
+
 		[HttpPost]
         [Authorize(Roles = "超級管理員,一般管理員,工程師,業務")]
 		public JsonResult GetProjects()
@@ -752,14 +760,17 @@ namespace DailyStatement.Controllers
         [Authorize(Roles = "超級管理員,一般管理員,業務,助理,會計")]
 		public ActionResult CategoryEdit(WorkCategory workCategory)
 		{
-			if (ModelState.IsValid)
-			{
-				db.Entry(workCategory).State = EntityState.Modified;
-				db.SaveChanges();
-				return RedirectToAction("CategoryIndex");
-			}
+            db.Database.ExecuteSqlCommand("UPDATE WorkCategories SET Name = {0}, OrderBy = {1} WHERE WorkCategoryId = {2}", workCategory.Name, workCategory.OrderBy, workCategory.WorkCategoryId);
 
-			return View(workCategory);
+            return RedirectToAction("CategoryIndex");
+            //if (ModelState.IsValid)
+            //{
+            //    db.Entry(workCategory).State = EntityState.Modified;
+            //    db.SaveChanges();
+            //    return RedirectToAction("CategoryIndex");
+            //}
+
+            //return View(workCategory);
 		}
 
 		[HttpPost, ActionName("CategoryDelete")]
@@ -783,13 +794,22 @@ namespace DailyStatement.Controllers
 							  select new CategoryForIndex
 							  {
 								  WorkCategoryId = c.WorkCategoryId,
-								  Name = c.Name
+								  Name = c.Name,
+                                  OrderBy = c.OrderBy
 							  }).ToList();
 
 			var grid = new KendoGrid<CategoryForIndex>(request, categories);
 
 			return Json(grid);
 		}
+
+        // 修改工作類型
+        [HttpPost]
+        [Authorize(Roles = "超級管理員,一般管理員,業務,助理,會計")]
+        public void UpdateCategoryGrid(WorkCategory workCategory)
+        {
+            db.Database.ExecuteSqlCommand("UPDATE WorkCategories SET Name = {0}, OrderBy = {1} WHERE WorkCategoryId = {2}", workCategory.Name, workCategory.OrderBy, workCategory.WorkCategoryId);
+        }
 
         [Authorize(Roles = "超級管理員,一般管理員,工程師,業務,助理,會計")]
 		private int UserId(string account)
