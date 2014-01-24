@@ -254,7 +254,7 @@
                 changeMonth: true
             });
             $('.datebox').each(function(){
-                $(this).val($(this).val().substring(0,10));
+                $(this).val($(this).val().substring(0, $(this).val().indexOf(' ')));
             });
             //$('.datebox').val($('.datebox').val().substring(0, 10));
             @{
