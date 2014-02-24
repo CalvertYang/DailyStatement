@@ -68,6 +68,13 @@
                     <td>@record.Total</td>
                 </tr>
                 }
+                @{
+                    sumOfDays[1] += overheads[0];
+                    sumOfDays[2] += overheads[1];
+                    sumOfDays[3] += overheads[2];
+                    sumOfDays[4] += overheads[3];
+                    sumOfDays[5] += overheads[4];
+                }
                 <tr>
                     <td>閒置工時</td>
                     <td class="bg-mark"></td>
