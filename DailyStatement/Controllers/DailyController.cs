@@ -111,6 +111,10 @@ namespace DailyStatement.Controllers
 								   WorkCategory = d.WorkCategory.Name,
 								   EmployeeName = d.Employee.Name
 							   }).OrderByDescending(d => d.CreateDate).ToList();
+                foreach (var daily in dailies)
+                {
+                    if (daily.ProjectNo == null) daily.ProjectNo = "";
+                }
 			}
 
 			var grid = new KendoGrid<DailyInfoForIndex>(request, dailies);
